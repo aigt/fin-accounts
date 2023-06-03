@@ -7,4 +7,4 @@ pluginManagement {
     }
 }
 
-include("m1-init")
+include("fin-accounts-acceptance")
