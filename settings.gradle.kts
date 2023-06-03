@@ -7,4 +7,4 @@ pluginManagement {
     }
 }
 
-include("fin-accounts-acceptance")
+include("acceptance")

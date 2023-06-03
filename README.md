@@ -31,4 +31,4 @@
 
 1. [deploy](deploy) - Инфраструктура развёртывания приложения
 2. [docs](docs) - Документация
-2. [fin-accounts-acceptance](fin-accounts-acceptance) - Приемочные тесты
+3. [acceptance](acceptance) - Приемочные тесты
