@@ -1,0 +1,12 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/v1/account/transaction"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "result": "SUCCESS"
+    }
+  }
+}
