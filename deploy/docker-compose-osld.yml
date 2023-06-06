@@ -18,14 +18,14 @@ services:
   zookeeper:
     image: 'bitnami/zookeeper:latest'
     ports:
-      - '2181:2181'
+      - "2181:2181"
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
 
   kafka:
     image: bitnami/kafka:latest
     ports:
-      - '9092:9092'
+      - "9092:9092"
     environment:
       # Во внутренней сети docker-compose слушаем адрес kafka:9092
       # Из внешней сети docker-compose будем слушать localhost:9094
@@ -52,7 +52,7 @@ services:
     environment:
       BOOTSTRAP_SERVERS: "kafka:9092"
     volumes:
-#      - ./volumes/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+      #      - ./volumes/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
       - ./volumes/logstash/10-mp-logs.conf:/usr/share/logstash/pipeline/10-mp-logs.conf
 
   opensearch:
@@ -80,7 +80,7 @@ services:
     image: opensearchproject/opensearch-dashboards:latest
     container_name: opensearch-dashboards
     ports:
-      - 5601:5601
+      - "5601:5601"
     expose:
       - "5601"
     environment:
