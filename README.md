@@ -13,9 +13,6 @@
 1. Маркетинг
     1. [Заинтересанты](./docs/marketing/stakeholders.md)
     2. [Целевая аудитория](./docs/marketing/target-audience.md)
-    3. [Конкурентный анализ](./docs/marketing/concurrency.md)
-    4. [Анализ экономики](./docs/marketing/economy.md)
-    5. [Пользовательские истории](./docs/marketing/user-stories.md)
 2. DevOps
     1. [Схема инфраструктуры](./docs/devops/infrastruture.md)
     2. [Схема мониторинга](./docs/devops/monitoring.md)
