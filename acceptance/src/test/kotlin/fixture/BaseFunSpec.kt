@@ -11,7 +11,7 @@ import io.kotest.core.test.TestCase
  */
 abstract class BaseFunSpec(
     private val dockerCompose: DockerCompose,
-    body: FunSpec.() -> Unit
+    body: FunSpec.() -> Unit,
 ) : FunSpec(body) {
 
     override suspend fun afterSpec(spec: Spec) {

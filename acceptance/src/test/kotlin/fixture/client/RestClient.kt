@@ -16,7 +16,11 @@ class RestClient(dockerCompose: DockerCompose) : Client {
     private val urlBuilder by lazy { dockerCompose.inputUrl }
     private val client = HttpClient(OkHttp)
 
-    override suspend fun sendAndReceive(version: String, path: String, request: String): String {
+    override suspend fun sendAndReceive(
+        version: String,
+        path: String,
+        request: String,
+    ): String {
 
         val url = urlBuilder.apply {
             path("/api/$version/$path")

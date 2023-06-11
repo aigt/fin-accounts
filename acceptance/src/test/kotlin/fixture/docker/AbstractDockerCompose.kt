@@ -15,11 +15,11 @@ private val log = KotlinLogging.logger {}
  */
 abstract class AbstractDockerCompose(
     private val apps: List<AppInfo>,
-    private val dockerComposeName: String
+    private val dockerComposeName: String,
 ) : DockerCompose {
 
     constructor(service: String, port: Int, dockerComposeName: String)
-            : this(listOf(AppInfo(service, port)), dockerComposeName)
+        : this(listOf(AppInfo(service, port)), dockerComposeName)
 
     private fun getComposeFile(): File {
         val file = File("docker-compose/$dockerComposeName")
