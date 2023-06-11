@@ -12,7 +12,7 @@ suspend fun Client.createAd(): Unit = withClue("addTransactionV1") {
             {
                 "name": "Bolt"
             }
-        """.trimIndent()
+        """.trimIndent(),
     )
 
     response should haveNoErrors

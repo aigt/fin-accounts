@@ -12,5 +12,9 @@ interface Client {
      * @param request тело сообщения в виде строки
      * @return тело ответа
      */
-    suspend fun sendAndReceive(version: String, path: String, request: String): String
+    suspend fun sendAndReceive(
+        version: String,
+        path: String,
+        request: String,
+    ): String
 }

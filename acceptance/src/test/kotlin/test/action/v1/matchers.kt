@@ -8,6 +8,6 @@ val haveNoErrors = Matcher<String> {
     MatcherResult(
         it.contains("""{"result":"SUCCESS"}"""),
         { "result should be success" },
-        { "result should not be success" }
+        { "result should not be success" },
     )
 }

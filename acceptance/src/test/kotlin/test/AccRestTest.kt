@@ -7,11 +7,13 @@ import fixture.client.RestClient
 import io.kotest.core.annotation.Ignored
 
 @Ignored
-open class AccRestTestBase(dockerCompose: DockerCompose) : BaseFunSpec(dockerCompose, {
-    val client = RestClient(dockerCompose)
-
-    testApiV1(client)
-})
+open class AccRestTestBase(dockerCompose: DockerCompose) : BaseFunSpec(
+    dockerCompose = dockerCompose,
+    body = {
+        val client = RestClient(dockerCompose)
+        testApiV1(client)
+    },
+)
 
 class AccRestWiremockTest : AccRestTestBase(WiremockDockerCompose)
 // TODO class AccRestSpringTest : AccRestTestBase(SpringDockerCompose)
