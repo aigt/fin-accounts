@@ -28,6 +28,8 @@
 # Структура проекта
 
 1. [acceptance](acceptance) - Приемочные тесты
-2. [deploy](deploy) - Инфраструктура развёртывания приложения
-3. [docs](docs) - Документация
-4. [specs](specs) - OpenAPI спецификации с описанием API
+2. [api-jackson](api-jackson) - Транспортные модели для сериализации с помощью jackson
+3. [api-kmp](api-kmp) - Транспортные модели для сериализации для использования в kotlin multiplatform
+4. [deploy](deploy) - Инфраструктура развёртывания приложения
+5. [docs](docs) - Документация
+6. [specs](specs) - OpenAPI спецификации с описанием API
