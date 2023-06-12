@@ -30,3 +30,4 @@
 1. [acceptance](acceptance) - Приемочные тесты
 2. [deploy](deploy) - Инфраструктура развёртывания приложения
 3. [docs](docs) - Документация
+4. [specs](specs) - OpenAPI спецификации с описанием API
