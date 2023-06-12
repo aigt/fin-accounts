@@ -1,0 +1,514 @@
+openapi: 3.0.4
+info:
+  title: "Fin accounts ${VERSION_APP}"
+  description: Financial accounts management
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api/v1
+tags:
+  - name: account
+    description: Финансовый счёт
+paths:
+  /account/create:
+    post:
+      tags:
+        - account
+      summary: Create account
+      operationId: accountCreate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCreateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountCreateResponse'
+  /account/read:
+    post:
+      tags:
+        - account
+      summary: Read account
+      operationId: accountRead
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountReadRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountReadResponse'
+  /account/update:
+    post:
+      tags:
+        - account
+      summary: Update account
+      operationId: accountUpdate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUpdateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountUpdateResponse'
+  /account/search:
+    post:
+      tags:
+        - account
+      summary: Search account
+      operationId: accountSearch
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountSearchRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountSearchResponse'
+  /account/history:
+    post:
+      tags:
+        - account
+      summary: Account history of transactions
+      operationId: accountHistory
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountHistoryRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountHistoryResponse'
+  /account/transact:
+    post:
+      tags:
+        - account
+      summary: Make transaction with account
+      operationId: accountTransact
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountTransactRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTransactResponse'
+
+components:
+  schemas:
+
+    # Общие схемы
+
+    IRequest:
+      type: object
+      description: Базовый интерфейс для всех запросов
+      properties:
+        requestType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+        requestId:
+          type: string
+          description: Идентификатор запроса для отладки
+      discriminator:
+        propertyName: requestType
+        mapping:
+          create:   '#/components/schemas/AccountCreateRequest'
+          read:     '#/components/schemas/AccountReadRequest'
+          update:   '#/components/schemas/AccountUpdateRequest'
+          search:   '#/components/schemas/AccountSearchRequest'
+          history:  '#/components/schemas/AccountHistoryRequest'
+          transact: '#/components/schemas/AccountTransactRequest'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        group:
+          type: string
+        field:
+          type: string
+        message:
+          type: string
+    ResponseResult:
+      type: string
+      enum:
+        - success
+        - error
+    IResponse:
+      type: object
+      description: Базовый интерфейс для всех ответов
+      properties:
+        responseType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+        requestId:
+          type: string
+          description: Идентификатор запроса для отладки
+        result:
+          $ref: '#/components/schemas/ResponseResult'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+
+      discriminator:
+        propertyName: responseType
+        mapping:
+          create: '#/components/schemas/AdCreateResponse'
+          read:   '#/components/schemas/AdReadResponse'
+          update: '#/components/schemas/AdUpdateResponse'
+          delete: '#/components/schemas/AdDeleteResponse'
+          search: '#/components/schemas/AdSearchResponse'
+          offers: '#/components/schemas/AdOffersResponse'
+          init: '#/components/schemas/AdInitResponse'
+
+    # Типы полей
+
+    AccountId:
+      type: string
+      description: Цифровой идентификатор счёта
+      pattern: '^\d{20}$'
+    AccountDescription:
+      type: string
+      description: Описание счёта
+      minLength: 0
+      maxLength: 10000
+    AccountOwnerId:
+      type: string
+      description: Идентификатор владельца счёта
+      format: uuid
+    AccountBalance:
+      type: integer
+      description: Баланс счёта в центах (копейках)
+      minimum: 0
+    AccountCurrency:
+      type: string
+      pattern: "^[a-zA-Z]{3}$"
+      description: "ISO 4217 код валюты, например: USD, EUR, CHF"
+    AccountLastTransaction:
+      type: string
+      format: date-time
+    AccountStatus:
+      type: string
+      description: 'Статус счёта'
+      enum:
+        - active
+        - closed
+        - frozen
+
+    AccountLock:
+      type: string
+      description: Версия оптимистичной блокировки
+    AccountPermissions:
+      type: string
+      description: Доступы для клиента для операций над счётом
+      enum:
+        - read
+        - update
+        - transact
+        - history
+
+    AccountBaseTransaction:
+      type: object
+      description: Операция совершённая по счёту
+      properties:
+        type:
+          required: true
+          $ref: '#/components/schemas/TransactionType'
+        amount:
+          required: true
+          $ref: '#/components/schemas/TransactionAmount'
+        counterpaty:
+          required: true
+          $ref: '#/components/schemas/TransactionCounterparty'
+        description:
+          required: true
+          $ref: '#/components/schemas/TransactionDescription'
+    AccountTransactionResponseObject:
+      allOf:
+        - $ref: '#/components/schemas/AccountBaseTransaction'
+        - type: object
+          properties:
+            timestamp:
+              required: true
+              $ref: '#/components/schemas/TransactionTimestamp'
+    TransactionAmount:
+      type: integer
+      description: Сумма операции центах (копейках)
+      minimum: 0
+    TransactionCounterparty:
+      $ref: '#/components/schemas/AccountId'
+    TransactionTimestamp:
+      type: string
+      format: date-time
+    TransactionDescription:
+      type: string
+      description: Описание операции
+      minLength: 0
+      maxLength: 10000
+    TransactionType:
+      type: string
+      description: Тип опирации (списание, зачисление)
+      enum:
+        - income
+        - withdraw
+
+    AccountSearchFilter:
+      type: object
+      description: Набор фильтров для поиска
+      properties:
+        searchString:
+          type: string
+          description: Поисковая строка, которая будет искаться по счёту
+
+    # Базовые схемы для композиции
+
+    BaseAccount:
+      type: object
+      description: Объект описывает свойства, одинаковые для create и update
+      properties:
+        description:
+          required: true
+          $ref: '#/components/schemas/AccountDescription'
+        ownerId:
+          required: true
+          $ref: '#/components/schemas/AccountOwnerId'
+        balance:
+          required: true
+          $ref: '#/components/schemas/AccountBalance'
+        currency:
+          required: true
+          $ref: '#/components/schemas/AccountCurrency'
+        status:
+          required: true
+          $ref: '#/components/schemas/AccountStatus'
+    AccountCreateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseAccount'
+    AccountUpdateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseAccount'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/AccountId'
+            lock:
+              $ref: '#/components/schemas/AccountLock'
+    AccountReadObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/AccountId'
+    AccountHistoryObject:
+      $ref: '#/components/schemas/AccountReadObject'
+    AccountTransactObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/AccountId'
+            lock:
+              $ref: '#/components/schemas/AccountLock'
+            transaction:
+              $ref: '#/components/schemas/AccountBaseTransaction'
+
+    AccountResponseObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseAccount'
+        - type: object
+          description: Объект, который возвращается в ответе бэкенда
+          properties:
+            id:
+              required: true
+              $ref: '#/components/schemas/AccountId'
+            lock:
+              required: true
+              $ref: '#/components/schemas/AccountLock'
+            lastTransaction:
+              required: true
+              $ref: '#/components/schemas/AccountLastTransaction'
+            permissions:
+              type: array
+              uniqueItems: true
+              items:
+                $ref: '#/components/schemas/AccountPermissions'
+    AccountResponseSingle:
+      allOf:
+        - type: object
+          description: Ответ с одним объектом счёта
+          properties:
+            account:
+              $ref: '#/components/schemas/AccountResponseObject'
+    AccountHistoryResponseObject:
+      allOf:
+        - type: object
+          description: Ответ с одним объектом счёта и историей трансакций про нему
+          properties:
+            account:
+              $ref: '#/components/schemas/AccountResponseObject'
+            history:
+              type: array
+              items:
+                $ref: '#/components/schemas/AccountTransactionResponseObject'
+    AccountResponseMulti:
+      allOf:
+        - type: object
+          description: Список найденных объектов
+          properties:
+            accounts:
+              type: array
+              items:
+                $ref: '#/components/schemas/AccountResponseObject'
+
+    # Схемы реквестов
+
+    AccountCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/AccountRequestDebug'
+        - type: object
+          properties:
+            account:
+              $ref: '#/components/schemas/AccountCreateObject'
+    AccountReadRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/AccountRequestDebug'
+        - type: object
+          properties:
+            account:
+              $ref: '#/components/schemas/AccountReadObject'
+    AccountUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/AccountRequestDebug'
+        - type: object
+          properties:
+            account:
+              $ref: '#/components/schemas/AccountUpdateObject'
+    AccountSearchRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/AccountRequestDebug'
+        - type: object
+          properties:
+            accountFilter:
+              $ref: '#/components/schemas/AccountSearchFilter'
+    AccountHistoryRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/AccountRequestDebug'
+        - type: object
+          properties:
+            account:
+              $ref: '#/components/schemas/AccountHistoryObject'
+    AccountTransactRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/AccountRequestDebug'
+        - type: object
+          properties:
+            account:
+              $ref: '#/components/schemas/AccountTransactObject'
+
+    # Схемы респонсов
+
+    AccountCreateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/AccountResponseSingle'
+    AccountReadResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/AccountResponseSingle'
+    AccountUpdateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/AccountResponseSingle'
+    AccountSearchResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/AccountResponseMulti'
+    AccountHistoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/AccountHistoryResponseObject'
+    AccountTransactResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/AccountResponseSingle'
+
+    # Debug схемы
+
+    AccountRequestDebug:
+      type: object
+      properties:
+        debug:
+          $ref: '#/components/schemas/AccountDebug'
+    AccountDebug:
+      type: object
+      properties:
+        mode:
+          $ref: '#/components/schemas/AccountRequestDebugMode'
+        stub:
+          $ref: '#/components/schemas/AccountRequestDebugStubs'
+    AccountRequestDebugStubs:
+      type: string
+      description: Перечисления всех стабов
+      enum:
+        - success
+        - notFound
+        - badId
+        - badTitle
+        - badDescription
+        - badVisibility
+        - cannotDelete
+        - badSearchString
+    AccountRequestDebugMode:
+      type: string
+      enum:
+        - prod
+        - test
+        - stub
