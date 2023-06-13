@@ -29,7 +29,7 @@ class RequestSerializationTest {
 
         assertContains(json, Regex("\"ownerId\":\\s*\"cd565097-4b69-490e-b167-b59128475562\""))
         assertContains(json, Regex("\"description\":\\s*\"stub\""))
-        assertContains(json, Regex("\"balance\":\\s*\"154\""))
+        assertContains(json, Regex("\"balance\":\\s*154"))
         assertContains(json, Regex("\"currency\":\\s*\"RUB\""))
         assertContains(json, Regex("\"status\":\\s*\"active\""))
         assertContains(json, Regex("\"requestType\":\\s*\"create\""))
