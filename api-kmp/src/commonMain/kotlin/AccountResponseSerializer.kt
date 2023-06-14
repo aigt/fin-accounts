@@ -11,9 +11,12 @@ import aigt.api.kmp.v1.models.IResponse
 import aigt.api.kmp.v1.responses.IResponseStrategy
 
 
-val AdResponseSerializer = ResponseSerializer(AdResponseSerializerBase)
+val accountResponseSerializer: ResponseSerializer<IResponse> =
+    ResponseSerializer(AccountResponseSerializerBase)
 
-private object AdResponseSerializerBase : JsonContentPolymorphicSerializer<IResponse>(IResponse::class) {
+private object AccountResponseSerializerBase :
+    JsonContentPolymorphicSerializer<IResponse>(IResponse::class) {
+
     private const val discriminator = "responseType"
 
     override fun selectDeserializer(element: JsonElement): KSerializer<out IResponse> {

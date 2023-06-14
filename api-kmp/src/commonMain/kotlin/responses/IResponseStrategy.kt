@@ -5,7 +5,7 @@ import aigt.api.kmp.v1.models.IResponse
 
 sealed interface IResponseStrategy: IApiStrategy<IResponse> {
     companion object {
-        val members = listOf(
+        private val members = listOf(
             CreateResponseStrategy,
             ReadResponseStrategy,
             UpdateResponseStrategy,

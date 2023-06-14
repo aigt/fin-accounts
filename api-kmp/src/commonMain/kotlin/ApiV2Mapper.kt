@@ -14,6 +14,7 @@ val apiV2Mapper = Json {
     ignoreUnknownKeys = true
 
     serializersModule = SerializersModule {
+
         polymorphicDefaultSerializer(IRequest::class) {
             @Suppress("UNCHECKED_CAST")
             when(it) {
@@ -26,9 +27,11 @@ val apiV2Mapper = Json {
                 else -> null
             }
         }
+
         polymorphicDefault(IRequest::class) {
-            AdRequestSerializer
+            accountRequestSerializer
         }
+
         polymorphicDefaultSerializer(IResponse::class) {
             @Suppress("UNCHECKED_CAST")
             when(it) {
@@ -41,23 +44,15 @@ val apiV2Mapper = Json {
                 else -> null
             }
         }
+
         polymorphicDefault(IResponse::class) {
-            AdResponseSerializer
+            accountResponseSerializer
         }
 
-        contextual(AdRequestSerializer)
-        contextual(AdResponseSerializer)
+        contextual(accountRequestSerializer)
+        contextual(accountResponseSerializer)
     }
 }
 
-fun Json.encodeResponse(response: IResponse): String = encodeToString(AdResponseSerializer, response)
-
-fun apiV2ResponseSerialize(Response: IResponse): String = apiV2Mapper.encodeToString(AdResponseSerializer, Response)
-
-@Suppress("UNCHECKED_CAST")
-fun <T : Any> apiV2ResponseDeserialize(json: String): T = apiV2Mapper.decodeFromString(AdResponseSerializer, json) as T
-
-fun apiV2RequestSerialize(request: IRequest): String = apiV2Mapper.encodeToString(AdRequestSerializer, request)
-
-@Suppress("UNCHECKED_CAST")
-fun <T : Any> apiV2RequestDeserialize(json: String): T = apiV2Mapper.decodeFromString(AdRequestSerializer, json) as T
+fun Json.encodeResponse(response: IResponse): String
+    = encodeToString(accountResponseSerializer, response)

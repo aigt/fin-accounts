@@ -11,13 +11,15 @@ import aigt.api.kmp.v1.models.IRequest
 import aigt.api.kmp.v1.requests.IRequestStrategy
 
 
-val AdRequestSerializer = RequestSerializer(AdRequestSerializerBase)
+val accountRequestSerializer: RequestSerializer<IRequest> =
+    RequestSerializer(AdRequestSerializerBase)
 
-private object AdRequestSerializerBase : JsonContentPolymorphicSerializer<IRequest>(IRequest::class) {
+private object AdRequestSerializerBase :
+    JsonContentPolymorphicSerializer<IRequest>(IRequest::class) {
+
     private const val discriminator = "requestType"
 
     override fun selectDeserializer(element: JsonElement): KSerializer<out IRequest> {
-
         val discriminatorValue = element.jsonObject[discriminator]?.jsonPrimitive?.content
         return IRequestStrategy.membersByDiscriminator[discriminatorValue]?.serializer
             ?: throw SerializationException(
