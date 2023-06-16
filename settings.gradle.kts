@@ -15,5 +15,5 @@ pluginManagement {
 include("acceptance")
 
 // OpenApi генерация
-include("api-jackson")
-include("api-kmp")
+include("api-v1-jackson")
+include("api-v1-kmp")
