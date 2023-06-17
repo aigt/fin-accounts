@@ -14,6 +14,8 @@ pluginManagement {
 // Приёмочные тесты
 include("acceptance")
 
+include("common")
+
 // OpenApi генерация
 include("api-v1-jackson")
 include("api-v1-kmp")
