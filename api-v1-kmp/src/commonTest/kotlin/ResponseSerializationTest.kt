@@ -1,8 +1,8 @@
-package aigt.api.v1.kmp
+package aigt.finaccounts.api.v1.kmp
 
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import aigt.api.v1.kmp.models.*
+import aigt.finaccounts.api.v1.kmp.models.*
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals

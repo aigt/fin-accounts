@@ -1,10 +1,10 @@
-package aigt.api.v1.jackson
+package aigt.finaccounts.api.v1.jackson
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.json.JsonMapper
-import aigt.api.v1.jackson.models.IRequest
-import aigt.api.v1.jackson.models.IResponse
+import aigt.finaccounts.api.v1.jackson.models.IRequest
+import aigt.finaccounts.api.v1.jackson.models.IResponse
 
 val apiV1Mapper: JsonMapper = JsonMapper.builder().run {
     configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)

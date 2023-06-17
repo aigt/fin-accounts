@@ -1,7 +1,7 @@
-package aigt.api.v1.kmp.responses
+package aigt.finaccounts.api.v1.kmp.responses
 
-import aigt.api.v1.kmp.IApiStrategy
-import aigt.api.v1.kmp.models.IResponse
+import aigt.finaccounts.api.v1.kmp.IApiStrategy
+import aigt.finaccounts.api.v1.kmp.models.IResponse
 
 sealed interface IResponseStrategy: IApiStrategy<IResponse> {
     companion object {

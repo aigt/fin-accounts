@@ -1,8 +1,8 @@
-package aigt.api.v1.kmp.requests
+package aigt.finaccounts.api.v1.kmp.requests
 
 import kotlinx.serialization.KSerializer
-import aigt.api.v1.kmp.models.AccountTransactRequest
-import aigt.api.v1.kmp.models.IRequest
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactRequest
+import aigt.finaccounts.api.v1.kmp.models.IRequest
 import kotlin.reflect.KClass
 
 object AccountTransactStrategy: IRequestStrategy {

@@ -1,11 +1,11 @@
-package aigt.api.v1.kmp
+package aigt.finaccounts.api.v1.kmp
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.contextual
-import aigt.api.v1.kmp.models.*
+import aigt.finaccounts.api.v1.kmp.models.*
 
 @OptIn(ExperimentalSerializationApi::class)
 val apiV2Mapper = Json {

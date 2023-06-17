@@ -1,8 +1,8 @@
-package aigt.api.v1.kmp.responses
+package aigt.finaccounts.api.v1.kmp.responses
 
 import kotlinx.serialization.KSerializer
-import aigt.api.v1.kmp.models.AccountHistoryResponse
-import aigt.api.v1.kmp.models.IResponse
+import aigt.finaccounts.api.v1.kmp.models.AccountHistoryResponse
+import aigt.finaccounts.api.v1.kmp.models.IResponse
 import kotlin.reflect.KClass
 
 object HistoryResponseStrategy: IResponseStrategy {

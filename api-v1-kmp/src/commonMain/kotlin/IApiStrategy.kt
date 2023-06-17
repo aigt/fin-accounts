@@ -1,4 +1,4 @@
-package aigt.api.v1.kmp
+package aigt.finaccounts.api.v1.kmp
 
 import kotlinx.serialization.KSerializer
 import kotlin.reflect.KClass

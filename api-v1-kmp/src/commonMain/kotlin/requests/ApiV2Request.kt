@@ -1,8 +1,8 @@
-package aigt.api.v1.kmp.requests
+package aigt.finaccounts.api.v1.kmp.requests
 
-import aigt.api.v1.kmp.accountRequestSerializer
-import aigt.api.v1.kmp.apiV2Mapper
-import aigt.api.v1.kmp.models.IRequest
+import aigt.finaccounts.api.v1.kmp.accountRequestSerializer
+import aigt.finaccounts.api.v1.kmp.apiV2Mapper
+import aigt.finaccounts.api.v1.kmp.models.IRequest
 
 fun apiV2RequestSerialize(request: IRequest): String =
     apiV2Mapper.encodeToString(accountRequestSerializer, request)

@@ -1,7 +1,7 @@
-package aigt.api.v1.kmp.requests
+package aigt.finaccounts.api.v1.kmp.requests
 
-import aigt.api.v1.kmp.IApiStrategy
-import aigt.api.v1.kmp.models.IRequest
+import aigt.finaccounts.api.v1.kmp.IApiStrategy
+import aigt.finaccounts.api.v1.kmp.models.IRequest
 
 sealed interface IRequestStrategy: IApiStrategy<IRequest> {
     companion object {

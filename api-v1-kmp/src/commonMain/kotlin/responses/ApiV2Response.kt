@@ -1,8 +1,8 @@
-package aigt.api.v1.kmp.responses
+package aigt.finaccounts.api.v1.kmp.responses
 
-import aigt.api.v1.kmp.accountResponseSerializer
-import aigt.api.v1.kmp.apiV2Mapper
-import aigt.api.v1.kmp.models.IResponse
+import aigt.finaccounts.api.v1.kmp.accountResponseSerializer
+import aigt.finaccounts.api.v1.kmp.apiV2Mapper
+import aigt.finaccounts.api.v1.kmp.models.IResponse
 
 fun apiV2ResponseSerialize(response: IResponse): String =
     apiV2Mapper.encodeToString(accountResponseSerializer, response)

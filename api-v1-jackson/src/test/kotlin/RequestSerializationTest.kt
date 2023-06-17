@@ -1,6 +1,6 @@
-package aigt.api.v1.jackson
+package aigt.finaccounts.api.v1.jackson
 
-import aigt.api.v1.jackson.models.*
+import aigt.finaccounts.api.v1.jackson.models.*
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertContains

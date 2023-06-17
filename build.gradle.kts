@@ -6,7 +6,7 @@ plugins {
 
 
 allprojects {
-    group = "aigt"
+    group = "aigt.finaccounts"
     version = "1.0-SNAPSHOT"
 
     repositories {

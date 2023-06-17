@@ -1,4 +1,4 @@
-package aigt.api.v1.kmp
+package aigt.finaccounts.api.v1.kmp
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
@@ -7,8 +7,8 @@ import kotlinx.serialization.json.JsonContentPolymorphicSerializer
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import aigt.api.v1.kmp.models.IRequest
-import aigt.api.v1.kmp.requests.IRequestStrategy
+import aigt.finaccounts.api.v1.kmp.models.IRequest
+import aigt.finaccounts.api.v1.kmp.requests.IRequestStrategy
 
 
 val accountRequestSerializer: RequestSerializer<IRequest> =
