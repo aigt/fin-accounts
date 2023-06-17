@@ -244,11 +244,9 @@ components:
       type: string
       description: Доступы для клиента для операций над счётом
       enum:
-        - create
         - read
         - update
         - history
-        - search
         - transact
 
     AccountBaseTransaction:
