@@ -505,10 +505,17 @@ components:
         - success
         - notFound
         - badId
-        - badTitle
         - badDescription
-        - badVisibility
-        - cannotDelete
+        - badOwnerId
+        - badBalance
+        - badCurrency
+        - badLastTransaction
+        - badStatus
+        - badTransactionAmount
+        - badTransactionCounterparty
+        - badTransactionTimestamp
+        - badTransactionDescription
+        - badTransactionType
         - badSearchString
     AccountRequestDebugMode:
       type: string

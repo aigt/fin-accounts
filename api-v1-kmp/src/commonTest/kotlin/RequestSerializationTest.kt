@@ -13,7 +13,7 @@ class RequestSerializationTest {
         requestId = "123",
         debug = AccountDebug(
             mode = AccountRequestDebugMode.STUB,
-            stub = AccountRequestDebugStubs.BAD_TITLE
+            stub = AccountRequestDebugStubs.BAD_OWNER_ID
         ),
         account = AccountCreateObject(
             ownerId = "cd565097-4b69-490e-b167-b59128475562",
