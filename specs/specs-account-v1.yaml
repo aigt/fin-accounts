@@ -228,6 +228,7 @@ components:
     AccountLastTransaction:
       type: string
       format: date-time
+      description: 'Дата и время последней операции по счёту'
     AccountStatus:
       type: string
       description: 'Статус счёта'
@@ -243,10 +244,12 @@ components:
       type: string
       description: Доступы для клиента для операций над счётом
       enum:
+        - create
         - read
         - update
-        - transact
         - history
+        - search
+        - transact
 
     AccountBaseTransaction:
       type: object
@@ -473,11 +476,13 @@ components:
     AccountHistoryResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/AccountResponseSingle'
         - $ref: '#/components/schemas/AccountHistoryResponseObject'
     AccountTransactResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
         - $ref: '#/components/schemas/AccountResponseSingle'
+        - $ref: '#/components/schemas/AccountHistoryResponseObject'
 
     # Debug схемы
 

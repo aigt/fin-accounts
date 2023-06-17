@@ -12,7 +12,7 @@
 3. OwnerId (UUID) - Идентификатор владельца счёта
 4. Balance (Cents) - баланс
 5. Currency (строка 3 символа) - ISO 4217 код валюты, например: USD, EUR, CHF
-6. LastTransaction (timestamp) - Дата последней операции по счёту
+6. LastTransaction (timestamp) - Дата и время последней операции по счёту
 7. Status (Active, Closed, Frozen) - Статус счёта
 
 ## Описание сущности Transaction
@@ -31,5 +31,5 @@
     3. update
     4. search
     5. history - отображение истории изменения счетов за период
-    6. transact - совершить операцию по счёту
+    6. transact - добвить операцию по счёту
 
