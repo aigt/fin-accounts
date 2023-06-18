@@ -84,7 +84,7 @@ class MapperTest {
             state = ContextState.RUNNING,
         )
 
-        val response = context.toTransportAd() as AccountCreateResponse
+        val response = context.toTransportResponse() as AccountCreateResponse
 
         assertEquals("1234", response.requestId)
         assertEquals("desc", response.account?.description)
@@ -92,7 +92,7 @@ class MapperTest {
         assertEquals(154, response.account?.balance)
         assertEquals("RUB", response.account?.currency)
         assertEquals(TransportAccountStatus.ACTIVE, response.account?.status)
-        assertEquals(transactionTime.toString(), response.account?.lastTransaction)
+        assertEquals(transactionTime.asString(), response.account?.lastTransaction)
         assertEquals(setOf(AccountPermissions.READ, AccountPermissions.HISTORY), response.account?.permissions)
         assertEquals(1, response.errors?.size)
         assertEquals("err", response.errors?.firstOrNull()?.code)
