@@ -160,6 +160,7 @@ components:
           transact: '#/components/schemas/AccountTransactRequest'
     Error:
       type: object
+      description: Ошибка произошедшая во время запроса
       properties:
         code:
           type: string
@@ -251,7 +252,7 @@ components:
 
     AccountBaseTransaction:
       type: object
-      description: Операция совершённая по счёту
+      description: Базовый объект операции совершённой по счёту
       properties:
         type:
           required: true
@@ -266,6 +267,7 @@ components:
           required: true
           $ref: '#/components/schemas/TransactionDescription'
     AccountTransactionResponseObject:
+      description: Операция совершённая по счёту
       allOf:
         - $ref: '#/components/schemas/AccountBaseTransaction'
         - type: object
@@ -328,9 +330,11 @@ components:
           required: true
           $ref: '#/components/schemas/AccountStatus'
     AccountCreateObject:
+      description: Данные аккаунта для создания
       allOf:
         - $ref: '#/components/schemas/BaseAccount'
     AccountUpdateObject:
+      description: Данные аккаунта для обновления
       allOf:
         - $ref: '#/components/schemas/BaseAccount'
         - type: object
@@ -340,14 +344,17 @@ components:
             lock:
               $ref: '#/components/schemas/AccountLock'
     AccountReadObject:
+      description: Данные аккаунта для чтения
       allOf:
         - type: object
           properties:
             id:
               $ref: '#/components/schemas/AccountId'
     AccountHistoryObject:
+      description: Данные истории операций аккаунта
       $ref: '#/components/schemas/AccountReadObject'
     AccountTransactObject:
+      description: Данные аккаунта для добавления операции по нему
       allOf:
         - type: object
           properties:
@@ -359,6 +366,7 @@ components:
               $ref: '#/components/schemas/AccountBaseTransaction'
 
     AccountResponseObject:
+      description: Данные аккаунта для респонса
       allOf:
         - $ref: '#/components/schemas/BaseAccount'
         - type: object
@@ -379,6 +387,7 @@ components:
               items:
                 $ref: '#/components/schemas/AccountPermissions'
     AccountResponseSingle:
+      description: Данные одиночного аккаунта для респонса
       allOf:
         - type: object
           description: Ответ с одним объектом счёта
@@ -386,6 +395,7 @@ components:
             account:
               $ref: '#/components/schemas/AccountResponseObject'
     AccountHistoryResponseObject:
+      description: Данные истории операций аккаунта для респонса
       allOf:
         - type: object
           description: Ответ с одним объектом счёта и историей трансакций про нему
@@ -397,6 +407,7 @@ components:
               items:
                 $ref: '#/components/schemas/AccountTransactionResponseObject'
     AccountResponseMulti:
+      description: Данные нескольких запрошенных аккаунтов для респонса
       allOf:
         - type: object
           description: Список найденных объектов
@@ -409,6 +420,7 @@ components:
     # Схемы реквестов
 
     AccountCreateRequest:
+      description: Реквест создания аккаунта
       allOf:
         - $ref: '#/components/schemas/IRequest'
         - $ref: '#/components/schemas/AccountRequestDebug'
@@ -417,6 +429,7 @@ components:
             account:
               $ref: '#/components/schemas/AccountCreateObject'
     AccountReadRequest:
+      description: Реквест чтения аккаунта
       allOf:
         - $ref: '#/components/schemas/IRequest'
         - $ref: '#/components/schemas/AccountRequestDebug'
@@ -425,6 +438,7 @@ components:
             account:
               $ref: '#/components/schemas/AccountReadObject'
     AccountUpdateRequest:
+      description: Реквест обновления аккаунта
       allOf:
         - $ref: '#/components/schemas/IRequest'
         - $ref: '#/components/schemas/AccountRequestDebug'
@@ -433,6 +447,7 @@ components:
             account:
               $ref: '#/components/schemas/AccountUpdateObject'
     AccountSearchRequest:
+      description: Реквест поиска аккаунтов
       allOf:
         - $ref: '#/components/schemas/IRequest'
         - $ref: '#/components/schemas/AccountRequestDebug'
@@ -441,6 +456,7 @@ components:
             accountFilter:
               $ref: '#/components/schemas/AccountSearchFilter'
     AccountHistoryRequest:
+      description: Реквест запроса истории операций по аккаунту
       allOf:
         - $ref: '#/components/schemas/IRequest'
         - $ref: '#/components/schemas/AccountRequestDebug'
@@ -449,6 +465,7 @@ components:
             account:
               $ref: '#/components/schemas/AccountHistoryObject'
     AccountTransactRequest:
+      description: Реквест добавления операции по аккаунту
       allOf:
         - $ref: '#/components/schemas/IRequest'
         - $ref: '#/components/schemas/AccountRequestDebug'
@@ -460,27 +477,33 @@ components:
     # Схемы респонсов
 
     AccountCreateResponse:
+      description: Респонс запроса создания аккаунта
       allOf:
         - $ref: '#/components/schemas/IResponse'
         - $ref: '#/components/schemas/AccountResponseSingle'
     AccountReadResponse:
+      description: Респонс запроса чтения аккаунта
       allOf:
         - $ref: '#/components/schemas/IResponse'
         - $ref: '#/components/schemas/AccountResponseSingle'
     AccountUpdateResponse:
+      description: Респонс запроса обновления аккаунта
       allOf:
         - $ref: '#/components/schemas/IResponse'
         - $ref: '#/components/schemas/AccountResponseSingle'
     AccountSearchResponse:
+      description: Респонс запроса поиска аккаунтов
       allOf:
         - $ref: '#/components/schemas/IResponse'
         - $ref: '#/components/schemas/AccountResponseMulti'
     AccountHistoryResponse:
+      description: Респонс запроса истории операций аккаунта
       allOf:
         - $ref: '#/components/schemas/IResponse'
         - $ref: '#/components/schemas/AccountResponseSingle'
         - $ref: '#/components/schemas/AccountHistoryResponseObject'
     AccountTransactResponse:
+      description: Респонс запроса добавления операци по аккаунту
       allOf:
         - $ref: '#/components/schemas/IResponse'
         - $ref: '#/components/schemas/AccountResponseSingle'
