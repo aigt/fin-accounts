@@ -301,6 +301,10 @@ components:
         searchString:
           type: string
           description: Поисковая строка, которая будет искаться по счёту
+        ownerId:
+          type: string
+          description: Идентификатор владельца счёта
+          format: uuid
 
     # Базовые схемы для композиции
 
