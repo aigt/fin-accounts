@@ -28,7 +28,7 @@ class ResponseSerializationTest {
     fun serialize() {
 //        val json = apiV2Mapper.encodeToString(AdRequestSerializer1, request)
 //        val json = apiV2Mapper.encodeToString(RequestSerializers.create, request)
-        val json = apiV2Mapper.encodeToString(response)
+        val json = apiV1Mapper.encodeToString(response)
 
         println(json)
 
@@ -46,11 +46,11 @@ class ResponseSerializationTest {
 
     @Test
     fun deserialize() {
-        val json = apiV2Mapper.encodeToString(response)
+        val json = apiV1Mapper.encodeToString(response)
 //        val json = apiV2Mapper.encodeToString(AdRequestSerializer1, request)
 //        val json = apiV2Mapper.encodeToString(RequestSerializers.create, request)
 //        val obj = apiV2Mapper.decodeFromString(AdRequestSerializer, json) as AdCreateRequest
-        val obj = apiV2Mapper.decodeFromString(json) as AccountCreateResponse
+        val obj = apiV1Mapper.decodeFromString(json) as AccountCreateResponse
 
         assertEquals(response, obj)
     }

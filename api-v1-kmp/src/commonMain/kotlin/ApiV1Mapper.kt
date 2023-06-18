@@ -8,7 +8,7 @@ import kotlinx.serialization.modules.contextual
 import aigt.finaccounts.api.v1.kmp.models.*
 
 @OptIn(ExperimentalSerializationApi::class)
-val apiV2Mapper = Json {
+val apiV1Mapper = Json {
     classDiscriminator = "_"
     encodeDefaults = true
     ignoreUnknownKeys = true
