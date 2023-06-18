@@ -5,8 +5,9 @@ import kotlin.jvm.JvmInline
 @JvmInline
 value class AccountBalance(private val cents: Int) {
     fun asString() = cents.toString()
+    fun asInt() = cents
 
     companion object {
-        val ZERO = AccountBalance(0)
+        val NONE = AccountBalance(0)
     }
 }

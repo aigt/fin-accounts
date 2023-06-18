@@ -76,15 +76,6 @@ fun FinAccountsContext.fromTransport(request: AccountCreateRequest) {
     accountRequest = request.account?.toInternal() ?: Account()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
-
-//    state = ContextState.
-//    errors: MutableList =
-//    requestStartTime: RequestStartTime =
-//    accountFilter: AccountFilter =
-//    accountRequest: Account =
-//    accountResponse: Account =
-//    accountsResponse: MutableList =
-//    historyResponse: MutableList =
 }
 
 fun FinAccountsContext.fromTransport(request: AccountReadRequest) {
@@ -145,7 +136,7 @@ private fun AccountCreateObject.toInternal(): Account = Account(
         ?: AccountOwnerId.NONE,
     balance = this.balance
         ?.let {AccountBalance(it)}
-        ?: AccountBalance.ZERO,
+        ?: AccountBalance.NONE,
     currency = this.currency
         ?.let { AccountCurrency(it) }
         ?: AccountCurrency.NONE,
@@ -172,7 +163,7 @@ private fun AccountUpdateObject.toInternal(): Account = Account(
         ?: AccountOwnerId.NONE,
     balance = this.balance
         ?.let {AccountBalance(it)}
-        ?: AccountBalance.ZERO,
+        ?: AccountBalance.NONE,
     currency = this.currency
         ?.let { AccountCurrency(it) }
         ?: AccountCurrency.NONE,
@@ -190,7 +181,7 @@ private fun AccountStatus?.fromTransport(): ContextAccountStatus = when (this) {
 private fun AccountBaseTransaction.toInternal(): Transaction = Transaction(
     amount = this.amount
         ?.let { TransactionAmount(it) }
-        ?: TransactionAmount.ZERO,
+        ?: TransactionAmount.NONE,
     counterpaty = this.counterpaty
         ?.let { TransactionCounterparty(it) }
         ?: TransactionCounterparty.NONE,
