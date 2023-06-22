@@ -28,5 +28,11 @@
 # Структура проекта
 
 1. [acceptance](acceptance) - Приемочные тесты
-2. [deploy](deploy) - Инфраструктура развёртывания приложения
-3. [docs](docs) - Документация
+2. [api-v1-jackson](api-v1-jackson) - Транспортные модели для сериализации с помощью jackson
+3. [api-v1-kmp](api-v1-kmp) - Транспортные модели для сериализации для использования в kotlin multiplatform
+4. [common](common) - Общие объекты используемые всеми остальными модулями (с поддержкой kotlin multiplatform)
+5. [mappers-v1-jvm](mappers-v1-jvm) - Мапперы транспортных моделей во внутренние для jvm рантайма
+6. [mappers-v1-kmp](mappers-v1-kmp) - Мапперы транспортных моделей во внутренние с поддержкой kotlin multiplatform
+7. [deploy](deploy) - Инфраструктура развёртывания приложения
+8. [docs](docs) - Документация
+9. [specs](specs) - OpenAPI спецификации с описанием API
