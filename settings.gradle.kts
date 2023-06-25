@@ -22,3 +22,5 @@ include("api-v1-kmp")
 
 include("mappers-v1-jvm")
 include("mappers-v1-kmp")
+
+include("stubs")
