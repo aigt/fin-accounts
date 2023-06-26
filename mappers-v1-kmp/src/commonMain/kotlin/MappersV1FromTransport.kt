@@ -182,7 +182,7 @@ private fun AccountBaseTransaction.toInternal(): Transaction = Transaction(
     amount = this.amount
         ?.let { TransactionAmount(it) }
         ?: TransactionAmount.NONE,
-    counterpaty = this.counterpaty
+    counterparty = this.counterpaty
         ?.let { TransactionCounterparty(it) }
         ?: TransactionCounterparty.NONE,
     type = this.type

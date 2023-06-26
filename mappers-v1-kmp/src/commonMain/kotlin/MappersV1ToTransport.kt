@@ -161,7 +161,7 @@ private fun Transaction.toTransportTransaction(): AccountTransactionResponseObje
     amount = amount
         .takeIf { it != TransactionAmount.NONE }
         ?.asInt(),
-    counterpaty = counterpaty
+    counterpaty = counterparty
         .takeIf { it != TransactionCounterparty.NONE }
         ?.asString(),
     description = description

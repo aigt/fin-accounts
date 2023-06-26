@@ -2,6 +2,8 @@ plugins {
     kotlin("multiplatform")
 }
 
+val benasherUUIDVersion: String by project
+
 kotlin {
     jvm {}
     linuxX64 {}
@@ -12,6 +14,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-common"))
+
+                implementation("com.benasher44:uuid:$benasherUUIDVersion")
 
                 implementation(project(":common"))
             }
