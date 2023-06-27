@@ -2,6 +2,8 @@ plugins {
     kotlin("multiplatform")
 }
 
+val benasherUUIDVersion: String by project
+
 kotlin {
     jvm {}
     linuxX64 {}
@@ -18,10 +20,13 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common"))
 
+                implementation("com.benasher44:uuid:$benasherUUIDVersion")
+
                 implementation(project(":common"))
                 implementation(project(":stubs"))
             }
         }
+
         @Suppress("UNUSED_VARIABLE")
         val commonTest by getting {
             dependencies {
@@ -31,12 +36,14 @@ kotlin {
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
             }
         }
+
         @Suppress("UNUSED_VARIABLE")
         val jvmMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
             }
         }
+
         @Suppress("UNUSED_VARIABLE")
         val jvmTest by getting {
             dependencies {

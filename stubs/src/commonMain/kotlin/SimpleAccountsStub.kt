@@ -27,22 +27,36 @@ object SimpleAccountsStub {
             currency = AccountCurrency(code = "RUB"),
             status = AccountStatus.ACTIVE,
             lastTransactionTime = AccountLastTransactionTime(
-                timestamp = Instant.parse("2023-06-26T18:43:00.123456789Z")
+                timestamp = Instant.parse("2023-06-26T18:43:00.123456789Z"),
+            ),
+            permissionsClient = mutableSetOf(AccountPermissionClient.READ),
+        )
+    val TRANSACT_ACCOUNT: Account
+        get() = Account(
+            id = AccountId(id = "10002000300040005000"),
+            description = AccountDescription(description = "Простой аккаунт"),
+            ownerId = AccountOwnerId(id = "9deb6b8c-b797-4b34-9201-776ae1d3cf58"),
+            balance = AccountBalance(cents = 1200_00),
+            currency = AccountCurrency(code = "RUB"),
+            status = AccountStatus.ACTIVE,
+            lastTransactionTime = AccountLastTransactionTime(
+                timestamp = Instant.parse("2023-06-26T18:43:00.123456789Z"),
             ),
             transaction = Transaction(
                 amount = TransactionAmount(
                     cents = 0,
                 ),
                 counterparty = TransactionCounterparty(
-                    id = "b60cfe37-aa75-49d2-b77a-8ef34fafdd82"
+                    id = "b60cfe37-aa75-49d2-b77a-8ef34fafdd82",
                 ),
                 timestamp = TransactionTimestamp(
-                    timestamp = Instant.parse("2023-06-26T18:43:00.123456789Z")
+                    timestamp = Instant.parse("2023-06-26T18:43:00.123456789Z"),
                 ),
                 type = TransactionType.INCOME,
                 description = TransactionDescription(id = "На чай"),
             ),
             permissionsClient = mutableSetOf(AccountPermissionClient.READ),
         )
-    val SIMPLE_FROZEN_ACCOUNT = SIMPLE_ACTIVE_ACCOUNT.copy(status = AccountStatus.FROZEN)
+    val SIMPLE_FROZEN_ACCOUNT =
+        SIMPLE_ACTIVE_ACCOUNT.copy(status = AccountStatus.FROZEN)
 }
