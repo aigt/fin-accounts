@@ -1,9 +1,9 @@
-package aigt.finaccounts.app.plugins
+package aigt.finaccounts.common.app.plugins
 
 import aigt.finaccounts.api.v1.kmp.apiV1Mapper
-import aigt.finaccounts.app.routes.v1.accountTransactionV1Routing
-import aigt.finaccounts.app.routes.v1.accountV1Routing
 import aigt.finaccounts.biz.AccountProcessor
+import aigt.finaccounts.common.app.routes.v1.accountTransactionV1Routing
+import aigt.finaccounts.common.app.routes.v1.accountV1Routing
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*

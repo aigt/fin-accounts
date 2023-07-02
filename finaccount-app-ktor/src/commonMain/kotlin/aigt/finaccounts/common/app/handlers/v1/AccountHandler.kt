@@ -1,4 +1,4 @@
-package aigt.finaccounts.app.handlers.v1
+package aigt.finaccounts.common.app.handlers.v1
 
 import aigt.finaccounts.api.v1.kmp.apiV1Mapper
 import aigt.finaccounts.api.v1.kmp.models.AccountCreateRequest
@@ -55,6 +55,7 @@ suspend fun ApplicationCall.searchAccount(processor: AccountProcessor) {
     val request =
         apiV1Mapper.decodeFromString<AccountSearchRequest>(receiveText())
     val context = FinAccountsContext()
+
     context.fromTransport(request)
     processor.exec(context)
 

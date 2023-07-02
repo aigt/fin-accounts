@@ -1,14 +1,14 @@
-package aigt.finaccounts.app
+package aigt.finaccounts.common.app
 
-import aigt.finaccounts.app.plugins.configureRouting
 import aigt.finaccounts.biz.AccountProcessor
+import aigt.finaccounts.common.app.plugins.configureRouting
 import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 
 fun Application.module(processor: AccountProcessor = AccountProcessor()) {
     configureRouting(processor)
-    
+
     log.info("KMP module loaded")
 }
 

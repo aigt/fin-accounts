@@ -41,9 +41,9 @@ fun FinAccountsContext.toTransportResponse(): IResponse =
         ContextCommand.CREATE -> toTransportCreate()
         ContextCommand.READ -> toTransportRead()
         ContextCommand.UPDATE -> toTransportUpdate()
-        ContextCommand.HISTORY -> toTransportDelete()
+        ContextCommand.HISTORY -> toTransportHistory()
         ContextCommand.SEARCH -> toTransportSearch()
-        ContextCommand.TRANSACT -> toTransportOffers()
+        ContextCommand.TRANSACT -> toTransportTransact()
         ContextCommand.NONE -> throw MappingUnknownCommand(cmd)
     }
 
@@ -83,7 +83,7 @@ fun FinAccountsContext.toTransportUpdate() = AccountUpdateResponse(
         .toTransportAccount(),
 )
 
-fun FinAccountsContext.toTransportDelete() = AccountHistoryResponse(
+fun FinAccountsContext.toTransportHistory() = AccountHistoryResponse(
     requestId = this.requestId
         .asString()
         .takeIf { it.isNotBlank() },
@@ -109,7 +109,7 @@ fun FinAccountsContext.toTransportSearch() = AccountSearchResponse(
         .toTransportAccounts(),
 )
 
-fun FinAccountsContext.toTransportOffers() = AccountTransactResponse(
+fun FinAccountsContext.toTransportTransact() = AccountTransactResponse(
     requestId = this.requestId
         .asString()
         .takeIf { it.isNotBlank() },

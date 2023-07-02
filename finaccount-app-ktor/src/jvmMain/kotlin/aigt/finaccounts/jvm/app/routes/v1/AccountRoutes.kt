@@ -1,10 +1,10 @@
-package aigt.finaccounts.app.routes.v1
+package aigt.finaccounts.jvm.app.routes.v1
 
-import aigt.finaccounts.app.handlers.v1.createAccount
-import aigt.finaccounts.app.handlers.v1.readAccount
-import aigt.finaccounts.app.handlers.v1.searchAccount
-import aigt.finaccounts.app.handlers.v1.updateAccount
 import aigt.finaccounts.biz.AccountProcessor
+import aigt.finaccounts.jvm.app.handlers.v1.createAccount
+import aigt.finaccounts.jvm.app.handlers.v1.readAccount
+import aigt.finaccounts.jvm.app.handlers.v1.searchAccount
+import aigt.finaccounts.jvm.app.handlers.v1.updateAccount
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 
