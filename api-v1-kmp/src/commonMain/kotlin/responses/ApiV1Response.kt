@@ -8,5 +8,5 @@ fun apiV1ResponseSerialize(response: IResponse): String =
     apiV1Mapper.encodeToString(accountResponseSerializer, response)
 
 @Suppress("UNCHECKED_CAST")
-fun <T : Any> apiV2ResponseDeserialize(json: String): T =
+fun <T : Any> apiV1ResponseDeserialize(json: String): T =
     apiV1Mapper.decodeFromString(accountResponseSerializer, json) as T

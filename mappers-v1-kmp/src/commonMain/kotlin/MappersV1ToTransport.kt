@@ -34,6 +34,7 @@ fun FinAccountsContext.toTransportResponse(): IResponse =
     }
 
 fun FinAccountsContext.toTransportCreate() = AccountCreateResponse(
+    responseType = "create",
     requestId = this.requestId
         .asString()
         .takeIf { it.isNotBlank() },
