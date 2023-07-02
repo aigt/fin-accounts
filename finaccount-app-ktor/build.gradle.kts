@@ -74,6 +74,8 @@ kotlin {
                 implementation(ktor("websockets")) // "io.ktor:ktor-websockets:$ktorVersion"
                 implementation(ktor("auth")) // "io.ktor:ktor-auth:$ktorVersion"
 
+                implementation("ch.qos.logback:logback-classic:$logbackVersion")
+
                 implementation(project(":common"))
                 implementation(project(":biz"))
 
@@ -109,9 +111,20 @@ kotlin {
                 implementation(ktor("netty")) // "io.ktor:ktor-ktor-server-netty:$ktorVersion"
 
                 // jackson
-                implementation(ktor("jackson", "serialization")) // io.ktor:ktor-serialization-jackson
+                implementation(
+                    ktor(
+                        "jackson",
+                        "serialization"
+                    )
+                ) // io.ktor:ktor-serialization-jackson
+
                 implementation(ktor("content-negotiation")) // io.ktor:ktor-server-content-negotiation
-                implementation(ktor("kotlinx-json", "serialization")) // io.ktor:ktor-serialization-kotlinx-json
+                implementation(
+                    ktor(
+                        "kotlinx-json",
+                        "serialization"
+                    )
+                ) // io.ktor:ktor-serialization-kotlinx-json
 
                 implementation(ktor("locations"))
                 implementation(ktor("caching-headers"))
