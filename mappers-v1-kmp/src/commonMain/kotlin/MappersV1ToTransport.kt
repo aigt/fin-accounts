@@ -1,4 +1,4 @@
-package aigt.finaccounts.mappers.v1
+package aigt.finaccounts.mappers.kmp.v1
 
 import aigt.finaccounts.api.v1.kmp.models.*
 import aigt.finaccounts.common.FinAccountsContext
@@ -18,7 +18,7 @@ import aigt.finaccounts.common.models.transaction.TransactionAmount
 import aigt.finaccounts.common.models.transaction.TransactionCounterparty
 import aigt.finaccounts.common.models.transaction.TransactionDescription
 import aigt.finaccounts.common.models.transaction.TransactionTimestamp
-import aigt.finaccounts.mappers.v1.exceptions.MappingUnknownCommand
+import aigt.finaccounts.mappers.kmp.v1.exceptions.MappingUnknownCommand
 import aigt.finaccounts.common.models.account.AccountStatus as CtxAccountStatus
 import aigt.finaccounts.common.models.transaction.TransactionType as CtxTransactionType
 

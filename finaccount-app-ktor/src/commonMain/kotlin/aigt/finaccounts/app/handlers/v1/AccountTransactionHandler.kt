@@ -5,9 +5,9 @@ import aigt.finaccounts.api.v1.kmp.models.AccountHistoryRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountReadRequest
 import aigt.finaccounts.biz.AccountProcessor
 import aigt.finaccounts.common.FinAccountsContext
-import aigt.finaccounts.mappers.v1.fromTransport
-import aigt.finaccounts.mappers.v1.toTransportHistory
-import aigt.finaccounts.mappers.v1.toTransportTransact
+import aigt.finaccounts.mappers.kmp.v1.fromTransport
+import aigt.finaccounts.mappers.kmp.v1.toTransportHistory
+import aigt.finaccounts.mappers.kmp.v1.toTransportTransact
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*

@@ -7,11 +7,11 @@ import aigt.finaccounts.api.v1.kmp.models.AccountSearchRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountUpdateRequest
 import aigt.finaccounts.biz.AccountProcessor
 import aigt.finaccounts.common.FinAccountsContext
-import aigt.finaccounts.mappers.v1.fromTransport
-import aigt.finaccounts.mappers.v1.toTransportCreate
-import aigt.finaccounts.mappers.v1.toTransportRead
-import aigt.finaccounts.mappers.v1.toTransportSearch
-import aigt.finaccounts.mappers.v1.toTransportUpdate
+import aigt.finaccounts.mappers.kmp.v1.fromTransport
+import aigt.finaccounts.mappers.kmp.v1.toTransportCreate
+import aigt.finaccounts.mappers.kmp.v1.toTransportRead
+import aigt.finaccounts.mappers.kmp.v1.toTransportSearch
+import aigt.finaccounts.mappers.kmp.v1.toTransportUpdate
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*

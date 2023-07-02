@@ -1,8 +1,13 @@
-package aigt.finaccounts.mappers.v1
+package aigt.finaccounts.mappers.jvm.v1
 
-import org.junit.Test
-import aigt.finaccounts.api.v1.jackson.models.*
-import aigt.finaccounts.api.v1.jackson.models.AccountStatus as TransportAccountStatus
+import aigt.finaccounts.api.v1.jackson.models.AccountCreateObject
+import aigt.finaccounts.api.v1.jackson.models.AccountCreateRequest
+import aigt.finaccounts.api.v1.jackson.models.AccountCreateResponse
+import aigt.finaccounts.api.v1.jackson.models.AccountDebug
+import aigt.finaccounts.api.v1.jackson.models.AccountPermissions
+import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugMode
+import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugStubs
+import aigt.finaccounts.api.v1.jackson.models.IRequest
 import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.common.models.account.Account
 import aigt.finaccounts.common.models.account.AccountBalance
@@ -12,17 +17,19 @@ import aigt.finaccounts.common.models.account.AccountId
 import aigt.finaccounts.common.models.account.AccountLastTransactionTime
 import aigt.finaccounts.common.models.account.AccountOwnerId
 import aigt.finaccounts.common.models.account.AccountPermissionClient
-import aigt.finaccounts.common.models.stubcase.ContextStubCase
-import aigt.finaccounts.common.models.workmode.ContextWorkMode
 import aigt.finaccounts.common.models.account.AccountStatus
 import aigt.finaccounts.common.models.command.ContextCommand
 import aigt.finaccounts.common.models.error.ContextError
 import aigt.finaccounts.common.models.request.RequestId
 import aigt.finaccounts.common.models.state.ContextState
+import aigt.finaccounts.common.models.stubcase.ContextStubCase
+import aigt.finaccounts.common.models.workmode.ContextWorkMode
 import kotlinx.datetime.Clock.System.now
-import aigt.finaccounts.api.v1.jackson.models.AccountStatus as AccountCreateObjectStatus
+import org.junit.Test
 import java.util.*
 import kotlin.test.assertEquals
+import aigt.finaccounts.api.v1.jackson.models.AccountStatus as AccountCreateObjectStatus
+import aigt.finaccounts.api.v1.jackson.models.AccountStatus as TransportAccountStatus
 
 class MapperTest {
     @Test
@@ -40,15 +47,21 @@ class MapperTest {
                 balance = 154,
                 currency = "RUB",
                 status = AccountCreateObjectStatus.ACTIVE,
-            )
+            ),
         )
         val context = FinAccountsContext()
         context.fromTransport(request)
 
         assertEquals(ContextStubCase.SUCCESS, context.stubCase)
         assertEquals(ContextWorkMode.STUB, context.workMode)
-        assertEquals(AccountOwnerId("cd565097-4b69-490e-b167-b59128475562"), context.accountRequest.ownerId)
-        assertEquals(AccountDescription("stub"), context.accountRequest.description)
+        assertEquals(
+            AccountOwnerId("cd565097-4b69-490e-b167-b59128475562"),
+            context.accountRequest.ownerId,
+        )
+        assertEquals(
+            AccountDescription("stub"),
+            context.accountRequest.description,
+        )
         assertEquals(AccountBalance(154), context.accountRequest.balance)
         assertEquals(AccountCurrency("RUB"), context.accountRequest.currency)
         assertEquals(AccountStatus.ACTIVE, context.accountRequest.status)
@@ -79,7 +92,7 @@ class MapperTest {
                     group = "request",
                     field = "title",
                     message = "wrong title",
-                )
+                ),
             ),
             state = ContextState.RUNNING,
         )
@@ -88,12 +101,24 @@ class MapperTest {
 
         assertEquals("1234", response.requestId)
         assertEquals("desc", response.account?.description)
-        assertEquals(UUID.fromString("cd565097-4b69-490e-b167-b59128475562"), response.account?.ownerId)
+        assertEquals(
+            UUID.fromString("cd565097-4b69-490e-b167-b59128475562"),
+            response.account?.ownerId,
+        )
         assertEquals(154, response.account?.balance)
         assertEquals("RUB", response.account?.currency)
         assertEquals(TransportAccountStatus.ACTIVE, response.account?.status)
-        assertEquals(transactionTime.asString(), response.account?.lastTransaction)
-        assertEquals(setOf(AccountPermissions.READ, AccountPermissions.HISTORY), response.account?.permissions)
+        assertEquals(
+            transactionTime.asString(),
+            response.account?.lastTransaction,
+        )
+        assertEquals(
+            setOf(
+                AccountPermissions.READ,
+                AccountPermissions.HISTORY,
+            ),
+            response.account?.permissions,
+        )
         assertEquals(1, response.errors?.size)
         assertEquals("err", response.errors?.firstOrNull()?.code)
         assertEquals("request", response.errors?.firstOrNull()?.group)
