@@ -4,8 +4,11 @@ import aigt.finaccounts.api.v1.kmp.models.AccountCreateObject
 import aigt.finaccounts.api.v1.kmp.models.AccountCreateRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountCreateResponse
 import aigt.finaccounts.api.v1.kmp.models.AccountDebug
+import aigt.finaccounts.api.v1.kmp.models.AccountHistoryRequest
+import aigt.finaccounts.api.v1.kmp.models.AccountHistoryResponse
 import aigt.finaccounts.api.v1.kmp.models.AccountReadObject
 import aigt.finaccounts.api.v1.kmp.models.AccountReadRequest
+import aigt.finaccounts.api.v1.kmp.models.AccountReadResponse
 import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugMode
 import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugStubs
 import aigt.finaccounts.api.v1.kmp.models.AccountStatus
@@ -90,7 +93,7 @@ class CommonApiV1StubTest {
 
         val responseJson = response.bodyAsText()
         println(responseJson)
-        val responseObj = apiV1ResponseDeserialize<AccountUpdateResponse>(
+        val responseObj = apiV1ResponseDeserialize<AccountReadResponse>(
             json = responseJson,
         )
 
@@ -142,5 +145,34 @@ class CommonApiV1StubTest {
         )
         assertEquals("XYZ", responseObj.account?.currency)
         assertEquals(AccountStatus.FROZEN, responseObj.account?.status)*/
+    }
+
+    @Test
+    fun history() = testApplication {
+        val response = client.post("/api-kmp/v1/account/history") {
+            val requestObject = AccountHistoryRequest(
+                requestType = "history",
+                requestId = "bdd12ca6-5812-4293-b93a-1a7b80767c66",
+                debug = AccountDebug(
+                    mode = AccountRequestDebugMode.STUB,
+                    stub = AccountRequestDebugStubs.SUCCESS,
+                ),
+                account = AccountReadObject(id = "10002000300040005000"),
+            )
+
+            contentType(ContentType.Application.Json)
+            val requestJson = apiV1RequestSerialize(requestObject)
+            setBody(requestJson)
+        }
+
+        val responseJson = response.bodyAsText()
+        println(responseJson)
+        val responseObj = apiV1ResponseDeserialize<AccountHistoryResponse>(
+            json = responseJson,
+        )
+
+        assertEquals(200, response.status.value)
+        assertEquals("10002000300040005000", responseObj.account?.id)
+        assertEquals(100_00, responseObj.history?.first()?.amount)
     }
 }

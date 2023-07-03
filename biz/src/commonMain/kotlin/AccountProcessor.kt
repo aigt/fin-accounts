@@ -18,6 +18,7 @@ class AccountProcessor {
         when (ctx.command) {
             ContextCommand.HISTORY -> {
                 val accountId = uuid4().toString()
+                ctx.accountResponse = AccountStub.get()
                 ctx.historyResponse
                     .addAll(
                         AccountStub.prepareTransactionsList(
