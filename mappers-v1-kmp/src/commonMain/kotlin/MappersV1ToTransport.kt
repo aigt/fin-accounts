@@ -47,6 +47,7 @@ fun FinAccountsContext.toTransportCreate() = AccountCreateResponse(
 )
 
 fun FinAccountsContext.toTransportRead() = AccountReadResponse(
+    responseType = "read",
     requestId = this.requestId
         .asString()
         .takeIf { it.isNotBlank() },
@@ -59,6 +60,7 @@ fun FinAccountsContext.toTransportRead() = AccountReadResponse(
 )
 
 fun FinAccountsContext.toTransportUpdate() = AccountUpdateResponse(
+    responseType = "update",
     requestId = this.requestId
         .asString()
         .takeIf { it.isNotBlank() },
@@ -71,6 +73,7 @@ fun FinAccountsContext.toTransportUpdate() = AccountUpdateResponse(
 )
 
 fun FinAccountsContext.toTransportHistory() = AccountHistoryResponse(
+    responseType = "history",
     requestId = this.requestId
         .asString()
         .takeIf { it.isNotBlank() },
@@ -85,6 +88,7 @@ fun FinAccountsContext.toTransportHistory() = AccountHistoryResponse(
 )
 
 fun FinAccountsContext.toTransportSearch() = AccountSearchResponse(
+    responseType = "search",
     requestId = this.requestId
         .asString()
         .takeIf { it.isNotBlank() },
@@ -97,6 +101,7 @@ fun FinAccountsContext.toTransportSearch() = AccountSearchResponse(
 )
 
 fun FinAccountsContext.toTransportTransact() = AccountTransactResponse(
+    responseType = "transact",
     requestId = this.requestId
         .asString()
         .takeIf { it.isNotBlank() },

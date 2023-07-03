@@ -137,14 +137,11 @@ private fun AccountCreateObject.toInternal(): Account = Account(
     ownerId = this.ownerId
         ?.let { AccountOwnerId(it.toString()) }
         ?: AccountOwnerId.NONE,
-    balance = this.balance
-        ?.let { AccountBalance(it) }
-        ?: AccountBalance.NONE,
+    balance = AccountBalance.NONE,
     currency = this.currency
         ?.let { AccountCurrency(it) }
         ?: AccountCurrency.NONE,
-    status = this.status
-        .fromTransport(),
+    status = ContextAccountStatus.NONE,
 )
 
 private fun AccountTransactObject.toInternal(): Account = Account(

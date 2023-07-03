@@ -152,11 +152,11 @@ components:
       discriminator:
         propertyName: requestType
         mapping:
-          create:   '#/components/schemas/AccountCreateRequest'
-          read:     '#/components/schemas/AccountReadRequest'
-          update:   '#/components/schemas/AccountUpdateRequest'
-          search:   '#/components/schemas/AccountSearchRequest'
-          history:  '#/components/schemas/AccountHistoryRequest'
+          create: '#/components/schemas/AccountCreateRequest'
+          read: '#/components/schemas/AccountReadRequest'
+          update: '#/components/schemas/AccountUpdateRequest'
+          search: '#/components/schemas/AccountSearchRequest'
+          history: '#/components/schemas/AccountHistoryRequest'
           transact: '#/components/schemas/AccountTransactRequest'
     Error:
       type: object
@@ -195,11 +195,11 @@ components:
       discriminator:
         propertyName: responseType
         mapping:
-          create:   '#/components/schemas/AccountCreateResponse'
-          read:     '#/components/schemas/AccountReadResponse'
-          update:   '#/components/schemas/AccountUpdateResponse'
-          history:  '#/components/schemas/AccountHistoryResponse'
-          search:   '#/components/schemas/AccountSearchResponse'
+          create: '#/components/schemas/AccountCreateResponse'
+          read: '#/components/schemas/AccountReadResponse'
+          update: '#/components/schemas/AccountUpdateResponse'
+          history: '#/components/schemas/AccountHistoryResponse'
+          search: '#/components/schemas/AccountSearchResponse'
           transact: '#/components/schemas/AccountTransactResponse'
 
 
@@ -320,15 +320,9 @@ components:
         ownerId:
           required: true
           $ref: '#/components/schemas/AccountOwnerId'
-        balance:
-          required: true
-          $ref: '#/components/schemas/AccountBalance'
         currency:
           required: true
           $ref: '#/components/schemas/AccountCurrency'
-        status:
-          required: true
-          $ref: '#/components/schemas/AccountStatus'
     AccountCreateObject:
       description: Данные аккаунта для создания
       allOf:
@@ -343,6 +337,12 @@ components:
               $ref: '#/components/schemas/AccountId'
             lock:
               $ref: '#/components/schemas/AccountLock'
+            balance:
+              required: true
+              $ref: '#/components/schemas/AccountBalance'
+            status:
+              required: true
+              $ref: '#/components/schemas/AccountStatus'
     AccountReadObject:
       description: Данные аккаунта для чтения
       allOf:
@@ -386,6 +386,12 @@ components:
               uniqueItems: true
               items:
                 $ref: '#/components/schemas/AccountPermissions'
+            balance:
+              required: true
+              $ref: '#/components/schemas/AccountBalance'
+            status:
+              required: true
+              $ref: '#/components/schemas/AccountStatus'
     AccountResponseSingle:
       description: Данные одиночного аккаунта для респонса
       allOf:

@@ -41,9 +41,7 @@ class MapperTest {
             account = AccountCreateObject(
                 ownerId = "cd565097-4b69-490e-b167-b59128475562",
                 description = "stub",
-                balance = 154,
                 currency = "RUB",
-                status = AccountStatus.ACTIVE,
             ),
         )
 
@@ -60,10 +58,10 @@ class MapperTest {
             AccountDescription("stub"),
             context.accountRequest.description,
         )
-        assertEquals(AccountBalance(154), context.accountRequest.balance)
+        assertEquals(AccountBalance.NONE, context.accountRequest.balance)
         assertEquals(AccountCurrency("RUB"), context.accountRequest.currency)
         assertEquals(
-            aigt.finaccounts.common.models.account.AccountStatus.ACTIVE,
+            aigt.finaccounts.common.models.account.AccountStatus.NONE,
             context.accountRequest.status,
         )
     }

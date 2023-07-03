@@ -1,8 +1,13 @@
 package aigt.finaccounts.api.v1.kmp
 
+import aigt.finaccounts.api.v1.kmp.models.AccountCreateObject
+import aigt.finaccounts.api.v1.kmp.models.AccountCreateRequest
+import aigt.finaccounts.api.v1.kmp.models.AccountDebug
+import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugMode
+import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugStubs
+import aigt.finaccounts.api.v1.kmp.models.IRequest
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import aigt.finaccounts.api.v1.kmp.models.*
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -13,15 +18,13 @@ class RequestSerializationTest {
         requestId = "123",
         debug = AccountDebug(
             mode = AccountRequestDebugMode.STUB,
-            stub = AccountRequestDebugStubs.BAD_OWNER_ID
+            stub = AccountRequestDebugStubs.BAD_OWNER_ID,
         ),
         account = AccountCreateObject(
             ownerId = "cd565097-4b69-490e-b167-b59128475562",
             description = "stub",
-            balance = 154,
             currency = "RUB",
-            status = AccountStatus.ACTIVE,
-        )
+        ),
     )
 
     @Test
@@ -32,11 +35,12 @@ class RequestSerializationTest {
 
         println(json)
 
-        assertContains(json, Regex("\"ownerId\":\\s*\"cd565097-4b69-490e-b167-b59128475562\""))
+        assertContains(
+            json,
+            Regex("\"ownerId\":\\s*\"cd565097-4b69-490e-b167-b59128475562\""),
+        )
         assertContains(json, Regex("\"description\":\\s*\"stub\""))
-        assertContains(json, Regex("\"balance\":\\s*154"))
         assertContains(json, Regex("\"currency\":\\s*\"RUB\""))
-        assertContains(json, Regex("\"status\":\\s*\"active\""))
         assertContains(json, Regex("\"requestType\":\\s*\"create\""))
     }
 
@@ -50,12 +54,14 @@ class RequestSerializationTest {
 
         assertEquals(request, obj)
     }
+
     @Test
     fun deserializeNaked() {
         val jsonString = """
             {"requestId": "123"}
         """.trimIndent()
-        val obj = apiV1Mapper.decodeFromString<AccountCreateRequest>(jsonString)
+        val obj =
+            apiV1Mapper.decodeFromString<AccountCreateRequest>(jsonString)
 
         assertEquals("123", obj.requestId)
     }

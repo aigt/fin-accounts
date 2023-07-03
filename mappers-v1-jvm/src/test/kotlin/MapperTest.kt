@@ -28,7 +28,6 @@ import kotlinx.datetime.Clock.System.now
 import org.junit.Test
 import java.util.*
 import kotlin.test.assertEquals
-import aigt.finaccounts.api.v1.jackson.models.AccountStatus as AccountCreateObjectStatus
 import aigt.finaccounts.api.v1.jackson.models.AccountStatus as TransportAccountStatus
 
 class MapperTest {
@@ -44,9 +43,7 @@ class MapperTest {
             account = AccountCreateObject(
                 ownerId = UUID.fromString("cd565097-4b69-490e-b167-b59128475562"),
                 description = "stub",
-                balance = 154,
                 currency = "RUB",
-                status = AccountCreateObjectStatus.ACTIVE,
             ),
         )
         val context = FinAccountsContext()
@@ -62,9 +59,9 @@ class MapperTest {
             AccountDescription("stub"),
             context.accountRequest.description,
         )
-        assertEquals(AccountBalance(154), context.accountRequest.balance)
+        assertEquals(AccountBalance.NONE, context.accountRequest.balance)
         assertEquals(AccountCurrency("RUB"), context.accountRequest.currency)
-        assertEquals(AccountStatus.ACTIVE, context.accountRequest.status)
+        assertEquals(AccountStatus.NONE, context.accountRequest.status)
     }
 
     @Test
