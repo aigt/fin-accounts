@@ -8,7 +8,7 @@ import aigt.finaccounts.api.v1.jackson.models.AccountResponseObject
 import aigt.finaccounts.api.v1.jackson.models.AccountSearchResponse
 import aigt.finaccounts.api.v1.jackson.models.AccountStatus
 import aigt.finaccounts.api.v1.jackson.models.AccountTransactResponse
-import aigt.finaccounts.api.v1.jackson.models.AccountTransactionResponseObject
+import aigt.finaccounts.api.v1.jackson.models.AccountTransaction
 import aigt.finaccounts.api.v1.jackson.models.AccountUpdateResponse
 import aigt.finaccounts.api.v1.jackson.models.Error
 import aigt.finaccounts.api.v1.jackson.models.IResponse
@@ -167,20 +167,20 @@ fun CtxAccountStatus.toTransportStatus(): AccountStatus? = when (this) {
     CtxAccountStatus.NONE -> null
 }
 
-fun List<Transaction>.toTransportHistory(): List<AccountTransactionResponseObject>? =
+fun List<Transaction>.toTransportHistory(): List<AccountTransaction>? =
     this
         .map { it.toTransportTransaction() }
         .toList()
         .takeIf { it.isNotEmpty() }
 
-private fun Transaction.toTransportTransaction(): AccountTransactionResponseObject =
-    AccountTransactionResponseObject(
+private fun Transaction.toTransportTransaction(): AccountTransaction =
+    AccountTransaction(
         type = type
             .toTransportTransactionType(),
         amount = amount
             .takeIf { it != TransactionAmount.NONE }
             ?.asInt(),
-        counterpaty = counterparty
+        counterparty = counterparty
             .takeIf { it != TransactionCounterparty.NONE }
             ?.asString(),
         description = description

@@ -9,6 +9,7 @@ import aigt.finaccounts.common.models.account.AccountLastTransactionTime
 import aigt.finaccounts.common.models.account.AccountOwnerId
 import aigt.finaccounts.common.models.account.AccountPermissionClient
 import aigt.finaccounts.common.models.account.AccountStatus
+import aigt.finaccounts.common.models.accountfilter.AccountFilter
 import aigt.finaccounts.common.models.transaction.Transaction
 import aigt.finaccounts.common.models.transaction.TransactionAccountId
 import aigt.finaccounts.common.models.transaction.TransactionAmount
@@ -50,14 +51,15 @@ object AccountStub {
         listSize: Int,
         currency: AccountCurrency,
         balance: AccountBalance,
-        filter: String,
+        filter: AccountFilter,
     ) = List(listSize) { index ->
         account(
             ownerId = AccountOwnerId(id = uuid4().toString()),
             balance = balance,
             currency = currency,
             status = AccountStatus.ACTIVE,
-            filter = filter,
+            filter = filter.searchString.asString(),
+            index = index + 1,
         )
     }
 
@@ -67,8 +69,9 @@ object AccountStub {
         currency: AccountCurrency,
         status: AccountStatus,
         filter: String,
+        index: Int = 0,
     ) = Account(
-        id = AccountId(id = uuid4().toString()),
+        id = AccountId(id = "1000200030004000500${index}"),
         description = AccountDescription("desc $filter"),
         ownerId = ownerId,
         balance = balance,

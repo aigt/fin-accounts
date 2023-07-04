@@ -9,12 +9,6 @@ import aigt.finaccounts.common.models.account.AccountLastTransactionTime
 import aigt.finaccounts.common.models.account.AccountOwnerId
 import aigt.finaccounts.common.models.account.AccountPermissionClient
 import aigt.finaccounts.common.models.account.AccountStatus
-import aigt.finaccounts.common.models.transaction.Transaction
-import aigt.finaccounts.common.models.transaction.TransactionAmount
-import aigt.finaccounts.common.models.transaction.TransactionCounterparty
-import aigt.finaccounts.common.models.transaction.TransactionDescription
-import aigt.finaccounts.common.models.transaction.TransactionTimestamp
-import aigt.finaccounts.common.models.transaction.TransactionType
 import kotlinx.datetime.Instant
 
 object SimpleAccountsStub {
@@ -41,19 +35,6 @@ object SimpleAccountsStub {
             status = AccountStatus.ACTIVE,
             lastTransactionTime = AccountLastTransactionTime(
                 timestamp = Instant.parse("2023-06-26T18:43:00.123456789Z"),
-            ),
-            transaction = Transaction(
-                amount = TransactionAmount(
-                    cents = 0,
-                ),
-                counterparty = TransactionCounterparty(
-                    id = "b60cfe37-aa75-49d2-b77a-8ef34fafdd82",
-                ),
-                timestamp = TransactionTimestamp(
-                    timestamp = Instant.parse("2023-06-26T18:43:00.123456789Z"),
-                ),
-                type = TransactionType.INCOME,
-                description = TransactionDescription(id = "На чай"),
             ),
             permissionsClient = mutableSetOf(AccountPermissionClient.READ),
         )

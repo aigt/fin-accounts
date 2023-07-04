@@ -250,7 +250,7 @@ components:
         - history
         - transact
 
-    AccountBaseTransaction:
+    AccountTransaction:
       type: object
       description: Базовый объект операции совершённой по счёту
       properties:
@@ -260,21 +260,15 @@ components:
         amount:
           required: true
           $ref: '#/components/schemas/TransactionAmount'
-        counterpaty:
+        counterparty:
           required: true
           $ref: '#/components/schemas/TransactionCounterparty'
         description:
           required: true
           $ref: '#/components/schemas/TransactionDescription'
-    AccountTransactionResponseObject:
-      description: Операция совершённая по счёту
-      allOf:
-        - $ref: '#/components/schemas/AccountBaseTransaction'
-        - type: object
-          properties:
-            timestamp:
-              required: true
-              $ref: '#/components/schemas/TransactionTimestamp'
+        timestamp:
+          required: true
+          $ref: '#/components/schemas/TransactionTimestamp'
     TransactionAmount:
       type: integer
       description: Сумма операции центах (копейках)
@@ -362,8 +356,6 @@ components:
               $ref: '#/components/schemas/AccountId'
             lock:
               $ref: '#/components/schemas/AccountLock'
-            transaction:
-              $ref: '#/components/schemas/AccountBaseTransaction'
 
     AccountResponseObject:
       description: Данные аккаунта для респонса
@@ -411,7 +403,7 @@ components:
             history:
               type: array
               items:
-                $ref: '#/components/schemas/AccountTransactionResponseObject'
+                $ref: '#/components/schemas/AccountTransaction'
     AccountResponseMulti:
       description: Данные нескольких запрошенных аккаунтов для респонса
       allOf:
@@ -479,6 +471,8 @@ components:
           properties:
             account:
               $ref: '#/components/schemas/AccountTransactObject'
+            transaction:
+              $ref: '#/components/schemas/AccountTransaction'
 
     # Схемы респонсов
 

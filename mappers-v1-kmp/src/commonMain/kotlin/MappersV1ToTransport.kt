@@ -159,20 +159,20 @@ fun CtxAccountStatus.toTransportStatus(): AccountStatus? = when (this) {
     CtxAccountStatus.NONE -> null
 }
 
-fun List<Transaction>.toTransportHistory(): List<AccountTransactionResponseObject>? =
+fun List<Transaction>.toTransportHistory(): List<AccountTransaction>? =
     this
         .map { it.toTransportTransaction() }
         .toList()
         .takeIf { it.isNotEmpty() }
 
-private fun Transaction.toTransportTransaction(): AccountTransactionResponseObject =
-    AccountTransactionResponseObject(
+private fun Transaction.toTransportTransaction(): AccountTransaction =
+    AccountTransaction(
         type = type
             .toTransportTransactionType(),
         amount = amount
             .takeIf { it != TransactionAmount.NONE }
             ?.asInt(),
-        counterpaty = counterparty
+        counterparty = counterparty
             .takeIf { it != TransactionCounterparty.NONE }
             ?.asString(),
         description = description

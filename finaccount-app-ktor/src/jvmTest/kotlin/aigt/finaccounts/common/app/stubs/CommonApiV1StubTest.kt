@@ -11,10 +11,18 @@ import aigt.finaccounts.api.v1.kmp.models.AccountReadRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountReadResponse
 import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugMode
 import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugStubs
+import aigt.finaccounts.api.v1.kmp.models.AccountSearchFilter
+import aigt.finaccounts.api.v1.kmp.models.AccountSearchRequest
+import aigt.finaccounts.api.v1.kmp.models.AccountSearchResponse
 import aigt.finaccounts.api.v1.kmp.models.AccountStatus
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactObject
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactRequest
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactResponse
+import aigt.finaccounts.api.v1.kmp.models.AccountTransaction
 import aigt.finaccounts.api.v1.kmp.models.AccountUpdateObject
 import aigt.finaccounts.api.v1.kmp.models.AccountUpdateRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountUpdateResponse
+import aigt.finaccounts.api.v1.kmp.models.TransactionType
 import aigt.finaccounts.api.v1.kmp.requests.apiV1RequestSerialize
 import aigt.finaccounts.api.v1.kmp.responses.apiV1ResponseDeserialize
 import io.ktor.client.request.*
@@ -69,22 +77,6 @@ class CommonApiV1StubTest {
                 ),
                 account = AccountReadObject(id = "10002000300040005000"),
             )
-            AccountUpdateRequest(
-                requestType = "update",
-                requestId = "bdd12ca6-5812-4293-b93a-1a7b80767c66",
-                debug = AccountDebug(
-                    mode = AccountRequestDebugMode.STUB,
-                    stub = AccountRequestDebugStubs.SUCCESS,
-                ),
-                account = AccountUpdateObject(
-                    description = "created for tests account",
-                    ownerId = "b32dbe3e-8b3e-40ee-b66f-4b7913b24fea",
-                    balance = 500_00,
-                    currency = "XYZ",
-                    status = AccountStatus.FROZEN,
-                    id = "10002000300040005000",
-                ),
-            )
 
             contentType(ContentType.Application.Json)
             val requestJson = apiV1RequestSerialize(requestObject)
@@ -92,7 +84,6 @@ class CommonApiV1StubTest {
         }
 
         val responseJson = response.bodyAsText()
-        println(responseJson)
         val responseObj = apiV1ResponseDeserialize<AccountReadResponse>(
             json = responseJson,
         )
@@ -127,7 +118,6 @@ class CommonApiV1StubTest {
         }
 
         val responseJson = response.bodyAsText()
-        println(responseJson)
         val responseObj = apiV1ResponseDeserialize<AccountUpdateResponse>(
             json = responseJson,
         )
@@ -166,7 +156,6 @@ class CommonApiV1StubTest {
         }
 
         val responseJson = response.bodyAsText()
-        println(responseJson)
         val responseObj = apiV1ResponseDeserialize<AccountHistoryResponse>(
             json = responseJson,
         )
@@ -174,5 +163,83 @@ class CommonApiV1StubTest {
         assertEquals(200, response.status.value)
         assertEquals("10002000300040005000", responseObj.account?.id)
         assertEquals(100_00, responseObj.history?.first()?.amount)
+    }
+
+    @Test
+    fun search() = testApplication {
+        val response = client.post("/api-kmp/v1/account/search") {
+            val requestObject = AccountSearchRequest(
+                requestType = "search",
+                requestId = "bdd12ca6-5812-4293-b93a-1a7b80767c66",
+                debug = AccountDebug(
+                    mode = AccountRequestDebugMode.STUB,
+                    stub = AccountRequestDebugStubs.SUCCESS,
+                ),
+                accountFilter = AccountSearchFilter(
+                    searchString = null,
+                    ownerId = null,
+                ),
+            )
+
+            contentType(ContentType.Application.Json)
+            val requestJson = apiV1RequestSerialize(requestObject)
+            setBody(requestJson)
+        }
+
+        val responseJson = response.bodyAsText()
+        val responseObj = apiV1ResponseDeserialize<AccountSearchResponse>(
+            json = responseJson,
+        )
+
+        assertEquals(200, response.status.value)
+        assertEquals("10002000300040005001", responseObj.accounts?.first()?.id)
+    }
+
+    @Test
+    fun transact() = testApplication {
+        val response = client.post("/api-kmp/v1/account/transact") {
+            val requestObject = AccountTransactRequest(
+                requestType = "transact",
+                requestId = "bdd12ca6-5812-4293-b93a-1a7b80767c66",
+                debug = AccountDebug(
+                    mode = AccountRequestDebugMode.STUB,
+                    stub = AccountRequestDebugStubs.SUCCESS,
+                ),
+                account = AccountTransactObject(
+                    id = "10002000300040005000",
+                    lock = null,
+                ),
+                transaction = AccountTransaction(
+                    type = TransactionType.INCOME,
+                    amount = 100_00,
+                    counterparty = "3f275212-fe2e-4109-953c-a0b68acde6b9",
+                    description = "Add new transaction for test",
+                    timestamp = "2023-07-04T18:43:00.123456789Z",
+                ),
+            )
+
+            contentType(ContentType.Application.Json)
+            val requestJson = apiV1RequestSerialize(requestObject)
+            setBody(requestJson)
+        }
+
+        val responseJson = response.bodyAsText()
+        println("responseJson = $responseJson")
+        val responseObj = apiV1ResponseDeserialize<AccountTransactResponse>(
+            json = responseJson,
+        )
+
+        assertEquals(
+            200,
+            response.status.value,
+        )
+        assertEquals(
+            "10002000300040005000",
+            responseObj.account?.id,
+        )
+        assertEquals(
+            "3f275212-fe2e-4109-953c-a0b68acde6b9",
+            responseObj.history?.first()?.counterparty,
+        )
     }
 }

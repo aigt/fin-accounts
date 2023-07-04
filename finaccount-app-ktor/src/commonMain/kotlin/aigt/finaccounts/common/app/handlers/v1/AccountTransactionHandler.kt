@@ -2,7 +2,7 @@ package aigt.finaccounts.common.app.handlers.v1
 
 import aigt.finaccounts.api.v1.kmp.apiV1Mapper
 import aigt.finaccounts.api.v1.kmp.models.AccountHistoryRequest
-import aigt.finaccounts.api.v1.kmp.models.AccountReadRequest
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactRequest
 import aigt.finaccounts.biz.AccountProcessor
 import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.mappers.kmp.v1.fromTransport
@@ -27,7 +27,7 @@ suspend fun ApplicationCall.historyAccount(processor: AccountProcessor) {
 
 suspend fun ApplicationCall.transactAccount(processor: AccountProcessor) {
     val request =
-        apiV1Mapper.decodeFromString<AccountReadRequest>(receiveText())
+        apiV1Mapper.decodeFromString<AccountTransactRequest>(receiveText())
     val context = FinAccountsContext()
 
     context.fromTransport(request)

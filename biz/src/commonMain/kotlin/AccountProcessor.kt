@@ -1,6 +1,8 @@
 package aigt.finaccounts.biz
 
 import aigt.finaccounts.common.FinAccountsContext
+import aigt.finaccounts.common.models.account.AccountBalance
+import aigt.finaccounts.common.models.account.AccountCurrency
 import aigt.finaccounts.common.models.command.ContextCommand
 import aigt.finaccounts.common.models.transaction.TransactionAccountId
 import aigt.finaccounts.common.models.transaction.TransactionType
@@ -32,6 +34,18 @@ class AccountProcessor {
 
             ContextCommand.TRANSACT -> {
                 ctx.accountResponse = AccountStub.transact()
+                ctx.historyResponse.add(ctx.transactionRequest)
+            }
+
+            ContextCommand.SEARCH -> {
+                ctx.accountsResponse.addAll(
+                    AccountStub.prepareAccountsList(
+                        listSize = 10,
+                        currency = AccountCurrency(code = "XYZ"),
+                        balance = AccountBalance(cents = 100),
+                        filter = ctx.accountFilter,
+                    ),
+                )
             }
 
             else -> {

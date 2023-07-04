@@ -119,6 +119,7 @@ fun FinAccountsContext.fromTransport(request: AccountTransactRequest) {
     accountRequest = request.account?.toInternal() ?: Account()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
+    transactionRequest = request.transaction?.toInternal() ?: Transaction()
 }
 
 private fun AccountSearchFilter?.toInternal(): AccountFilter = AccountFilter(
@@ -147,9 +148,6 @@ private fun AccountCreateObject.toInternal(): Account = Account(
 private fun AccountTransactObject.toInternal(): Account = Account(
     id = this.id
         .toAccountId(),
-    transaction = this.transaction
-        ?.toInternal()
-        ?: Transaction(),
 )
 
 private fun AccountUpdateObject.toInternal(): Account = Account(
@@ -179,11 +177,11 @@ private fun AccountStatus?.fromTransport(): ContextAccountStatus =
         null -> ContextAccountStatus.NONE
     }
 
-private fun AccountBaseTransaction.toInternal(): Transaction = Transaction(
+private fun AccountTransaction.toInternal(): Transaction = Transaction(
     amount = this.amount
         ?.let { TransactionAmount(it) }
         ?: TransactionAmount.NONE,
-    counterparty = this.counterpaty
+    counterparty = this.counterparty
         ?.let { TransactionCounterparty(it) }
         ?: TransactionCounterparty.NONE,
     type = this.type
