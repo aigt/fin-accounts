@@ -1,43 +1,47 @@
 package aigt.finaccounts.common.app.stubs
 
-import aigt.finaccounts.api.v1.kmp.models.AccountCreateObject
-import aigt.finaccounts.api.v1.kmp.models.AccountCreateRequest
-import aigt.finaccounts.api.v1.kmp.models.AccountCreateResponse
-import aigt.finaccounts.api.v1.kmp.models.AccountDebug
-import aigt.finaccounts.api.v1.kmp.models.AccountHistoryRequest
-import aigt.finaccounts.api.v1.kmp.models.AccountHistoryResponse
-import aigt.finaccounts.api.v1.kmp.models.AccountReadObject
-import aigt.finaccounts.api.v1.kmp.models.AccountReadRequest
-import aigt.finaccounts.api.v1.kmp.models.AccountReadResponse
-import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugMode
-import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugStubs
-import aigt.finaccounts.api.v1.kmp.models.AccountSearchFilter
-import aigt.finaccounts.api.v1.kmp.models.AccountSearchRequest
-import aigt.finaccounts.api.v1.kmp.models.AccountSearchResponse
-import aigt.finaccounts.api.v1.kmp.models.AccountStatus
-import aigt.finaccounts.api.v1.kmp.models.AccountTransactObject
-import aigt.finaccounts.api.v1.kmp.models.AccountTransactRequest
-import aigt.finaccounts.api.v1.kmp.models.AccountTransactResponse
-import aigt.finaccounts.api.v1.kmp.models.AccountTransaction
-import aigt.finaccounts.api.v1.kmp.models.AccountUpdateObject
-import aigt.finaccounts.api.v1.kmp.models.AccountUpdateRequest
-import aigt.finaccounts.api.v1.kmp.models.AccountUpdateResponse
-import aigt.finaccounts.api.v1.kmp.models.TransactionType
-import aigt.finaccounts.api.v1.kmp.requests.apiV1RequestSerialize
-import aigt.finaccounts.api.v1.kmp.responses.apiV1ResponseDeserialize
+import aigt.finaccounts.api.v1.jackson.models.AccountCreateObject
+import aigt.finaccounts.api.v1.jackson.models.AccountCreateRequest
+import aigt.finaccounts.api.v1.jackson.models.AccountCreateResponse
+import aigt.finaccounts.api.v1.jackson.models.AccountDebug
+import aigt.finaccounts.api.v1.jackson.models.AccountHistoryRequest
+import aigt.finaccounts.api.v1.jackson.models.AccountHistoryResponse
+import aigt.finaccounts.api.v1.jackson.models.AccountReadObject
+import aigt.finaccounts.api.v1.jackson.models.AccountReadRequest
+import aigt.finaccounts.api.v1.jackson.models.AccountReadResponse
+import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugMode
+import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugStubs
+import aigt.finaccounts.api.v1.jackson.models.AccountSearchFilter
+import aigt.finaccounts.api.v1.jackson.models.AccountSearchRequest
+import aigt.finaccounts.api.v1.jackson.models.AccountSearchResponse
+import aigt.finaccounts.api.v1.jackson.models.AccountStatus
+import aigt.finaccounts.api.v1.jackson.models.AccountTransactObject
+import aigt.finaccounts.api.v1.jackson.models.AccountTransactRequest
+import aigt.finaccounts.api.v1.jackson.models.AccountTransactResponse
+import aigt.finaccounts.api.v1.jackson.models.AccountTransaction
+import aigt.finaccounts.api.v1.jackson.models.AccountUpdateObject
+import aigt.finaccounts.api.v1.jackson.models.AccountUpdateRequest
+import aigt.finaccounts.api.v1.jackson.models.AccountUpdateResponse
+import aigt.finaccounts.api.v1.jackson.models.TransactionType
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.SerializationFeature
+import io.ktor.client.call.*
+import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.serialization.jackson.*
 import io.ktor.server.testing.*
 import org.junit.Test
+import java.util.*
 import kotlin.test.assertEquals
 
-class CommonApiV1StubTest {
+class JvmApiV1StubTest {
 
-    val accountV1Url = "/api-kmp/v1/account"
+    val accountV1Url = "/api/v1/account"
 
     @Test
     fun create() = testApplication {
+        val client = myClient()
         val response = client.post("${accountV1Url}/create") {
             val requestObject = AccountCreateRequest(
                 requestType = "create",
@@ -48,20 +52,16 @@ class CommonApiV1StubTest {
                 ),
                 account = AccountCreateObject(
                     description = "created for tests account",
-                    ownerId = "b32dbe3e-8b3e-40ee-b66f-4b7913b24fea",
+                    ownerId = UUID.fromString("b32dbe3e-8b3e-40ee-b66f-4b7913b24fea"),
                     currency = "XYZ",
                 ),
             )
 
             contentType(ContentType.Application.Json)
-            val requestJson = apiV1RequestSerialize(requestObject)
-            setBody(requestJson)
+            setBody(requestObject)
         }
 
-        val responseJson = response.bodyAsText()
-        val responseObj = apiV1ResponseDeserialize<AccountCreateResponse>(
-            json = responseJson,
-        )
+        val responseObj = response.body<AccountCreateResponse>()
 
         assertEquals(200, response.status.value)
         assertEquals("10002000300040005000", responseObj.account?.id)
@@ -69,6 +69,7 @@ class CommonApiV1StubTest {
 
     @Test
     fun read() = testApplication {
+        val client = myClient()
         val response = client.post("${accountV1Url}/read") {
             val requestObject = AccountReadRequest(
                 requestType = "read",
@@ -81,14 +82,10 @@ class CommonApiV1StubTest {
             )
 
             contentType(ContentType.Application.Json)
-            val requestJson = apiV1RequestSerialize(requestObject)
-            setBody(requestJson)
+            setBody(requestObject)
         }
 
-        val responseJson = response.bodyAsText()
-        val responseObj = apiV1ResponseDeserialize<AccountReadResponse>(
-            json = responseJson,
-        )
+        val responseObj = response.body<AccountReadResponse>()
 
         assertEquals(200, response.status.value)
         assertEquals("10002000300040005000", responseObj.account?.id)
@@ -96,6 +93,7 @@ class CommonApiV1StubTest {
 
     @Test
     fun update() = testApplication {
+        val client = myClient()
         val response = client.post("${accountV1Url}/update") {
             val requestObject = AccountUpdateRequest(
                 requestType = "update",
@@ -106,7 +104,7 @@ class CommonApiV1StubTest {
                 ),
                 account = AccountUpdateObject(
                     description = "created for tests account",
-                    ownerId = "b32dbe3e-8b3e-40ee-b66f-4b7913b24fea",
+                    ownerId = UUID.fromString("b32dbe3e-8b3e-40ee-b66f-4b7913b24fea"),
                     balance = 500_00,
                     currency = "XYZ",
                     status = AccountStatus.FROZEN,
@@ -115,32 +113,18 @@ class CommonApiV1StubTest {
             )
 
             contentType(ContentType.Application.Json)
-            val requestJson = apiV1RequestSerialize(requestObject)
-            setBody(requestJson)
+            setBody(requestObject)
         }
 
-        val responseJson = response.bodyAsText()
-        val responseObj = apiV1ResponseDeserialize<AccountUpdateResponse>(
-            json = responseJson,
-        )
+        val responseObj = response.body<AccountUpdateResponse>()
 
         assertEquals(200, response.status.value)
         assertEquals("10002000300040005000", responseObj.account?.id)
-        /*assertEquals(
-            "b32dbe3e-8b3e-40ee-b66f-4b7913b24fea",
-            responseObj.account?.ownerId,
-        )
-        assertEquals(500_00, responseObj.account?.balance)
-        assertEquals(
-            "created for tests account",
-            responseObj.account?.description,
-        )
-        assertEquals("XYZ", responseObj.account?.currency)
-        assertEquals(AccountStatus.FROZEN, responseObj.account?.status)*/
     }
 
     @Test
     fun history() = testApplication {
+        val client = myClient()
         val response = client.post("${accountV1Url}/history") {
             val requestObject = AccountHistoryRequest(
                 requestType = "history",
@@ -153,14 +137,10 @@ class CommonApiV1StubTest {
             )
 
             contentType(ContentType.Application.Json)
-            val requestJson = apiV1RequestSerialize(requestObject)
-            setBody(requestJson)
+            setBody(requestObject)
         }
 
-        val responseJson = response.bodyAsText()
-        val responseObj = apiV1ResponseDeserialize<AccountHistoryResponse>(
-            json = responseJson,
-        )
+        val responseObj = response.body<AccountHistoryResponse>()
 
         assertEquals(200, response.status.value)
         assertEquals("10002000300040005000", responseObj.account?.id)
@@ -169,6 +149,7 @@ class CommonApiV1StubTest {
 
     @Test
     fun search() = testApplication {
+        val client = myClient()
         val response = client.post("${accountV1Url}/search") {
             val requestObject = AccountSearchRequest(
                 requestType = "search",
@@ -184,14 +165,10 @@ class CommonApiV1StubTest {
             )
 
             contentType(ContentType.Application.Json)
-            val requestJson = apiV1RequestSerialize(requestObject)
-            setBody(requestJson)
+            setBody(requestObject)
         }
 
-        val responseJson = response.bodyAsText()
-        val responseObj = apiV1ResponseDeserialize<AccountSearchResponse>(
-            json = responseJson,
-        )
+        val responseObj = response.body<AccountSearchResponse>()
 
         assertEquals(200, response.status.value)
         assertEquals("10002000300040005001", responseObj.accounts?.first()?.id)
@@ -199,6 +176,7 @@ class CommonApiV1StubTest {
 
     @Test
     fun transact() = testApplication {
+        val client = myClient()
         val response = client.post("${accountV1Url}/transact") {
             val requestObject = AccountTransactRequest(
                 requestType = "transact",
@@ -221,15 +199,10 @@ class CommonApiV1StubTest {
             )
 
             contentType(ContentType.Application.Json)
-            val requestJson = apiV1RequestSerialize(requestObject)
-            setBody(requestJson)
+            setBody(requestObject)
         }
 
-        val responseJson = response.bodyAsText()
-        println("responseJson = $responseJson")
-        val responseObj = apiV1ResponseDeserialize<AccountTransactResponse>(
-            json = responseJson,
-        )
+        val responseObj = response.body<AccountTransactResponse>()
 
         assertEquals(
             200,
@@ -243,5 +216,16 @@ class CommonApiV1StubTest {
             "3f275212-fe2e-4109-953c-a0b68acde6b9",
             responseObj.history?.first()?.counterparty,
         )
+    }
+
+    private fun ApplicationTestBuilder.myClient() = createClient {
+        install(ContentNegotiation) {
+            jackson {
+                disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+
+                enable(SerializationFeature.INDENT_OUTPUT)
+                writerWithDefaultPrettyPrinter()
+            }
+        }
     }
 }

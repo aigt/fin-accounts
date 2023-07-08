@@ -4,6 +4,7 @@ import aigt.finaccounts.api.v1.kmp.apiV1Mapper
 import aigt.finaccounts.biz.AccountProcessor
 import aigt.finaccounts.common.app.routes.v1.accountTransactionV1Routing
 import aigt.finaccounts.common.app.routes.v1.accountV1Routing
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
@@ -18,7 +19,7 @@ fun Application.configureRouting(processor: AccountProcessor) {
 
         route("api-kmp/v1") {
             install(ContentNegotiation) {
-                json(apiV1Mapper)
+                json(apiV1Mapper, ContentType.Application.Json)
             }
 
             accountV1Routing(processor)

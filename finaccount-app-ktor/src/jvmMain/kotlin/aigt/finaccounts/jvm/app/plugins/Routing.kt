@@ -2,8 +2,8 @@ package aigt.finaccounts.jvm.app.plugins
 
 import aigt.finaccounts.api.v1.jackson.apiV1Mapper
 import aigt.finaccounts.biz.AccountProcessor
-import aigt.finaccounts.common.app.routes.v1.accountTransactionV1Routing
-import aigt.finaccounts.common.app.routes.v1.accountV1Routing
+import aigt.finaccounts.jvm.app.routes.v1.accountTransactionV1Routing
+import aigt.finaccounts.jvm.app.routes.v1.accountV1Routing
 import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
 import io.ktor.server.http.content.*

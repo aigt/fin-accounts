@@ -57,6 +57,7 @@ fun FinAccountsContext.toTransportCreate() = AccountCreateResponse(
         .toTransportErrors(),
     account = accountResponse
         .toTransportAccount(),
+    responseType = "create",
 )
 
 fun FinAccountsContext.toTransportRead() = AccountReadResponse(
@@ -69,6 +70,7 @@ fun FinAccountsContext.toTransportRead() = AccountReadResponse(
         .toTransportErrors(),
     account = accountResponse
         .toTransportAccount(),
+    responseType = "read",
 )
 
 fun FinAccountsContext.toTransportUpdate() = AccountUpdateResponse(
@@ -81,6 +83,7 @@ fun FinAccountsContext.toTransportUpdate() = AccountUpdateResponse(
         .toTransportErrors(),
     account = accountResponse
         .toTransportAccount(),
+    responseType = "update",
 )
 
 fun FinAccountsContext.toTransportHistory() = AccountHistoryResponse(
@@ -95,6 +98,7 @@ fun FinAccountsContext.toTransportHistory() = AccountHistoryResponse(
         .toTransportAccount(),
     history = historyResponse
         .toTransportHistory(),
+    responseType = "history",
 )
 
 fun FinAccountsContext.toTransportSearch() = AccountSearchResponse(
@@ -107,6 +111,7 @@ fun FinAccountsContext.toTransportSearch() = AccountSearchResponse(
         .toTransportErrors(),
     accounts = accountsResponse
         .toTransportAccounts(),
+    responseType = "search",
 )
 
 fun FinAccountsContext.toTransportTransact() = AccountTransactResponse(
@@ -121,6 +126,7 @@ fun FinAccountsContext.toTransportTransact() = AccountTransactResponse(
         .toTransportAccount(),
     history = historyResponse
         .toTransportHistory(),
+    responseType = "transact",
 )
 
 fun FinAccountsContext.toTransportResponseResult(): ResponseResult =

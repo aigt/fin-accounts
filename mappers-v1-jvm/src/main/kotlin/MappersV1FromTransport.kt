@@ -7,6 +7,7 @@ import aigt.finaccounts.common.models.account.AccountBalance
 import aigt.finaccounts.common.models.account.AccountCurrency
 import aigt.finaccounts.common.models.account.AccountDescription
 import aigt.finaccounts.common.models.account.AccountId
+import aigt.finaccounts.common.models.account.AccountLastTransactionTime
 import aigt.finaccounts.common.models.account.AccountOwnerId
 import aigt.finaccounts.common.models.accountfilter.AccountFilter
 import aigt.finaccounts.common.models.accountfilter.OwnerIdFilter
@@ -143,6 +144,8 @@ private fun AccountCreateObject.toInternal(): Account = Account(
         ?.let { AccountCurrency(it) }
         ?: AccountCurrency.NONE,
     status = ContextAccountStatus.NONE,
+    id = AccountId.NONE,
+    lastTransactionTime = AccountLastTransactionTime.NONE,
 )
 
 private fun AccountTransactObject.toInternal(): Account = Account(
