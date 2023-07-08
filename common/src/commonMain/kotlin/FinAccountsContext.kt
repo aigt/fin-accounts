@@ -1,15 +1,15 @@
 package aigt.finaccounts.common
 
+import aigt.finaccounts.common.models.account.Account
+import aigt.finaccounts.common.models.accountfilter.AccountFilter
 import aigt.finaccounts.common.models.command.ContextCommand
 import aigt.finaccounts.common.models.error.ContextError
-import aigt.finaccounts.common.models.accountfilter.AccountFilter
-import aigt.finaccounts.common.models.account.Account
 import aigt.finaccounts.common.models.request.RequestId
 import aigt.finaccounts.common.models.request.RequestStartTime
 import aigt.finaccounts.common.models.state.ContextState
-import aigt.finaccounts.common.models.workmode.ContextWorkMode
 import aigt.finaccounts.common.models.stubcase.ContextStubCase
 import aigt.finaccounts.common.models.transaction.Transaction
+import aigt.finaccounts.common.models.workmode.ContextWorkMode
 
 data class FinAccountsContext(
     var command: ContextCommand = ContextCommand.NONE,
@@ -25,6 +25,7 @@ data class FinAccountsContext(
     var accountFilter: AccountFilter = AccountFilter(),
 
     var accountRequest: Account = Account(),
+    var transactionRequest: Transaction = Transaction(),
 
     var accountResponse: Account = Account(),
     var accountsResponse: MutableList<Account> = mutableListOf(),
