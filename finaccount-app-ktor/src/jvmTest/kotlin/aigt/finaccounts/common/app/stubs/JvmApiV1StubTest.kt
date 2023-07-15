@@ -4,6 +4,7 @@ import aigt.finaccounts.api.v1.jackson.models.AccountCreateObject
 import aigt.finaccounts.api.v1.jackson.models.AccountCreateRequest
 import aigt.finaccounts.api.v1.jackson.models.AccountCreateResponse
 import aigt.finaccounts.api.v1.jackson.models.AccountDebug
+import aigt.finaccounts.api.v1.jackson.models.AccountHistoryObject
 import aigt.finaccounts.api.v1.jackson.models.AccountHistoryRequest
 import aigt.finaccounts.api.v1.jackson.models.AccountHistoryResponse
 import aigt.finaccounts.api.v1.jackson.models.AccountReadObject
@@ -133,7 +134,7 @@ class JvmApiV1StubTest {
                     mode = AccountRequestDebugMode.STUB,
                     stub = AccountRequestDebugStubs.SUCCESS,
                 ),
-                account = AccountReadObject(id = "10002000300040005000"),
+                account = AccountHistoryObject(id = "10002000300040005000"),
             )
 
             contentType(ContentType.Application.Json)

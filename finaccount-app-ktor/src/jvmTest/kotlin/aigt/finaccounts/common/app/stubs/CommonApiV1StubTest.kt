@@ -4,6 +4,7 @@ import aigt.finaccounts.api.v1.kmp.models.AccountCreateObject
 import aigt.finaccounts.api.v1.kmp.models.AccountCreateRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountCreateResponse
 import aigt.finaccounts.api.v1.kmp.models.AccountDebug
+import aigt.finaccounts.api.v1.kmp.models.AccountHistoryObject
 import aigt.finaccounts.api.v1.kmp.models.AccountHistoryRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountHistoryResponse
 import aigt.finaccounts.api.v1.kmp.models.AccountReadObject
@@ -149,7 +150,7 @@ class CommonApiV1StubTest {
                     mode = AccountRequestDebugMode.STUB,
                     stub = AccountRequestDebugStubs.SUCCESS,
                 ),
-                account = AccountReadObject(id = "10002000300040005000"),
+                account = AccountHistoryObject(id = "10002000300040005000"),
             )
 
             contentType(ContentType.Application.Json)
