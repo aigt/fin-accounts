@@ -1,13 +1,14 @@
-package aigt.finaccounts.api.v1.jackson.request
+package aigt.finaccounts.api.v1.kmp.request
 
-import aigt.finaccounts.api.v1.jackson.apiV1Mapper
-import aigt.finaccounts.api.v1.jackson.apiV1RequestDeserialize
-import aigt.finaccounts.api.v1.jackson.apiV1RequestSerialize
-import aigt.finaccounts.api.v1.jackson.models.AccountDebug
-import aigt.finaccounts.api.v1.jackson.models.AccountHistoryObject
-import aigt.finaccounts.api.v1.jackson.models.AccountHistoryRequest
-import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugMode
-import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugStubs
+import aigt.finaccounts.api.v1.kmp.apiV1Mapper
+import aigt.finaccounts.api.v1.kmp.models.AccountDebug
+import aigt.finaccounts.api.v1.kmp.models.AccountHistoryObject
+import aigt.finaccounts.api.v1.kmp.models.AccountHistoryRequest
+import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugMode
+import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugStubs
+import aigt.finaccounts.api.v1.kmp.requests.apiV1RequestDeserialize
+import aigt.finaccounts.api.v1.kmp.requests.apiV1RequestSerialize
+import kotlinx.serialization.decodeFromString
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -70,10 +71,8 @@ class AccountHistoryRequestSerializationTest {
             }
         """.trimIndent()
         val obj =
-            apiV1Mapper.readValue(
-                jsonString,
-                AccountHistoryRequest::class.java,
-            )
+            apiV1Mapper.decodeFromString<AccountHistoryRequest>(jsonString)
+        //  as AccountHistoryRequest
 
         assertEquals("75038a32-9d63-4394-968b-d33aaedc057e", obj.requestId)
     }

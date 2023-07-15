@@ -41,14 +41,13 @@ class AccountReadRequestSerializationTest {
             Regex("\"id\":\\s*\"26c45c31-857f-4d5d-bf59-890817c9320b\""),
         )
 
-
         // Баг Jackson - дублирует дискриминатор
-        /*assertContains(
+        assertContains(
             json,
             Regex("^(?![\\S\\s]*?(\"requestType\":\\s*null)[\\S\\s]*+\$)"),
             "Request Type не должен быть null",
         )
-        assertContains(
+        /*assertContains(
             json,
             Regex("/^(?![\\S\\s]*?(\"requestType\":[\\S\\s]*){2}+[\\S\\s]*+\$)"),
             "Должен отсутствовать повторяющийся дискриминатор",
@@ -57,7 +56,7 @@ class AccountReadRequestSerializationTest {
 
     @Test
     fun deserialize() {
-        val json = apiV1Mapper.writeValueAsString(request)
+        val json = apiV1RequestSerialize(request)
         val obj = apiV1RequestDeserialize<AccountReadRequest>(json)
 
         assertEquals(request, obj)

@@ -22,11 +22,7 @@ abstract class AccountCreateRequestMixIn
 val apiV1Mapper: JsonMapper = JsonMapper.builder().run {
     configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     enable(MapperFeature.USE_BASE_TYPE_AS_DEFAULT_IMPL)
-    /*visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
-    addMixIn(
-        AccountCreateRequest::class.java,
-        AccountCreateRequestMixIn::class.java,
-    )*/
+
     build()
 }
 
