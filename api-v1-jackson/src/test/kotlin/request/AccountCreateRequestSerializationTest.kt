@@ -55,12 +55,12 @@ class AccountCreateRequestSerializationTest {
         )
 
         // Баг Jackson - дублирует дискриминатор
-        /*assertContains(
+        assertContains(
             json,
             Regex("^(?![\\S\\s]*?(\"requestType\":\\s*null)[\\S\\s]*+\$)"),
             "Request Type не должен быть null",
         )
-        assertContains(
+        /*assertContains(
             json,
             Regex("/^(?![\\S\\s]*?(\"requestType\":[\\S\\s]*){2}+[\\S\\s]*+\$)"),
             "Должен отсутствовать повторяющийся дискриминатор",
@@ -69,7 +69,7 @@ class AccountCreateRequestSerializationTest {
 
     @Test
     fun deserialize() {
-        val json = apiV1Mapper.writeValueAsString(request)
+        val json = apiV1RequestSerialize(request)
         val obj = apiV1RequestDeserialize<AccountCreateRequest>(json)
 
         assertEquals(request, obj)

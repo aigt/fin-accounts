@@ -1,38 +1,36 @@
-package aigt.finaccounts.api.v1.jackson.request
+package aigt.finaccounts.api.v1.kmp.request
 
-import aigt.finaccounts.api.v1.jackson.apiV1Mapper
-import aigt.finaccounts.api.v1.jackson.apiV1RequestDeserialize
-import aigt.finaccounts.api.v1.jackson.apiV1RequestSerialize
-import aigt.finaccounts.api.v1.jackson.models.AccountDebug
-import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugMode
-import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugStubs
-import aigt.finaccounts.api.v1.jackson.models.AccountTransactObject
-import aigt.finaccounts.api.v1.jackson.models.AccountTransactRequest
-import aigt.finaccounts.api.v1.jackson.models.AccountTransaction
-import aigt.finaccounts.api.v1.jackson.models.TransactionType
+import aigt.finaccounts.api.v1.kmp.apiV1Mapper
+import aigt.finaccounts.api.v1.kmp.models.AccountDebug
+import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugMode
+import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugStubs
+import aigt.finaccounts.api.v1.kmp.models.AccountStatus
+import aigt.finaccounts.api.v1.kmp.models.AccountUpdateObject
+import aigt.finaccounts.api.v1.kmp.models.AccountUpdateRequest
+import aigt.finaccounts.api.v1.kmp.requests.apiV1RequestDeserialize
+import aigt.finaccounts.api.v1.kmp.requests.apiV1RequestSerialize
+import kotlinx.serialization.decodeFromString
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 
-class AccountTransactRequestSerializationTest {
+class AccountUpdateRequestSerializationTest {
 
-    private val request = AccountTransactRequest(
-        requestType = "transact",
+    private val request = AccountUpdateRequest(
+        requestType = "update",
         requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
         debug = AccountDebug(
             mode = AccountRequestDebugMode.STUB,
             stub = AccountRequestDebugStubs.BAD_OWNER_ID,
         ),
-        account = AccountTransactObject(
+        account = AccountUpdateObject(
+            description = "stub description",
+            ownerId = "cd565097-4b69-490e-b167-b59128475562",
+            currency = "RUB",
             id = "26c45c31-857f-4d5d-bf59-890817c9320b",
             lock = "a3c0cffb-97d3-4e9d-898d-10eb10470501",
-        ),
-        transaction = AccountTransaction(
-            type = TransactionType.WITHDRAW,
-            amount = 1005_00,
-            counterparty = "11102220333044405550",
-            description = "stub transaction description",
-            timestamp = "2023-07-04T18:43:00.123456789Z",
+            balance = 1005_00,
+            status = AccountStatus.FROZEN,
         ),
     )
 
@@ -42,11 +40,23 @@ class AccountTransactRequestSerializationTest {
 
         assertContains(
             json,
-            Regex("\"requestType\":\\s*\"transact\""),
+            Regex("\"requestType\":\\s*\"update\""),
         )
         assertContains(
             json,
             Regex("\"requestId\":\\s*\"75038a32-9d63-4394-968b-d33aaedc057e\""),
+        )
+        assertContains(
+            json,
+            Regex("\"description\":\\s*\"stub description\""),
+        )
+        assertContains(
+            json,
+            Regex("\"ownerId\":\\s*\"cd565097-4b69-490e-b167-b59128475562\""),
+        )
+        assertContains(
+            json,
+            Regex("\"currency\":\\s*\"RUB\""),
         )
         assertContains(
             json,
@@ -58,23 +68,11 @@ class AccountTransactRequestSerializationTest {
         )
         assertContains(
             json,
-            Regex("\"type\":\\s*\"withdraw\""),
+            Regex("\"balance\":\\s*100500"),
         )
         assertContains(
             json,
-            Regex("\"amount\":\\s*100500"),
-        )
-        assertContains(
-            json,
-            Regex("\"counterparty\":\\s*\"11102220333044405550\""),
-        )
-        assertContains(
-            json,
-            Regex("\"description\":\\s*\"stub transaction description\""),
-        )
-        assertContains(
-            json,
-            Regex("\"timestamp\":\\s*\"2023-07-04T18:43:00.123456789Z\""),
+            Regex("\"status\":\\s*\"frozen\""),
         )
 
 
@@ -94,7 +92,7 @@ class AccountTransactRequestSerializationTest {
     @Test
     fun deserialize() {
         val json = apiV1RequestSerialize(request)
-        val obj = apiV1RequestDeserialize<AccountTransactRequest>(json)
+        val obj = apiV1RequestDeserialize<AccountUpdateRequest>(json)
 
         assertEquals(request, obj)
     }
@@ -107,10 +105,8 @@ class AccountTransactRequestSerializationTest {
             }
         """.trimIndent()
         val obj =
-            apiV1Mapper.readValue(
-                jsonString,
-                AccountTransactRequest::class.java,
-            )
+            apiV1Mapper.decodeFromString<AccountUpdateRequest>(jsonString)
+        //  as AccountUpdateRequest
 
         assertEquals("75038a32-9d63-4394-968b-d33aaedc057e", obj.requestId)
     }

@@ -1,34 +1,35 @@
-package aigt.finaccounts.api.v1.jackson.request
+package aigt.finaccounts.api.v1.jackson.response
 
-import aigt.finaccounts.api.v1.jackson.apiV1Mapper
-import aigt.finaccounts.api.v1.jackson.apiV1RequestDeserialize
-import aigt.finaccounts.api.v1.jackson.apiV1RequestSerialize
-import aigt.finaccounts.api.v1.jackson.models.AccountDebug
-import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugMode
-import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugStubs
+import aigt.finaccounts.api.v1.jackson.apiV1ResponseDeserialize
+import aigt.finaccounts.api.v1.jackson.apiV1ResponseSerialize
+import aigt.finaccounts.api.v1.jackson.models.AccountCreateResponse
+import aigt.finaccounts.api.v1.jackson.models.AccountPermissions
+import aigt.finaccounts.api.v1.jackson.models.AccountResponseObject
 import aigt.finaccounts.api.v1.jackson.models.AccountStatus
-import aigt.finaccounts.api.v1.jackson.models.AccountUpdateObject
-import aigt.finaccounts.api.v1.jackson.models.AccountUpdateRequest
+import aigt.finaccounts.api.v1.jackson.models.ResponseResult
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 
-class AccountUpdateRequestSerializationTest {
+class AccountCreateResponseSerializationTest {
 
-    private val request = AccountUpdateRequest(
-        requestType = "update",
+    private val response = AccountCreateResponse(
+        responseType = "create",
         requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
-        debug = AccountDebug(
-            mode = AccountRequestDebugMode.STUB,
-            stub = AccountRequestDebugStubs.BAD_OWNER_ID,
-        ),
-        account = AccountUpdateObject(
+        result = ResponseResult.SUCCESS,
+        errors = listOf(),
+        account = AccountResponseObject(
             description = "stub description",
             ownerId = UUID.fromString("cd565097-4b69-490e-b167-b59128475562"),
             currency = "RUB",
             id = "26c45c31-857f-4d5d-bf59-890817c9320b",
             lock = "a3c0cffb-97d3-4e9d-898d-10eb10470501",
+            lastTransaction = "2023-07-04T18:43:00.123456789Z",
+            permissions = setOf(
+                AccountPermissions.UPDATE,
+                AccountPermissions.READ,
+            ),
             balance = 1005_00,
             status = AccountStatus.FROZEN,
         ),
@@ -36,15 +37,20 @@ class AccountUpdateRequestSerializationTest {
 
     @Test
     fun serialize() {
-        val json = apiV1RequestSerialize(request)
+        val json = apiV1ResponseSerialize(response)
+
 
         assertContains(
             json,
-            Regex("\"requestType\":\\s*\"update\""),
+            Regex("\"responseType\":\\s*\"create\""),
         )
         assertContains(
             json,
             Regex("\"requestId\":\\s*\"75038a32-9d63-4394-968b-d33aaedc057e\""),
+        )
+        assertContains(
+            json,
+            Regex("\"result\":\\s*\"success\""),
         )
         assertContains(
             json,
@@ -68,6 +74,14 @@ class AccountUpdateRequestSerializationTest {
         )
         assertContains(
             json,
+            Regex("\"lastTransaction\":\\s*\"2023-07-04T18:43:00.123456789Z\""),
+        )
+        assertContains(
+            json,
+            Regex("\"permissions\":\\s*\\[\"update\",\"read\"\\]"),
+        )
+        assertContains(
+            json,
             Regex("\"balance\":\\s*100500"),
         )
         assertContains(
@@ -79,34 +93,21 @@ class AccountUpdateRequestSerializationTest {
         // Баг Jackson - дублирует дискриминатор
         assertContains(
             json,
-            Regex("^(?![\\S\\s]*?(\"requestType\":\\s*null)[\\S\\s]*+\$)"),
+            Regex("^(?![\\S\\s]*?(\"responseType\":\\s*null)[\\S\\s]*+\$)"),
             "Request Type не должен быть null",
         )
         /*assertContains(
             json,
-            Regex("/^(?![\\S\\s]*?(\"requestType\":[\\S\\s]*){2}+[\\S\\s]*+\$)"),
+            Regex("/^(?![\\S\\s]*?(\"responseType\":[\\S\\s]*){2}+[\\S\\s]*+\$)"),
             "Должен отсутствовать повторяющийся дискриминатор",
         )*/
     }
 
     @Test
     fun deserialize() {
-        val json = apiV1RequestSerialize(request)
-        val obj = apiV1RequestDeserialize<AccountUpdateRequest>(json)
+        val json = apiV1ResponseSerialize(response)
+        val obj = apiV1ResponseDeserialize<AccountCreateResponse>(json)
 
-        assertEquals(request, obj)
-    }
-
-    @Test
-    fun deserializeNaked() {
-        val jsonString = """
-            {
-                "requestId":"75038a32-9d63-4394-968b-d33aaedc057e"
-            }
-        """.trimIndent()
-        val obj =
-            apiV1Mapper.readValue(jsonString, AccountUpdateRequest::class.java)
-
-        assertEquals("75038a32-9d63-4394-968b-d33aaedc057e", obj.requestId)
+        assertEquals(response, obj)
     }
 }

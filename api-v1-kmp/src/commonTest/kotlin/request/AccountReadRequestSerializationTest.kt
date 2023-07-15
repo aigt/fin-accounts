@@ -1,27 +1,28 @@
-package aigt.finaccounts.api.v1.jackson.request
+package aigt.finaccounts.api.v1.kmp.request
 
-import aigt.finaccounts.api.v1.jackson.apiV1Mapper
-import aigt.finaccounts.api.v1.jackson.apiV1RequestDeserialize
-import aigt.finaccounts.api.v1.jackson.apiV1RequestSerialize
-import aigt.finaccounts.api.v1.jackson.models.AccountDebug
-import aigt.finaccounts.api.v1.jackson.models.AccountHistoryObject
-import aigt.finaccounts.api.v1.jackson.models.AccountHistoryRequest
-import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugMode
-import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugStubs
+import aigt.finaccounts.api.v1.kmp.apiV1Mapper
+import aigt.finaccounts.api.v1.kmp.models.AccountDebug
+import aigt.finaccounts.api.v1.kmp.models.AccountReadObject
+import aigt.finaccounts.api.v1.kmp.models.AccountReadRequest
+import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugMode
+import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugStubs
+import aigt.finaccounts.api.v1.kmp.requests.apiV1RequestDeserialize
+import aigt.finaccounts.api.v1.kmp.requests.apiV1RequestSerialize
+import kotlinx.serialization.decodeFromString
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 
-class AccountHistoryRequestSerializationTest {
+class AccountReadRequestSerializationTest {
 
-    private val request = AccountHistoryRequest(
-        requestType = "history",
+    private val request = AccountReadRequest(
+        requestType = "read",
         requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
         debug = AccountDebug(
             mode = AccountRequestDebugMode.STUB,
             stub = AccountRequestDebugStubs.BAD_OWNER_ID,
         ),
-        account = AccountHistoryObject(id = "26c45c31-857f-4d5d-bf59-890817c9320b"),
+        account = AccountReadObject(id = "26c45c31-857f-4d5d-bf59-890817c9320b"),
     )
 
     @Test
@@ -30,7 +31,7 @@ class AccountHistoryRequestSerializationTest {
 
         assertContains(
             json,
-            Regex("\"requestType\":\\s*\"history\""),
+            Regex("\"requestType\":\\s*\"read\""),
         )
         assertContains(
             json,
@@ -57,7 +58,7 @@ class AccountHistoryRequestSerializationTest {
     @Test
     fun deserialize() {
         val json = apiV1RequestSerialize(request)
-        val obj = apiV1RequestDeserialize<AccountHistoryRequest>(json)
+        val obj = apiV1RequestDeserialize<AccountReadRequest>(json)
 
         assertEquals(request, obj)
     }
@@ -70,10 +71,8 @@ class AccountHistoryRequestSerializationTest {
             }
         """.trimIndent()
         val obj =
-            apiV1Mapper.readValue(
-                jsonString,
-                AccountHistoryRequest::class.java,
-            )
+            apiV1Mapper.decodeFromString<AccountReadRequest>(jsonString)
+        //  as AccountReadRequest
 
         assertEquals("75038a32-9d63-4394-968b-d33aaedc057e", obj.requestId)
     }
