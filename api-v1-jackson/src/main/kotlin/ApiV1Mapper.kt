@@ -1,15 +1,32 @@
 package aigt.finaccounts.api.v1.jackson
 
+import aigt.finaccounts.api.v1.jackson.models.IRequest
+import aigt.finaccounts.api.v1.jackson.models.IResponse
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.json.JsonMapper
-import aigt.finaccounts.api.v1.jackson.models.IRequest
-import aigt.finaccounts.api.v1.jackson.models.IResponse
+
+
+// mixin for BaseType to define @JsonTypeInfo
+// this can be in a completely different package / module
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "requestType",
+    visible = true,
+)
+abstract class AccountCreateRequestMixIn
+
 
 val apiV1Mapper: JsonMapper = JsonMapper.builder().run {
     configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     enable(MapperFeature.USE_BASE_TYPE_AS_DEFAULT_IMPL)
-//    setSerializationInclusion(JsonInclude.Include.NON_NULL)
+    /*visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
+    addMixIn(
+        AccountCreateRequest::class.java,
+        AccountCreateRequestMixIn::class.java,
+    )*/
     build()
 }
 

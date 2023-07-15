@@ -1,8 +1,12 @@
 package aigt.finaccounts.api.v1.kmp
 
+import aigt.finaccounts.api.v1.kmp.models.AccountCreateResponse
+import aigt.finaccounts.api.v1.kmp.models.AccountPermissions
+import aigt.finaccounts.api.v1.kmp.models.AccountResponseObject
+import aigt.finaccounts.api.v1.kmp.models.AccountStatus
+import aigt.finaccounts.api.v1.kmp.models.IResponse
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import aigt.finaccounts.api.v1.kmp.models.*
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -20,8 +24,11 @@ class ResponseSerializationTest {
             id = "94852616476317587179",
             lock = "234",
             lastTransaction = "2023-06-12T16:55:08.219Z",
-            permissions = setOf(AccountPermissions.UPDATE, AccountPermissions.READ),
-        )
+            permissions = setOf(
+                AccountPermissions.UPDATE,
+                AccountPermissions.READ,
+            ),
+        ),
     )
 
     @Test
@@ -32,15 +39,24 @@ class ResponseSerializationTest {
 
         println(json)
 
-        assertContains(json, Regex("\"ownerId\":\\s*\"cd565097-4b69-490e-b167-b59128475562\""))
+        assertContains(
+            json,
+            Regex("\"ownerId\":\\s*\"cd565097-4b69-490e-b167-b59128475562\""),
+        )
         assertContains(json, Regex("\"description\":\\s*\"stub\""))
         assertContains(json, Regex("\"balance\":\\s*154"))
         assertContains(json, Regex("\"currency\":\\s*\"RUB\""))
         assertContains(json, Regex("\"status\":\\s*\"active\""))
         assertContains(json, Regex("\"id\":\\s*\"94852616476317587179\""))
         assertContains(json, Regex("\"lock\":\\s*\"234\""))
-        assertContains(json, Regex("\"lastTransaction\":\\s*\"2023-06-12T16:55:08.219Z\""))
-        assertContains(json, Regex("\"permissions\":\\s*\\[\"update\",\"read\"\\]"))
+        assertContains(
+            json,
+            Regex("\"lastTransaction\":\\s*\"2023-06-12T16:55:08.219Z\""),
+        )
+        assertContains(
+            json,
+            Regex("\"permissions\":\\s*\\[\"update\",\"read\"\\]"),
+        )
         assertContains(json, Regex("\"responseType\":\\s*\"create\""))
     }
 

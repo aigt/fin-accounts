@@ -152,11 +152,11 @@ components:
       discriminator:
         propertyName: requestType
         mapping:
-          create:   '#/components/schemas/AccountCreateRequest'
-          read:     '#/components/schemas/AccountReadRequest'
-          update:   '#/components/schemas/AccountUpdateRequest'
-          search:   '#/components/schemas/AccountSearchRequest'
-          history:  '#/components/schemas/AccountHistoryRequest'
+          create: '#/components/schemas/AccountCreateRequest'
+          read: '#/components/schemas/AccountReadRequest'
+          update: '#/components/schemas/AccountUpdateRequest'
+          search: '#/components/schemas/AccountSearchRequest'
+          history: '#/components/schemas/AccountHistoryRequest'
           transact: '#/components/schemas/AccountTransactRequest'
     Error:
       type: object
@@ -195,11 +195,11 @@ components:
       discriminator:
         propertyName: responseType
         mapping:
-          create:   '#/components/schemas/AccountCreateResponse'
-          read:     '#/components/schemas/AccountReadResponse'
-          update:   '#/components/schemas/AccountUpdateResponse'
-          history:  '#/components/schemas/AccountHistoryResponse'
-          search:   '#/components/schemas/AccountSearchResponse'
+          create: '#/components/schemas/AccountCreateResponse'
+          read: '#/components/schemas/AccountReadResponse'
+          update: '#/components/schemas/AccountUpdateResponse'
+          history: '#/components/schemas/AccountHistoryResponse'
+          search: '#/components/schemas/AccountSearchResponse'
           transact: '#/components/schemas/AccountTransactResponse'
 
 
@@ -250,7 +250,7 @@ components:
         - history
         - transact
 
-    AccountBaseTransaction:
+    AccountTransaction:
       type: object
       description: Базовый объект операции совершённой по счёту
       properties:
@@ -260,21 +260,15 @@ components:
         amount:
           required: true
           $ref: '#/components/schemas/TransactionAmount'
-        counterpaty:
+        counterparty:
           required: true
           $ref: '#/components/schemas/TransactionCounterparty'
         description:
           required: true
           $ref: '#/components/schemas/TransactionDescription'
-    AccountTransactionResponseObject:
-      description: Операция совершённая по счёту
-      allOf:
-        - $ref: '#/components/schemas/AccountBaseTransaction'
-        - type: object
-          properties:
-            timestamp:
-              required: true
-              $ref: '#/components/schemas/TransactionTimestamp'
+        timestamp:
+          required: true
+          $ref: '#/components/schemas/TransactionTimestamp'
     TransactionAmount:
       type: integer
       description: Сумма операции центах (копейках)
@@ -320,15 +314,9 @@ components:
         ownerId:
           required: true
           $ref: '#/components/schemas/AccountOwnerId'
-        balance:
-          required: true
-          $ref: '#/components/schemas/AccountBalance'
         currency:
           required: true
           $ref: '#/components/schemas/AccountCurrency'
-        status:
-          required: true
-          $ref: '#/components/schemas/AccountStatus'
     AccountCreateObject:
       description: Данные аккаунта для создания
       allOf:
@@ -343,6 +331,12 @@ components:
               $ref: '#/components/schemas/AccountId'
             lock:
               $ref: '#/components/schemas/AccountLock'
+            balance:
+              required: true
+              $ref: '#/components/schemas/AccountBalance'
+            status:
+              required: true
+              $ref: '#/components/schemas/AccountStatus'
     AccountReadObject:
       description: Данные аккаунта для чтения
       allOf:
@@ -352,7 +346,8 @@ components:
               $ref: '#/components/schemas/AccountId'
     AccountHistoryObject:
       description: Данные истории операций аккаунта
-      $ref: '#/components/schemas/AccountReadObject'
+      allOf:
+        - $ref: '#/components/schemas/AccountReadObject'
     AccountTransactObject:
       description: Данные аккаунта для добавления операции по нему
       allOf:
@@ -362,8 +357,6 @@ components:
               $ref: '#/components/schemas/AccountId'
             lock:
               $ref: '#/components/schemas/AccountLock'
-            transaction:
-              $ref: '#/components/schemas/AccountBaseTransaction'
 
     AccountResponseObject:
       description: Данные аккаунта для респонса
@@ -386,6 +379,12 @@ components:
               uniqueItems: true
               items:
                 $ref: '#/components/schemas/AccountPermissions'
+            balance:
+              required: true
+              $ref: '#/components/schemas/AccountBalance'
+            status:
+              required: true
+              $ref: '#/components/schemas/AccountStatus'
     AccountResponseSingle:
       description: Данные одиночного аккаунта для респонса
       allOf:
@@ -405,7 +404,7 @@ components:
             history:
               type: array
               items:
-                $ref: '#/components/schemas/AccountTransactionResponseObject'
+                $ref: '#/components/schemas/AccountTransaction'
     AccountResponseMulti:
       description: Данные нескольких запрошенных аккаунтов для респонса
       allOf:
@@ -473,6 +472,8 @@ components:
           properties:
             account:
               $ref: '#/components/schemas/AccountTransactObject'
+            transaction:
+              $ref: '#/components/schemas/AccountTransaction'
 
     # Схемы респонсов
 
