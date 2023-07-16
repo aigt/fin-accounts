@@ -28,13 +28,20 @@
 # Структура проекта
 
 1. [acceptance](acceptance) - Приемочные тесты
-2. [api-v1-jackson](api-v1-jackson) - Транспортные модели для сериализации с помощью jackson
-3. [api-v1-kmp](api-v1-kmp) - Транспортные модели для сериализации для использования в kotlin multiplatform
+2. [api-v1-jackson](api-v1-jackson) - Транспортные модели для сериализации с
+   помощью jackson
+3. [api-v1-kmp](api-v1-kmp) - Транспортные модели для сериализации для
+   использования в kotlin multiplatform
 4. [biz](biz) - Бизнес-логиа
-5. [common](common) - Общие объекты используемые всеми остальными модулями (с поддержкой kotlin multiplatform)
+5. [common](common) - Общие объекты используемые всеми остальными модулями (с
+   поддержкой kotlin multiplatform)
 6. [finaccount-app-ktor](finaccount-app-ktor) - Приложение
-7. [mappers-v1-jvm](mappers-v1-jvm) - Мапперы транспортных моделей во внутренние для jvm рантайма
-8. [mappers-v1-kmp](mappers-v1-kmp) - Мапперы транспортных моделей во внутренние с поддержкой kotlin multiplatform
+6. [finaccount-app-kafka](finaccount-app-kafka) - Приложение с асинхронным
+   транспортным протоколом использующее kafka
+7. [mappers-v1-jvm](mappers-v1-jvm) - Мапперы транспортных моделей во
+   внутренние для jvm рантайма
+8. [mappers-v1-kmp](mappers-v1-kmp) - Мапперы транспортных моделей во
+   внутренние с поддержкой kotlin multiplatform
 9. [deploy](deploy) - Инфраструктура развёртывания приложения
 10. [docs](docs) - Документация
 11. [specs](specs) - OpenAPI спецификации с описанием API
