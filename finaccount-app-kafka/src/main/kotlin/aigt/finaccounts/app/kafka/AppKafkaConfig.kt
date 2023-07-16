@@ -5,8 +5,8 @@ class AppKafkaConfig(
     val kafkaGroupId: String = KAFKA_GROUP_ID,
     val kafkaTopicInV1Jvm: String = KAFKA_TOPIC_IN_V1_JVM,
     val kafkaTopicOutV1Jvm: String = KAFKA_TOPIC_OUT_V1_JVM,
-    val kafkaTopicInV2Kmp: String = KAFKA_TOPIC_IN_V1_KMP,
-    val kafkaTopicOutV2Kmp: String = KAFKA_TOPIC_OUT_V1_KMP,
+    val kafkaTopicInV1Kmp: String = KAFKA_TOPIC_IN_V1_KMP,
+    val kafkaTopicOutV1Kmp: String = KAFKA_TOPIC_OUT_V1_KMP,
 ) {
     companion object {
         const val KAFKA_HOST_VAR = "KAFKA_HOSTS"
