@@ -3,7 +3,6 @@ package aigt.finaccounts.blackbox.test
 import aigt.finaccounts.blackbox.docker.WiremockDockerCompose
 import aigt.finaccounts.blackbox.fixture.BaseFunSpec
 import aigt.finaccounts.blackbox.fixture.docker.DockerCompose
-import fixture.client.RestClient
 import io.kotest.core.annotation.Ignored
 
 @Ignored
