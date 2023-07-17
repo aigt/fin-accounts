@@ -2,10 +2,6 @@ plugins {
     kotlin("jvm")
 }
 
-sourceSets {
-    val test by getting
-}
-
 dependencies {
     val testcontainersVersion: String by project
     val kotestVersion: String by project
@@ -13,8 +9,12 @@ dependencies {
     val coroutinesVersion: String by project
     val logbackVersion: String by project
     val kotlinLoggingJvmVersion: String by project
+    val kafkaVersion: String by project
 
     testImplementation(kotlin("stdlib"))
+
+    testImplementation(":api-v1-jackson")
+    testImplementation(":api-v1-kmp")
 
     testImplementation("ch.qos.logback:logback-classic:$logbackVersion")
     testImplementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingJvmVersion")
@@ -23,6 +23,8 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
     testImplementation("io.kotest:kotest-framework-datatest:$kotestVersion")
     testImplementation("io.kotest:kotest-property:$kotestVersion")
+
+    testImplementation("org.apache.kafka:kafka-clients:$kafkaVersion")
 
     testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
@@ -35,6 +37,8 @@ dependencies {
 tasks {
     withType<Test>().configureEach {
         useJUnitPlatform()
+        dependsOn(":finaccount-app-ktor:publishImageToLocalRegistry")
+        dependsOn(":finaccount-app-kafka:dockerBuildImage")
     }
     test {
         systemProperty("kotest.framework.test.severity", "NORMAL")
