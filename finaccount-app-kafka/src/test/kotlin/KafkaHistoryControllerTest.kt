@@ -1,12 +1,8 @@
 package aigt.finaccounts.app.kafka
 
 import aigt.finaccounts.api.v1.kmp.models.AccountHistoryResponse
-import aigt.finaccounts.api.v1.kmp.models.AccountReadResponse
-import aigt.finaccounts.api.v1.kmp.models.AccountUpdateResponse
 import aigt.finaccounts.app.kafka.fixture.getAccountHistoryRequest
-import aigt.finaccounts.app.kafka.fixture.getAccountReadRequest
-import aigt.finaccounts.app.kafka.fixture.getAccountUpdateRequest
-import aigt.finaccounts.app.kafka.fixture.runSUT
+import aigt.finaccounts.app.kafka.fixture.receiveFromKafka
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -19,8 +15,10 @@ class KafkaHistoryControllerTest {
         val config = AppKafkaConfig()
         val outputTopic = config.kafkaTopicOutV1Jvm
 
-        val testResults =
-            runSUT<AccountHistoryResponse>(request = getAccountHistoryRequest())
+        val testResults = receiveFromKafka<AccountHistoryResponse>(
+            request = getAccountHistoryRequest(),
+            config = config,
+        )
 
         assertEquals(
             outputTopic,

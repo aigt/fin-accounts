@@ -2,7 +2,7 @@ package aigt.finaccounts.app.kafka
 
 import aigt.finaccounts.api.v1.kmp.models.AccountTransactResponse
 import aigt.finaccounts.app.kafka.fixture.getAccountTransactRequest
-import aigt.finaccounts.app.kafka.fixture.runSUT
+import aigt.finaccounts.app.kafka.fixture.receiveFromKafka
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -15,8 +15,10 @@ class KafkaTransactControllerTest {
         val config = AppKafkaConfig()
         val outputTopic = config.kafkaTopicOutV1Jvm
 
-        val testResults =
-            runSUT<AccountTransactResponse>(request = getAccountTransactRequest())
+        val testResults = receiveFromKafka<AccountTransactResponse>(
+            request = getAccountTransactRequest(),
+            config = config,
+        )
 
         assertEquals(
             outputTopic,

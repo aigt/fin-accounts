@@ -1,10 +1,8 @@
 package aigt.finaccounts.app.kafka
 
-import aigt.finaccounts.api.v1.kmp.models.AccountReadResponse
 import aigt.finaccounts.api.v1.kmp.models.AccountUpdateResponse
-import aigt.finaccounts.app.kafka.fixture.getAccountReadRequest
 import aigt.finaccounts.app.kafka.fixture.getAccountUpdateRequest
-import aigt.finaccounts.app.kafka.fixture.runSUT
+import aigt.finaccounts.app.kafka.fixture.receiveFromKafka
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -17,8 +15,10 @@ class KafkaUpdateControllerTest {
         val config = AppKafkaConfig()
         val outputTopic = config.kafkaTopicOutV1Jvm
 
-        val testResults =
-            runSUT<AccountUpdateResponse>(request = getAccountUpdateRequest())
+        val testResults = receiveFromKafka<AccountUpdateResponse>(
+            request = getAccountUpdateRequest(),
+            config = config,
+        )
 
         assertEquals(
             outputTopic,

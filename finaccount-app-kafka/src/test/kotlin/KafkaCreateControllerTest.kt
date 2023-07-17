@@ -2,7 +2,7 @@ package aigt.finaccounts.app.kafka
 
 import aigt.finaccounts.api.v1.kmp.models.AccountCreateResponse
 import aigt.finaccounts.app.kafka.fixture.getAccountCreateRequest
-import aigt.finaccounts.app.kafka.fixture.runSUT
+import aigt.finaccounts.app.kafka.fixture.receiveFromKafka
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -15,8 +15,10 @@ class KafkaCreateControllerTest {
         val config = AppKafkaConfig()
         val outputTopic = config.kafkaTopicOutV1Jvm
 
-        val testResults =
-            runSUT<AccountCreateResponse>(request = getAccountCreateRequest())
+        val testResults = receiveFromKafka<AccountCreateResponse>(
+            request = getAccountCreateRequest(),
+            config = config,
+        )
 
         assertEquals(
             outputTopic,

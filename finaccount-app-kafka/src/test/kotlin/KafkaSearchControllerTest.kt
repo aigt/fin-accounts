@@ -2,7 +2,7 @@ package aigt.finaccounts.app.kafka
 
 import aigt.finaccounts.api.v1.kmp.models.AccountSearchResponse
 import aigt.finaccounts.app.kafka.fixture.getAccountSearchRequest
-import aigt.finaccounts.app.kafka.fixture.runSUT
+import aigt.finaccounts.app.kafka.fixture.receiveFromKafka
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -15,8 +15,10 @@ class KafkaSearchControllerTest {
         val config = AppKafkaConfig()
         val outputTopic = config.kafkaTopicOutV1Jvm
 
-        val testResults =
-            runSUT<AccountSearchResponse>(request = getAccountSearchRequest())
+        val testResults = receiveFromKafka<AccountSearchResponse>(
+            request = getAccountSearchRequest(),
+            config = config,
+        )
 
         assertEquals(
             outputTopic,
