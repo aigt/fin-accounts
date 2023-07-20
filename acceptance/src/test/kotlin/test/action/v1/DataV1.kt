@@ -28,7 +28,7 @@ val debug = AccountDebug(
 )
 
 
-val adStub = AccountResponseObject(
+val accountStub = AccountResponseObject(
     description = "stub account response object description",
     ownerId = fromString("cd565097-4b69-490e-b167-b59128475562"),
     currency = "RUB",
