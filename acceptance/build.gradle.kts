@@ -13,8 +13,8 @@ dependencies {
 
     testImplementation(kotlin("stdlib"))
 
-    testImplementation(":api-v1-jackson")
-    testImplementation(":api-v1-kmp")
+    testImplementation(project(":api-v1-jackson"))
+    testImplementation(project(":api-v1-kmp"))
 
     testImplementation("ch.qos.logback:logback-classic:$logbackVersion")
     testImplementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingJvmVersion")
