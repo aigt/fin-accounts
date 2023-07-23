@@ -1,15 +1,18 @@
 package aigt.finaccounts.blackbox.test
 
+import aigt.finaccounts.api.v1.jackson.models.AccountSearchFilter
 import aigt.finaccounts.blackbox.fixture.client.Client
 import aigt.finaccounts.blackbox.test.action.v1.createAccount
 import aigt.finaccounts.blackbox.test.action.v1.readAccount
 import aigt.finaccounts.blackbox.test.action.v1.searchAccount
 import aigt.finaccounts.blackbox.test.action.v1.someCreateAccount
+import aigt.finaccounts.blackbox.test.action.v1.transactAccount
 import aigt.finaccounts.blackbox.test.action.v1.updateAccount
 import io.kotest.assertions.asClue
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import java.util.*
 
 
 fun FunSpec.testApiV1(client: Client, prefix: String = "") {
@@ -38,14 +41,45 @@ fun FunSpec.testApiV1(client: Client, prefix: String = "") {
             }
         }
 
-        test("Search Account ok") {
-            val created1 = client.createAccount()
-            val created2 = client.createAccount(
-                someCreateAccount.copy(description = "other description"),
-            )
+        context("Search Account ok") {
+            test("Search by ownerId") {
+                val created1 = client.createAccount()
+                val created2 = client.createAccount(
+                    someCreateAccount.copy(description = "other description"),
+                )
+
+                val accountFilter = AccountSearchFilter(
+                    ownerId = UUID.fromString("cd565097-4b69-490e-b167-b59128475562"),
+                )
+
+                withClue("Search Selling") {
+                    val results = client.searchAccount(accountFilter)
+                    // TODO раскомментировать, когда будет реальный реп
+                }
+            }
+
+            test("Search by searchString") {
+                val created1 = client.createAccount()
+                val created2 = client.createAccount(
+                    someCreateAccount.copy(description = "other description"),
+                )
+
+                val accountFilter = AccountSearchFilter(
+                    searchString = "other description",
+                )
+
+                withClue("Search Selling") {
+                    val results = client.searchAccount(accountFilter)
+                    // TODO раскомментировать, когда будет реальный реп
+                }
+            }
+        }
+
+        test("Transact Account ok") {
+            val created = client.createAccount()
 
             withClue("Search Selling") {
-                val results = client.searchAccount()
+                val results = client.transactAccount(created.id)
                 // TODO раскомментировать, когда будет реальный реп
             }
         }

@@ -12,15 +12,15 @@ import io.kotest.matchers.should
 
 
 suspend fun Client.searchAccount(
-    account: AccountSearchFilter = someSearchFilter,
-): List<AccountResponseObject> = searchAccount(account) {
+    accountFilter: AccountSearchFilter,
+): List<AccountResponseObject> = searchAccount(accountFilter) {
     it should haveSuccessResult
     it.accounts ?: listOf()
 }
 
 
 suspend fun <T> Client.searchAccount(
-    accountFilter: AccountSearchFilter = someSearchFilter,
+    accountFilter: AccountSearchFilter,
     block: (AccountSearchResponse) -> T,
 ): T = withClue("searchAccountV1: $accountFilter") {
 
@@ -34,7 +34,8 @@ suspend fun <T> Client.searchAccount(
     )
 
     val response = sendAndReceive(
-        path = path, request = request,
+        path = path,
+        request = request,
     ) as AccountSearchResponse
 
     response.asClue(block)
