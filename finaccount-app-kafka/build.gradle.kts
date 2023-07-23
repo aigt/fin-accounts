@@ -9,6 +9,13 @@ application {
 }
 
 docker {
+
+    /**
+     * Для Linux, если есть проблема с пермишенами, необходимо
+     * после установки докера добавить нерутового пользователя в группу
+     * docker и перелогиниться:
+     * https://docs.docker.com/engine/install/linux-postinstall/
+     */
     javaApplication {
         mainClassName.set(application.mainClass.get())
         baseImage.set("openjdk:17")

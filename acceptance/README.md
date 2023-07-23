@@ -44,3 +44,25 @@ C использованием docker-compose запускаются наши п
 * После завершения тестов в классе docker-compose завершается
 * Перед каждым тестом выполняется очистка базы данных, чтобы сделать тесты
   независимыми друг от друга
+
+# Запуск в Ubuntu с docker compose v2
+
+Для запуска тестов можно создать alias docker-compose:
+
+1. Создайте файл `/bin/docker-compose`
+    ```bash
+    sudo nano /bin/docker-compose
+    ```
+2. Впишите:
+    ```
+    docker compose "$@"
+    ```
+3. Сохраните и закройте
+4. Добавьте права на запуск файла:
+   ```bash
+   sudo chmod +x /bin/docker-compose
+   ```
+5. Проверить
+   ```bash
+   docker-compose version
+   ```

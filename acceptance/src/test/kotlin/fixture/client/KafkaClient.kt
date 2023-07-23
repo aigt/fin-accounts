@@ -1,5 +1,6 @@
 package aigt.finaccounts.blackbox.fixture.client
 
+import aigt.finaccounts.blackbox.fixture.docker.DockerCompose
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.clients.producer.KafkaProducer
@@ -7,7 +8,6 @@ import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.common.serialization.StringSerializer
-import ru.otus.otuskotlin.marketplace.blackbox.fixture.docker.DockerCompose
 import java.time.Duration
 import java.util.*
 

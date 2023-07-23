@@ -34,17 +34,19 @@ dependencies {
     testImplementation("io.ktor:ktor-client-okhttp-jvm:$ktorVersion")
 }
 
+var severity: String = "MINOR"
+
 tasks {
     withType<Test>().configureEach {
         useJUnitPlatform()
         dependsOn(":finaccount-app-ktor:publishImageToLocalRegistry")
         dependsOn(":finaccount-app-kafka:dockerBuildImage")
     }
-    test {
-        systemProperty("kotest.framework.test.severity", "NORMAL")
-    }
-    create<Test>("test-strict") {
-        systemProperty("kotest.framework.test.severity", "MINOR")
-        group = "verification"
-    }
+    /*    test {
+            systemProperty("kotest.framework.test.severity", "NORMAL")
+        }
+        create<Test>("test-strict") {
+            systemProperty("kotest.framework.test.severity", "MINOR")
+            group = "verification"
+        }*/
 }

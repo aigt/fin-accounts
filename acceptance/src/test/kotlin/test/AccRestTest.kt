@@ -1,19 +1,21 @@
 package aigt.finaccounts.blackbox.test
 
-import aigt.finaccounts.blackbox.docker.WiremockDockerCompose
+import aigt.finaccounts.blackbox.docker.KtorDockerCompose
 import aigt.finaccounts.blackbox.fixture.BaseFunSpec
+import aigt.finaccounts.blackbox.fixture.client.RestClient
 import aigt.finaccounts.blackbox.fixture.docker.DockerCompose
 import io.kotest.core.annotation.Ignored
 
+
 @Ignored
-open class AccRestTestBase(dockerCompose: DockerCompose) : BaseFunSpec(
+open class AccRestTestBase(
+    dockerCompose: DockerCompose,
+) : BaseFunSpec(
     dockerCompose = dockerCompose,
     body = {
-        val client = RestClient(dockerCompose)
-        testApiV1(client)
+        val restClient = RestClient(dockerCompose)
+        testApiV1(restClient, "rest ")
     },
 )
 
-class AccRestWiremockTest : AccRestTestBase(WiremockDockerCompose)
-// TODO class AccRestSpringTest : AccRestTestBase(SpringDockerCompose)
-// TODO class AccRestKtorTest : AccRestTestBase(KtorDockerCompose)
+class AccRestKtorTest : AccRestTestBase(KtorDockerCompose)

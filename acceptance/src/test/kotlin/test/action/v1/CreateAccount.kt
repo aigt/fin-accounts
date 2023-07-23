@@ -13,8 +13,8 @@ import io.kotest.matchers.shouldBe
 
 
 suspend fun Client.createAccount(
-    ad: AccountCreateObject = someCreateAccount,
-): AccountResponseObject = createAccount(ad) {
+    account: AccountCreateObject = someCreateAccount,
+): AccountResponseObject = createAccount(account) {
     it should haveSuccessResult
     it.account shouldBe accountStub
     it.account!!

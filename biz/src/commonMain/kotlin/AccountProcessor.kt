@@ -4,6 +4,7 @@ import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.common.models.account.AccountBalance
 import aigt.finaccounts.common.models.account.AccountCurrency
 import aigt.finaccounts.common.models.command.ContextCommand
+import aigt.finaccounts.common.models.state.ContextState
 import aigt.finaccounts.common.models.transaction.TransactionAccountId
 import aigt.finaccounts.common.models.transaction.TransactionType
 import aigt.finaccounts.common.models.workmode.ContextWorkMode
@@ -16,6 +17,8 @@ class AccountProcessor {
         require(ctx.workMode == ContextWorkMode.STUB) {
             "Currently working only in STUB mode."
         }
+
+        ctx.state = ContextState.RUNNING
 
         when (ctx.command) {
             ContextCommand.HISTORY -> {
