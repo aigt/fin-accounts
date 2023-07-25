@@ -1,3 +1,3 @@
 # Схема интеграции
 
-![Схема интеграции](./img/marketplace-integration.drawio.svg)
+![Схема интеграции](./img/finaccounts-integration.drawio.svg)

@@ -38,11 +38,11 @@ class KafkaClient(dockerCompose: DockerCompose) : Client {
                 ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
             ),
         ).also {
-            it.subscribe(versions.map { "marketplace-out-$it" })
+            it.subscribe(versions.map { "finaccounts-out-$it-jvm" })
         }
     }
     private var counter = 0
-    private val versions = setOf("v1", "v2")
+    private val versions = setOf("v1")
 
     override suspend fun sendAndReceive(
         version: String,
@@ -56,7 +56,7 @@ class KafkaClient(dockerCompose: DockerCompose) : Client {
         counter += 1
         producer.send(
             ProducerRecord(
-                "marketplace-in-$version",
+                "finaccounts-in-$version-jvm",
                 "test-$counter",
                 request,
             ),

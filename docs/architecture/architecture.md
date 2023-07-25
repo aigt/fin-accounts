@@ -1,3 +1,3 @@
 # Архитектурная диаграмма
 
-![Комопнентная архитектура](./img/marketplace-arch.drawio.svg)
+![Комопнентная архитектура](./img/finaccounts-arch.drawio.svg)
