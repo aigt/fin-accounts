@@ -25,12 +25,12 @@ repositories {
 }
 
 application {
-    mainClass.set("io.ktor.server.cio.EngineMain")
+    mainClass.set("aigt.finaccounts.app.ApplicationJvmKt")
 }
 
 ktor {
     docker {
-        localImageName.set(project.name + "-ktor")
+        localImageName.set(project.name)
         imageTag.set(project.version.toString())
         jreVersion.set(io.ktor.plugin.features.JreVersion.JRE_17)
     }
@@ -38,6 +38,7 @@ ktor {
 
 jib {
     container.mainClass = "io.ktor.server.cio.EngineMain"
+//    container.mainClass = "aigt.finaccounts.app.ApplicationJvmKt"
 }
 
 kotlin {
@@ -160,4 +161,11 @@ kotlin {
 
 tasks.withType<Copy> {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+
+ktor {
+    fatJar {
+        archiveFileName.set("fat.jar")
+    }
 }

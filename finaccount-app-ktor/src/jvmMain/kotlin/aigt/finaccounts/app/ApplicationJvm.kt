@@ -1,4 +1,4 @@
-package aigt.finaccounts.jvm.app
+package aigt.finaccounts.app
 
 import aigt.finaccounts.biz.AccountProcessor
 import aigt.finaccounts.jvm.app.plugins.configureCORS
@@ -9,7 +9,7 @@ import io.ktor.server.locations.*
 import io.ktor.server.plugins.autohead.*
 import io.ktor.server.plugins.cachingheaders.*
 import io.ktor.server.plugins.defaultheaders.*
-import aigt.finaccounts.common.app.module as commonModule
+import aigt.finaccounts.app.module as commonModule
 
 // function with config (application.conf)
 fun main(args: Array<String>): Unit = io.ktor.server.cio.EngineMain.main(args)

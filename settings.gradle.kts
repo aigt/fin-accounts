@@ -4,6 +4,7 @@ pluginManagement {
     val kotlinVersion: String by settings
     val openapiVersion: String by settings
     val ktorVersion: String by settings
+    val bmuschkoVersion: String by settings
 
     plugins {
         kotlin("jvm") version kotlinVersion apply false
@@ -13,6 +14,10 @@ pluginManagement {
         id("io.ktor.plugin") version ktorVersion apply false
 
         id("org.openapi.generator") version openapiVersion apply false
+
+        id("com.bmuschko.docker-java-application") version bmuschkoVersion apply false
+        id("com.bmuschko.docker-spring-boot-application") version bmuschkoVersion apply false
+        id("com.bmuschko.docker-remote-api") version bmuschkoVersion apply false
     }
 }
 
@@ -30,4 +35,6 @@ include("mappers-v1-kmp")
 
 include("biz")
 include("stubs")
+
 include("finaccount-app-ktor")
+include("finaccount-app-kafka")

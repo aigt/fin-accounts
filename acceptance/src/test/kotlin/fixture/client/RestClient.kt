@@ -1,6 +1,5 @@
-package fixture.client
+package aigt.finaccounts.blackbox.fixture.client
 
-import aigt.finaccounts.blackbox.fixture.client.Client
 import aigt.finaccounts.blackbox.fixture.docker.DockerCompose
 import io.ktor.client.*
 import io.ktor.client.call.*

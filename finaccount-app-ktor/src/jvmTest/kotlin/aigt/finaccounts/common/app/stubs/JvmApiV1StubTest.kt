@@ -1,4 +1,4 @@
-package aigt.finaccounts.common.app.stubs
+package aigt.finaccounts.app.stubs
 
 import aigt.finaccounts.api.v1.jackson.models.AccountCreateObject
 import aigt.finaccounts.api.v1.jackson.models.AccountCreateRequest

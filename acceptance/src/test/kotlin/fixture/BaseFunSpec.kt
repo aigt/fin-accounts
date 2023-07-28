@@ -6,8 +6,8 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.core.test.TestCase
 
 /**
- * Базовая реализация тестов, которая выполняет запуск и останов контейнеров, а также очистку БД.
- * Основана на FunSpec
+ * Базовая реализация тестов, которая выполняет запуск и останов контейнеров,
+ * а также очистку БД. Основана на FunSpec
  */
 abstract class BaseFunSpec(
     private val dockerCompose: DockerCompose,

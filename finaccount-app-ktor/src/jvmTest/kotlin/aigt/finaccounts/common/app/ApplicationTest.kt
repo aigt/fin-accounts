@@ -1,4 +1,4 @@
-package aigt.finaccounts.jvm.app
+package aigt.finaccounts.app
 
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
