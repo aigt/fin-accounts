@@ -1,12 +1,12 @@
-package aigt.finaccounts.blackbox.test.action.v1
+package aigt.finaccounts.blackbox.test.action.v1.kmp
 
 
-import aigt.finaccounts.api.v1.jackson.models.AccountResponseObject
-import aigt.finaccounts.api.v1.jackson.models.AccountTransactObject
-import aigt.finaccounts.api.v1.jackson.models.AccountTransactRequest
-import aigt.finaccounts.api.v1.jackson.models.AccountTransactResponse
-import aigt.finaccounts.api.v1.jackson.models.AccountTransaction
-import aigt.finaccounts.api.v1.jackson.models.TransactionType
+import aigt.finaccounts.api.v1.kmp.models.AccountResponseObject
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactObject
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactRequest
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactResponse
+import aigt.finaccounts.api.v1.kmp.models.AccountTransaction
+import aigt.finaccounts.api.v1.kmp.models.TransactionType
 import aigt.finaccounts.blackbox.fixture.client.Client
 import io.kotest.assertions.asClue
 import io.kotest.assertions.withClue

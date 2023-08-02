@@ -1,22 +1,21 @@
-package aigt.finaccounts.blackbox.test
+package aigt.finaccounts.blackbox.test.api.v1.kmp
 
-import aigt.finaccounts.api.v1.jackson.models.AccountSearchFilter
+import aigt.finaccounts.api.v1.kmp.models.AccountSearchFilter
 import aigt.finaccounts.blackbox.fixture.client.Client
-import aigt.finaccounts.blackbox.test.action.v1.createAccount
-import aigt.finaccounts.blackbox.test.action.v1.readAccount
-import aigt.finaccounts.blackbox.test.action.v1.searchAccount
-import aigt.finaccounts.blackbox.test.action.v1.someCreateAccount
-import aigt.finaccounts.blackbox.test.action.v1.transactAccount
-import aigt.finaccounts.blackbox.test.action.v1.updateAccount
+import aigt.finaccounts.blackbox.test.action.v1.kmp.createAccount
+import aigt.finaccounts.blackbox.test.action.v1.kmp.readAccount
+import aigt.finaccounts.blackbox.test.action.v1.kmp.searchAccount
+import aigt.finaccounts.blackbox.test.action.v1.kmp.someCreateAccount
+import aigt.finaccounts.blackbox.test.action.v1.kmp.transactAccount
+import aigt.finaccounts.blackbox.test.action.v1.kmp.updateAccount
 import io.kotest.assertions.asClue
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import java.util.*
 
 
-fun FunSpec.testApiV1(client: Client, prefix: String = "") {
-    context("${prefix}v1") {
+fun FunSpec.testApiV1Kmp(client: Client, prefix: String = "") {
+    context("${prefix} v1") {
 
         test("Create Account ok") {
             client.createAccount()
@@ -49,7 +48,7 @@ fun FunSpec.testApiV1(client: Client, prefix: String = "") {
                 )
 
                 val accountFilter = AccountSearchFilter(
-                    ownerId = UUID.fromString("cd565097-4b69-490e-b167-b59128475562"),
+                    ownerId = "cd565097-4b69-490e-b167-b59128475562",
                 )
 
                 withClue("Search Selling") {

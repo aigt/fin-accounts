@@ -1,18 +1,17 @@
-package aigt.finaccounts.blackbox.test.action.v1
+package aigt.finaccounts.blackbox.test.action.v1.kmp
 
-import aigt.finaccounts.api.v1.jackson.models.AccountCreateObject
-import aigt.finaccounts.api.v1.jackson.models.AccountDebug
-import aigt.finaccounts.api.v1.jackson.models.AccountHistoryObject
-import aigt.finaccounts.api.v1.jackson.models.AccountPermissions
-import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugMode
-import aigt.finaccounts.api.v1.jackson.models.AccountRequestDebugStubs
-import aigt.finaccounts.api.v1.jackson.models.AccountResponseObject
-import aigt.finaccounts.api.v1.jackson.models.AccountSearchFilter
-import aigt.finaccounts.api.v1.jackson.models.AccountStatus
-import aigt.finaccounts.api.v1.jackson.models.AccountTransactObject
-import aigt.finaccounts.api.v1.jackson.models.AccountTransaction
-import aigt.finaccounts.api.v1.jackson.models.TransactionType
-import java.util.UUID.fromString
+import aigt.finaccounts.api.v1.kmp.models.AccountCreateObject
+import aigt.finaccounts.api.v1.kmp.models.AccountDebug
+import aigt.finaccounts.api.v1.kmp.models.AccountHistoryObject
+import aigt.finaccounts.api.v1.kmp.models.AccountPermissions
+import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugMode
+import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugStubs
+import aigt.finaccounts.api.v1.kmp.models.AccountResponseObject
+import aigt.finaccounts.api.v1.kmp.models.AccountSearchFilter
+import aigt.finaccounts.api.v1.kmp.models.AccountStatus
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactObject
+import aigt.finaccounts.api.v1.kmp.models.AccountTransaction
+import aigt.finaccounts.api.v1.kmp.models.TransactionType
 
 
 val debug = AccountDebug(
@@ -23,7 +22,7 @@ val debug = AccountDebug(
 
 val accountStub = AccountResponseObject(
     description = "Простой аккаунт",
-    ownerId = fromString("9deb6b8c-b797-4b34-9201-776ae1d3cf58"),
+    ownerId = "9deb6b8c-b797-4b34-9201-776ae1d3cf58",
     currency = "RUB",
     id = "10002000300040005000",
     lock = null,
@@ -38,14 +37,14 @@ val accountStub = AccountResponseObject(
 
 val someCreateAccount = AccountCreateObject(
     description = "stub description",
-    ownerId = fromString("cd565097-4b69-490e-b167-b59128475562"),
+    ownerId = "cd565097-4b69-490e-b167-b59128475562",
     currency = "RUB",
 )
 
 
 val someSearchFilter = AccountSearchFilter(
     searchString = "stub search string",
-    ownerId = fromString("cd565097-4b69-490e-b167-b59128475562"),
+    ownerId = "cd565097-4b69-490e-b167-b59128475562",
 )
 
 

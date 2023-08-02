@@ -1,10 +1,10 @@
-package aigt.finaccounts.blackbox.test.action.v1
+package aigt.finaccounts.blackbox.test.action.v1.kmp
 
 
-import aigt.finaccounts.api.v1.jackson.models.AccountReadObject
-import aigt.finaccounts.api.v1.jackson.models.AccountReadRequest
-import aigt.finaccounts.api.v1.jackson.models.AccountReadResponse
-import aigt.finaccounts.api.v1.jackson.models.AccountResponseObject
+import aigt.finaccounts.api.v1.kmp.models.AccountReadObject
+import aigt.finaccounts.api.v1.kmp.models.AccountReadRequest
+import aigt.finaccounts.api.v1.kmp.models.AccountReadResponse
+import aigt.finaccounts.api.v1.kmp.models.AccountResponseObject
 import aigt.finaccounts.blackbox.fixture.client.Client
 import io.kotest.assertions.asClue
 import io.kotest.assertions.withClue
