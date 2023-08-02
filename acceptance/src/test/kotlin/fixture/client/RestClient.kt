@@ -10,7 +10,7 @@ import io.ktor.http.*
 /**
  * Отправка запросов по http/rest
  */
-class RestClient(dockerCompose: DockerCompose) : Client {
+class RestClient(dockerCompose: DockerCompose, val apiPath: String) : Client {
 
     private val urlBuilder by lazy { dockerCompose.inputUrl }
     private val client = HttpClient(OkHttp)
@@ -22,7 +22,7 @@ class RestClient(dockerCompose: DockerCompose) : Client {
     ): String {
 
         val url = urlBuilder.apply {
-            path("/api/$version/$path")
+            path("/$apiPath/$version/$path")
         }.build()
 
         val resp = client.post {

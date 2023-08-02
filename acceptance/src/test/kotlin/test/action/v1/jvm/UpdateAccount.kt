@@ -1,4 +1,4 @@
-package aigt.finaccounts.blackbox.test.action.v1
+package aigt.finaccounts.blackbox.test.action.v1.jvm
 
 
 import aigt.finaccounts.api.v1.jackson.models.AccountResponseObject

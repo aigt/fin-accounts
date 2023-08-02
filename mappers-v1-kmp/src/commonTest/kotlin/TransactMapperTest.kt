@@ -1,14 +1,14 @@
 package aigt.finaccounts.mappers.kmp.v1
 
-import aigt.finaccounts.api.v1.kmp.models.AccountCreateObject
-import aigt.finaccounts.api.v1.kmp.models.AccountCreateRequest
-import aigt.finaccounts.api.v1.kmp.models.AccountCreateResponse
 import aigt.finaccounts.api.v1.kmp.models.AccountDebug
-import aigt.finaccounts.api.v1.kmp.models.AccountPermissions
 import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugMode
 import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugStubs
-import aigt.finaccounts.api.v1.kmp.models.AccountStatus
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactObject
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactRequest
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactResponse
+import aigt.finaccounts.api.v1.kmp.models.AccountTransaction
 import aigt.finaccounts.api.v1.kmp.models.IRequest
+import aigt.finaccounts.api.v1.kmp.models.TransactionType
 import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.common.models.account.Account
 import aigt.finaccounts.common.models.account.AccountBalance
@@ -28,41 +28,56 @@ import kotlinx.datetime.Clock
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class MapperTest {
+class TransactMapperTest {
     @Test
     fun fromTransport() {
-        val request: IRequest = AccountCreateRequest(
-            requestType = "create",
+        val request: IRequest = AccountTransactRequest(
+            requestType = "transact",
             requestId = "123",
             debug = AccountDebug(
                 mode = AccountRequestDebugMode.STUB,
                 stub = AccountRequestDebugStubs.SUCCESS,
             ),
-            account = AccountCreateObject(
-                ownerId = "cd565097-4b69-490e-b167-b59128475562",
-                description = "stub",
-                currency = "RUB",
+            account = AccountTransactObject(
+                id = "26c45c31-857f-4d5d-bf59-890817c9320b",
+                lock = "a3c0cffb-97d3-4e9d-898d-10eb10470501",
+            ),
+            transaction = AccountTransaction(
+                type = TransactionType.WITHDRAW,
+                amount = 1005_00,
+                counterparty = "11102220333044405550",
+                description = "stub transaction description",
+                timestamp = "2023-07-04T18:43:00.123456789Z",
             ),
         )
+
+//             requestType = "create",
+//             requestId = "123",
+//             debug = AccountDebug(
+//                 mode = AccountRequestDebugMode.STUB,
+//                 stub = AccountRequestDebugStubs.SUCCESS,
+//             ),
+//             account = AccountCreateObject(
+//                 ownerId = "cd565097-4b69-490e-b167-b59128475562",
+//                 description = "stub",
+//                 currency = "RUB",
+//             ),
+//         )
 
         val context = FinAccountsContext()
         context.fromTransport(request)
 
-        assertEquals(ContextStubCase.SUCCESS, context.stubCase)
-        assertEquals(ContextWorkMode.STUB, context.workMode)
         assertEquals(
-            AccountOwnerId("cd565097-4b69-490e-b167-b59128475562"),
-            context.accountRequest.ownerId,
+            ContextStubCase.SUCCESS,
+            context.stubCase,
         )
         assertEquals(
-            AccountDescription("stub"),
-            context.accountRequest.description,
+            ContextCommand.TRANSACT,
+            context.command,
         )
-        assertEquals(AccountBalance.NONE, context.accountRequest.balance)
-        assertEquals(AccountCurrency("RUB"), context.accountRequest.currency)
         assertEquals(
-            aigt.finaccounts.common.models.account.AccountStatus.NONE,
-            context.accountRequest.status,
+            ContextWorkMode.STUB,
+            context.workMode,
         )
     }
 
@@ -71,7 +86,7 @@ class MapperTest {
         val transactionTime = AccountLastTransactionTime(Clock.System.now())
         val context = FinAccountsContext(
             requestId = RequestId("1234"),
-            command = ContextCommand.CREATE,
+            command = ContextCommand.TRANSACT,
             accountResponse = Account(
                 id = AccountId("94852616476317587179"),
                 description = AccountDescription("desc"),
@@ -96,32 +111,8 @@ class MapperTest {
             state = ContextState.RUNNING,
         )
 
-        val response = context.toTransportResponse() as AccountCreateResponse
+        val response = context.toTransportResponse() as AccountTransactResponse
 
-        assertEquals("1234", response.requestId)
-        assertEquals("desc", response.account?.description)
-        assertEquals(
-            "cd565097-4b69-490e-b167-b59128475562",
-            response.account?.ownerId,
-        )
-        assertEquals(154, response.account?.balance)
-        assertEquals("RUB", response.account?.currency)
-        assertEquals(AccountStatus.ACTIVE, response.account?.status)
-        assertEquals(
-            transactionTime.asString(),
-            response.account?.lastTransaction,
-        )
-        assertEquals(
-            setOf(
-                AccountPermissions.READ,
-                AccountPermissions.HISTORY,
-            ),
-            response.account?.permissions,
-        )
-        assertEquals(1, response.errors?.size)
-        assertEquals("err", response.errors?.firstOrNull()?.code)
-        assertEquals("request", response.errors?.firstOrNull()?.group)
-        assertEquals("title", response.errors?.firstOrNull()?.field)
-        assertEquals("wrong title", response.errors?.firstOrNull()?.message)
+        assertEquals("transact", response.responseType)
     }
 }

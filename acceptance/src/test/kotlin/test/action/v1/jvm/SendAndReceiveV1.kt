@@ -1,4 +1,4 @@
-package aigt.finaccounts.blackbox.test.action.v1
+package aigt.finaccounts.blackbox.test.action.v1.jvm
 
 import aigt.finaccounts.api.v1.jackson.apiV1RequestSerialize
 import aigt.finaccounts.api.v1.jackson.apiV1ResponseDeserialize
@@ -15,7 +15,11 @@ suspend fun Client.sendAndReceive(path: String, request: IRequest): IResponse {
     val requestBody = apiV1RequestSerialize(request)
     log.info { "Send to v1/$path\n$requestBody" }
 
-    val responseBody = sendAndReceive("v1", path, requestBody)
+    val responseBody = sendAndReceive(
+        version = "v1",
+        path = path,
+        request = requestBody
+    )
     log.info { "Received\n$responseBody" }
 
     return apiV1ResponseDeserialize(responseBody)

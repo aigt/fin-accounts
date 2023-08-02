@@ -27,9 +27,9 @@ fun FinAccountsContext.toTransportResponse(): IResponse =
         ContextCommand.CREATE -> toTransportCreate()
         ContextCommand.READ -> toTransportRead()
         ContextCommand.UPDATE -> toTransportUpdate()
-        ContextCommand.HISTORY -> toTransportTransact()
         ContextCommand.SEARCH -> toTransportSearch()
-        ContextCommand.TRANSACT -> toTransportHistory()
+        ContextCommand.HISTORY -> toTransportHistory()
+        ContextCommand.TRANSACT -> toTransportTransact()
         ContextCommand.NONE -> throw MappingUnknownCommand(cmd)
     }
 

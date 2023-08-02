@@ -14,7 +14,7 @@ import java.util.*
 /**
  * Отправка запросов в очереди kafka
  */
-class KafkaClient(dockerCompose: DockerCompose) : Client {
+class KafkaClient(dockerCompose: DockerCompose, val apiPath: String) : Client {
     private val host by lazy {
         val url = dockerCompose.inputUrl
         "${url.host}:${url.port}"
@@ -38,7 +38,7 @@ class KafkaClient(dockerCompose: DockerCompose) : Client {
                 ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
             ),
         ).also {
-            it.subscribe(versions.map { "finaccounts-out-$it-jvm" })
+            it.subscribe(versions.map { "finaccounts-out-$it-$apiPath" })
         }
     }
     private var counter = 0
@@ -56,7 +56,7 @@ class KafkaClient(dockerCompose: DockerCompose) : Client {
         counter += 1
         producer.send(
             ProducerRecord(
-                "finaccounts-in-$version-jvm",
+                "finaccounts-in-$version-$apiPath",
                 "test-$counter",
                 request,
             ),

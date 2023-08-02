@@ -1,14 +1,14 @@
-package aigt.finaccounts.blackbox.test.action.v1
+package aigt.finaccounts.blackbox.test.action.v1.kmp
 
-import aigt.finaccounts.api.v1.jackson.models.AccountCreateResponse
-import aigt.finaccounts.api.v1.jackson.models.AccountHistoryResponse
-import aigt.finaccounts.api.v1.jackson.models.AccountReadResponse
-import aigt.finaccounts.api.v1.jackson.models.AccountResponseObject
-import aigt.finaccounts.api.v1.jackson.models.AccountSearchResponse
-import aigt.finaccounts.api.v1.jackson.models.AccountTransactResponse
-import aigt.finaccounts.api.v1.jackson.models.AccountUpdateResponse
-import aigt.finaccounts.api.v1.jackson.models.IResponse
-import aigt.finaccounts.api.v1.jackson.models.ResponseResult
+import aigt.finaccounts.api.v1.kmp.models.AccountCreateResponse
+import aigt.finaccounts.api.v1.kmp.models.AccountHistoryResponse
+import aigt.finaccounts.api.v1.kmp.models.AccountReadResponse
+import aigt.finaccounts.api.v1.kmp.models.AccountResponseObject
+import aigt.finaccounts.api.v1.kmp.models.AccountSearchResponse
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactResponse
+import aigt.finaccounts.api.v1.kmp.models.AccountUpdateResponse
+import aigt.finaccounts.api.v1.kmp.models.IResponse
+import aigt.finaccounts.api.v1.kmp.models.ResponseResult
 import io.kotest.matchers.Matcher
 import io.kotest.matchers.MatcherResult
 import io.kotest.matchers.and
