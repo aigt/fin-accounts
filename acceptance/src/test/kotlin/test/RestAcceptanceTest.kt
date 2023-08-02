@@ -7,27 +7,21 @@ import aigt.finaccounts.blackbox.test.api.v1.jvm.testApiV1Jvm
 import aigt.finaccounts.blackbox.test.api.v1.kmp.testApiV1Kmp
 
 
-class RestJvmAcceptanceTest : BaseFunSpec(
+class RestAcceptanceTest : BaseFunSpec(
     dockerCompose = KtorDockerCompose,
     body = {
-        val apiPath = "api"
-        val restClient = RestClient(
+        val jvmApiPath = "api"
+        val jvmRestClient = RestClient(
             dockerCompose = KtorDockerCompose,
-            apiPath = apiPath,
+            apiPath = jvmApiPath,
         )
-        testApiV1Jvm(restClient, "rest $apiPath")
-    },
-)
+        testApiV1Jvm(jvmRestClient, "rest $jvmApiPath")
 
-
-class RestKmpAcceptanceTest : BaseFunSpec(
-    dockerCompose = KtorDockerCompose,
-    body = {
-        val apiPath = "api-kmp"
-        val restClient = RestClient(
+        val kmpApiPath = "api-kmp"
+        val kmpRestClient = RestClient(
             dockerCompose = KtorDockerCompose,
-            apiPath = apiPath,
+            apiPath = kmpApiPath,
         )
-        testApiV1Kmp(restClient, "rest $apiPath")
+        testApiV1Kmp(kmpRestClient, "rest $kmpApiPath")
     },
 )

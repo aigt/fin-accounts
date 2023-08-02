@@ -11,22 +11,30 @@ import aigt.finaccounts.blackbox.test.api.v1.kmp.testApiV1Kmp
 class KafkaJvmAcceptanceTest : BaseFunSpec(
     dockerCompose = KafkaDockerCompose,
     body = {
-        val client = KafkaClient(
+        val jvmApiPath = "jvm"
+        val jvmClient = KafkaClient(
             dockerCompose = KafkaDockerCompose,
-            apiPath = "jvm",
+            apiPath = jvmApiPath,
         )
-        testApiV1Jvm(client, "jvm")
+        testApiV1Jvm(jvmClient, jvmApiPath)
+
+        val kmpApiPath = "kmp"
+        val kmpClient = KafkaClient(
+            dockerCompose = KafkaDockerCompose,
+            apiPath = kmpApiPath,
+        )
+        testApiV1Kmp(kmpClient, kmpApiPath)
     },
 )
 
-
-class KafkaKmpAcceptanceTest : BaseFunSpec(
-    dockerCompose = KafkaDockerCompose,
-    body = {
-        val client = KafkaClient(
-            dockerCompose = KafkaDockerCompose,
-            apiPath = "kmp",
-        )
-        testApiV1Kmp(client, "kmp")
-    },
-)
+//
+// class KafkaKmpAcceptanceTest : BaseFunSpec(
+//     dockerCompose = KafkaDockerCompose,
+//     body = {
+//         val client = KafkaClient(
+//             dockerCompose = KafkaDockerCompose,
+//             apiPath = "kmp",
+//         )
+//         testApiV1Kmp(client, "kmp")
+//     },
+// )
