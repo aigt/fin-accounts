@@ -31,7 +31,8 @@ import kotlin.test.assertEquals
 class TransactMapperTest {
     @Test
     fun fromTransport() {
-        val request: IRequest = AccountTransactRequest(
+        val request: IRequest = AccountTransactRequest()
+        AccountTransactRequest(
             requestType = "transact",
             requestId = "123",
             debug = AccountDebug(

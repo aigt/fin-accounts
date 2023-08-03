@@ -4,12 +4,14 @@ import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.common.models.account.AccountBalance
 import aigt.finaccounts.common.models.account.AccountCurrency
 import aigt.finaccounts.common.models.command.ContextCommand
+import aigt.finaccounts.common.models.request.RequestStartTime
 import aigt.finaccounts.common.models.state.ContextState
 import aigt.finaccounts.common.models.transaction.TransactionAccountId
 import aigt.finaccounts.common.models.transaction.TransactionType
 import aigt.finaccounts.common.models.workmode.ContextWorkMode
 import aigt.finaccounts.stubs.AccountStub
 import com.benasher44.uuid.uuid4
+import kotlinx.datetime.toInstant
 
 class AccountProcessor {
     suspend fun exec(ctx: FinAccountsContext) {
@@ -18,6 +20,8 @@ class AccountProcessor {
             "Currently working only in STUB mode."
         }
 
+        ctx.requestStartTime =
+            RequestStartTime("2023-08-04T18:43:00.123456789Z".toInstant())
         ctx.state = ContextState.RUNNING
 
         when (ctx.command) {

@@ -9,4 +9,8 @@ data class Account(
     var status: AccountStatus = AccountStatus.NONE,
     var lastTransactionTime: AccountLastTransactionTime = AccountLastTransactionTime.NONE,
     val permissionsClient: MutableSet<AccountPermissionClient> = mutableSetOf(),
-)
+) {
+    companion object {
+        val NONE = Account()
+    }
+}
