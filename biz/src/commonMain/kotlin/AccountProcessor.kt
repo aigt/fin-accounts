@@ -59,5 +59,7 @@ class AccountProcessor {
                 ctx.accountResponse = AccountStub.get()
             }
         }
+
+        ctx.state = ContextState.FINISHED
     }
 }

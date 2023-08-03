@@ -4,4 +4,5 @@ enum class ContextState {
     NONE,
     RUNNING,
     FAILING,
+    FINISHED,
 }
