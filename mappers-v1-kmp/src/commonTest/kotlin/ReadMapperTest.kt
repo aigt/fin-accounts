@@ -1,11 +1,10 @@
 package aigt.finaccounts.mappers.kmp.v1
 
 import aigt.finaccounts.api.v1.kmp.models.AccountPermissions
+import aigt.finaccounts.api.v1.kmp.models.AccountReadResponse
 import aigt.finaccounts.api.v1.kmp.models.AccountStatus
-import aigt.finaccounts.api.v1.kmp.models.AccountTransactResponse
 import aigt.finaccounts.api.v1.kmp.models.IRequest
 import aigt.finaccounts.api.v1.kmp.models.ResponseResult
-import aigt.finaccounts.api.v1.kmp.models.TransactionType
 import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.common.models.account.Account
 import aigt.finaccounts.common.models.account.AccountBalance
@@ -20,40 +19,33 @@ import aigt.finaccounts.common.models.request.RequestId
 import aigt.finaccounts.common.models.request.RequestStartTime
 import aigt.finaccounts.common.models.state.ContextState
 import aigt.finaccounts.common.models.stubcase.ContextStubCase
-import aigt.finaccounts.common.models.transaction.TransactionAccountId
-import aigt.finaccounts.common.models.transaction.TransactionAmount
-import aigt.finaccounts.common.models.transaction.TransactionCounterparty
-import aigt.finaccounts.common.models.transaction.TransactionDescription
-import aigt.finaccounts.common.models.transaction.TransactionId
-import aigt.finaccounts.common.models.transaction.TransactionTimestamp
+import aigt.finaccounts.common.models.transaction.Transaction
 import aigt.finaccounts.common.models.workmode.ContextWorkMode
-import aigt.finaccounts.mappers.kmp.v1.fixture.getAccountTransactRequest
-import aigt.finaccounts.mappers.kmp.v1.fixture.getTransactFinAccountsContext
+import aigt.finaccounts.mappers.kmp.v1.fixture.getAccountReadRequest
+import aigt.finaccounts.mappers.kmp.v1.fixture.getReadFinAccountsContext
 import kotlin.test.Test
-import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import aigt.finaccounts.common.models.account.AccountStatus as CtxAccountStatus
-import aigt.finaccounts.common.models.transaction.TransactionType as CtxTransactionType
 
-class TransactMapperTest {
+class ReadMapperTest {
 
     @Test
     fun fromTransport() {
         val context = FinAccountsContext().apply {
-            val request: IRequest = getAccountTransactRequest()
+            val request: IRequest = getAccountReadRequest()
             fromTransport(request)
         }
 
         assertEquals(
-            expected = ContextCommand.TRANSACT,
+            expected = ContextCommand.READ,
             actual = context.command,
-            message = "Должен создаваться контекст добавления транзакции аккаунта",
+            message = "Должен создаваться контекст чтения аккаунта",
         )
         assertEquals(
             expected = ContextState.NONE,
             actual = context.state,
-            message = "state в запросе не приходит",
+            message = "У контекста не должно быть стэйта",
         )
         assertEquals(
             expected = listOf(),
@@ -83,85 +75,53 @@ class TransactMapperTest {
         assertEquals(
             expected = AccountFilter.NONE,
             actual = context.accountFilter,
-            message = "accountFilter для данной команды не применяется",
+            message = "Фильтр для данной команды не применяется",
         )
         assertEquals(
             expected = AccountId("26c45c31-857f-4d5d-bf59-890817c9320b"),
             actual = context.accountRequest.id,
-            message = "accountRequest.id должен быть присланный в запросе",
+            message = "Id аккаунта должно быть присланным в запросе",
         )
         assertEquals(
             expected = AccountDescription.NONE,
             actual = context.accountRequest.description,
-            message = "accountRequest.description в запросе не приходит",
+            message = "accountRequest.description должен присваиваться бизнес логикой",
         )
         assertEquals(
             expected = AccountOwnerId.NONE,
             actual = context.accountRequest.ownerId,
-            message = "accountRequest.ownerId в запросе не приходит",
+            message = "accountRequest.ownerId должен присваиваться бизнес логикой",
         )
         assertEquals(
             expected = AccountBalance.NONE,
             actual = context.accountRequest.balance,
-            message = "accountRequest.balance в запросе не приходит",
+            message = "Баланс аккаунта должен присваиваться бизнес логикой",
         )
         assertEquals(
             expected = AccountCurrency.NONE,
             actual = context.accountRequest.currency,
-            message = "accountRequest.currency в запросе не приходит",
+            message = "accountRequest.currency должен присваиваться бизнес логикой",
         )
         assertEquals(
             expected = CtxAccountStatus.NONE,
             actual = context.accountRequest.status,
-            message = "accountRequest.status в запросе не приходит",
+            message = "accountRequest.status должен присваиваться бизнес логикой",
         )
         assertEquals(
             expected = AccountLastTransactionTime.NONE,
             actual = context.accountRequest.lastTransactionTime,
-            message = "accountRequest.lastTransactionTime в запросе не приходит",
+            message = "accountRequest.lastTransactionTime должен присваиваться бизнес логикой",
         )
         assertEquals(
             expected = setOf(),
             actual = context.accountRequest.permissionsClient,
-            message = "accountRequest.permissionsClient в запросе не приходит",
+            message = "accountRequest.permissionsClient должен присваиваться бизнес логикой",
         )
-        context.transactionRequest.let { transactionRequest ->
-            assertEquals(
-                expected = TransactionId.NONE,
-                actual = transactionRequest.id,
-                message = "context.transactionRequest.id в запросе не приходит",
-            )
-            assertEquals(
-                expected = TransactionAmount(1005_00),
-                actual = transactionRequest.amount,
-                message = "context.transactionRequest.amount должен быть присланный в запросе",
-            )
-            assertEquals(
-                expected = TransactionAccountId.NONE,
-                actual = transactionRequest.accountId,
-                message = "context.transactionRequest.accountId в запросе не приходит",
-            )
-            assertEquals(
-                expected = TransactionCounterparty("11102220333044405550"),
-                actual = transactionRequest.counterparty,
-                message = "context.transactionRequest.counterparty должен быть присланный в запросе",
-            )
-            assertEquals(
-                expected = TransactionTimestamp.NONE,
-                actual = transactionRequest.timestamp,
-                message = "context.transactionRequest.timestamp в запросе не приходит",
-            )
-            assertEquals(
-                expected = CtxTransactionType.WITHDRAW,
-                actual = transactionRequest.type,
-                message = "context.transactionRequest.type должен быть присланный в запросе",
-            )
-            assertEquals(
-                expected = TransactionDescription("stub transaction description"),
-                actual = transactionRequest.description,
-                message = "context.transactionRequest.description должен быть присланный в запросе",
-            )
-        }
+        assertEquals(
+            expected = Transaction.NONE,
+            actual = context.transactionRequest,
+            message = "Транзакции для данной команды не применяется",
+        )
         assertEquals(
             expected = Account.NONE,
             actual = context.accountResponse,
@@ -181,14 +141,14 @@ class TransactMapperTest {
 
     @Test
     fun toTransport() {
-        val context = getTransactFinAccountsContext()
+        val context = getReadFinAccountsContext()
 
-        val response = context.toTransportResponse() as AccountTransactResponse
+        val response = context.toTransportResponse() as AccountReadResponse
 
         assertEquals(
-            expected = "transact",
+            expected = "read",
             actual = response.responseType,
-            message = "Должен отдаватся тип ответа истории аккаунта",
+            message = "Должен отдаватся тип ответа чтения аккаунта",
         )
         assertEquals(
             expected = "75038a32-9d63-4394-968b-d33aaedc057e",
@@ -247,7 +207,7 @@ class TransactMapperTest {
                 message = "account.permissions должен быть равен указанному в контексте",
             )
             assertEquals(
-                expected = 1200_00,
+                expected = 154,
                 actual = account.balance,
                 message = "account.balance должен быть равен указанному в контексте",
             )
@@ -255,43 +215,6 @@ class TransactMapperTest {
                 expected = AccountStatus.ACTIVE,
                 actual = account.status,
                 message = "account.status должен быть равен указанному в контексте",
-            )
-        }
-
-        assertNotNull(
-            actual = response.history,
-            message = "history не должен быть null, а равен указанному в контексте",
-        )
-        assertEquals(
-            expected = 1,
-            actual = response.history?.size,
-            message = "history.size должен быть равен количеству транзакций в контексте",
-        )
-        response.history!!.let { history ->
-            history.first().let { transaction ->
-                assertEquals(
-                    expected = TransactionType.WITHDRAW,
-                    actual = transaction.type,
-                    message = "history.firstOrNull().type должен быть равен указанному в контексте",
-                )
-                assertEquals(
-                    expected = "99992000300040005000",
-                    actual = transaction.counterparty,
-                    message = "history.firstOrNull().counterparty должен быть равен указанному в контексте",
-                )
-                transaction.description?.let { description ->
-                    assertContains(
-                        charSequence = description,
-                        other = "filter stub",
-                        message = "history.firstOrNull().description должен быть операция с указанным описанием",
-                    )
-                }
-            }
-
-            assertEquals(
-                expected = 100_00,
-                actual = history.firstOrNull { it.description!!.contains("index: 0 ") }?.amount,
-                message = "history.firstOrNull().amount должен быть операция с суммой как в контексте",
             )
         }
     }

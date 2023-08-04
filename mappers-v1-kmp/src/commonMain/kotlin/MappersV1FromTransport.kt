@@ -38,12 +38,15 @@ private fun String?.toAccountId() = this
     ?.let { AccountId(it) }
     ?: AccountId.NONE
 
+
 private fun String?.toAccountWithId() = Account(
     id = this.toAccountId(),
 )
 
+
 private fun IRequest?.requestId() =
     this?.requestId?.let { RequestId(it) } ?: RequestId.NONE
+
 
 private fun AccountDebug?.transportToWorkMode(): ContextWorkMode =
     when (this?.mode) {
@@ -52,6 +55,7 @@ private fun AccountDebug?.transportToWorkMode(): ContextWorkMode =
         AccountRequestDebugMode.STUB -> ContextWorkMode.STUB
         null -> ContextWorkMode.PROD
     }
+
 
 private fun AccountDebug?.transportToStubCase(): ContextStubCase =
     when (this?.stub) {
@@ -73,6 +77,7 @@ private fun AccountDebug?.transportToStubCase(): ContextStubCase =
         null -> ContextStubCase.NONE
     }
 
+
 fun FinAccountsContext.fromTransport(request: AccountCreateRequest) {
     command = ContextCommand.CREATE
     requestId = request.requestId()
@@ -80,6 +85,7 @@ fun FinAccountsContext.fromTransport(request: AccountCreateRequest) {
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
+
 
 fun FinAccountsContext.fromTransport(request: AccountReadRequest) {
     command = ContextCommand.READ
@@ -89,6 +95,7 @@ fun FinAccountsContext.fromTransport(request: AccountReadRequest) {
     stubCase = request.debug.transportToStubCase()
 }
 
+
 fun FinAccountsContext.fromTransport(request: AccountUpdateRequest) {
     command = ContextCommand.UPDATE
     requestId = request.requestId()
@@ -96,6 +103,7 @@ fun FinAccountsContext.fromTransport(request: AccountUpdateRequest) {
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
+
 
 fun FinAccountsContext.fromTransport(request: AccountHistoryRequest) {
     command = ContextCommand.HISTORY
@@ -105,6 +113,7 @@ fun FinAccountsContext.fromTransport(request: AccountHistoryRequest) {
     stubCase = request.debug.transportToStubCase()
 }
 
+
 fun FinAccountsContext.fromTransport(request: AccountSearchRequest) {
     command = ContextCommand.SEARCH
     requestId = request.requestId()
@@ -112,6 +121,7 @@ fun FinAccountsContext.fromTransport(request: AccountSearchRequest) {
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
+
 
 fun FinAccountsContext.fromTransport(request: AccountTransactRequest) {
     command = ContextCommand.TRANSACT
@@ -122,6 +132,7 @@ fun FinAccountsContext.fromTransport(request: AccountTransactRequest) {
     transactionRequest = request.transaction?.toInternal() ?: Transaction()
 }
 
+
 private fun AccountSearchFilter?.toInternal(): AccountFilter = AccountFilter(
     searchString = this?.searchString
         ?.let { SearchStringFilter(it) }
@@ -130,6 +141,7 @@ private fun AccountSearchFilter?.toInternal(): AccountFilter = AccountFilter(
         ?.let { OwnerIdFilter(it) }
         ?: OwnerIdFilter.NONE,
 )
+
 
 private fun AccountCreateObject.toInternal(): Account = Account(
     description = this.description

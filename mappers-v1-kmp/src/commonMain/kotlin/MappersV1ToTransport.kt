@@ -117,7 +117,7 @@ fun FinAccountsContext.toTransportTransact() = AccountTransactResponse(
 
 fun FinAccountsContext.toTransportResponseResult(): ResponseResult =
     when (state) {
-        ContextState.RUNNING -> ResponseResult.SUCCESS
+        ContextState.FINISHED -> ResponseResult.SUCCESS
         else -> ResponseResult.ERROR
     }
 

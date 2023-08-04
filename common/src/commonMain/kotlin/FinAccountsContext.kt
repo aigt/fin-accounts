@@ -22,12 +22,12 @@ data class FinAccountsContext(
     var requestId: RequestId = RequestId.NONE,
     var requestStartTime: RequestStartTime = RequestStartTime.NONE,
 
-    var accountFilter: AccountFilter = AccountFilter(),
+    var accountFilter: AccountFilter = AccountFilter.NONE,
 
-    var accountRequest: Account = Account(),
-    var transactionRequest: Transaction = Transaction(),
+    var accountRequest: Account = Account.NONE,
+    var transactionRequest: Transaction = Transaction.NONE,
 
-    var accountResponse: Account = Account(),
+    var accountResponse: Account = Account.NONE,
     var accountsResponse: MutableList<Account> = mutableListOf(),
     var historyResponse: MutableList<Transaction> = mutableListOf(),
 )

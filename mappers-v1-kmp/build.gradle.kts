@@ -23,6 +23,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
+                implementation(project(":stubs"))
             }
         }
         val jvmMain by getting {
@@ -33,6 +34,7 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
+                implementation(project(":stubs"))
             }
         }
 

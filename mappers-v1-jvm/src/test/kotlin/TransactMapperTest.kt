@@ -1,11 +1,11 @@
-package aigt.finaccounts.mappers.kmp.v1
+package aigt.finaccounts.mappers.jvm.v1
 
-import aigt.finaccounts.api.v1.kmp.models.AccountPermissions
-import aigt.finaccounts.api.v1.kmp.models.AccountStatus
-import aigt.finaccounts.api.v1.kmp.models.AccountTransactResponse
-import aigt.finaccounts.api.v1.kmp.models.IRequest
-import aigt.finaccounts.api.v1.kmp.models.ResponseResult
-import aigt.finaccounts.api.v1.kmp.models.TransactionType
+import aigt.finaccounts.api.v1.jackson.models.AccountPermissions
+import aigt.finaccounts.api.v1.jackson.models.AccountStatus
+import aigt.finaccounts.api.v1.jackson.models.AccountTransactResponse
+import aigt.finaccounts.api.v1.jackson.models.IRequest
+import aigt.finaccounts.api.v1.jackson.models.ResponseResult
+import aigt.finaccounts.api.v1.jackson.models.TransactionType
 import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.common.models.account.Account
 import aigt.finaccounts.common.models.account.AccountBalance
@@ -27,8 +27,9 @@ import aigt.finaccounts.common.models.transaction.TransactionDescription
 import aigt.finaccounts.common.models.transaction.TransactionId
 import aigt.finaccounts.common.models.transaction.TransactionTimestamp
 import aigt.finaccounts.common.models.workmode.ContextWorkMode
-import aigt.finaccounts.mappers.kmp.v1.fixture.getAccountTransactRequest
-import aigt.finaccounts.mappers.kmp.v1.fixture.getTransactFinAccountsContext
+import aigt.finaccounts.mappers.jvm.v1.fixture.getAccountTransactRequest
+import aigt.finaccounts.mappers.jvm.v1.fixture.getTransactFinAccountsContext
+import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -217,7 +218,7 @@ class TransactMapperTest {
                 message = "account.description должен быть равен указанному в контексте",
             )
             assertEquals(
-                expected = "9deb6b8c-b797-4b34-9201-776ae1d3cf58",
+                expected = UUID.fromString("9deb6b8c-b797-4b34-9201-776ae1d3cf58"),
                 actual = account.ownerId,
                 message = "account.ownerId должен быть равен указанному в контексте",
             )
