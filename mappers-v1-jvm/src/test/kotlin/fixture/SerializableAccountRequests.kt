@@ -21,13 +21,16 @@ import aigt.finaccounts.api.v1.jackson.models.TransactionType
 import java.util.*
 
 
+fun getStubSuccessAccountDebug() = AccountDebug(
+    mode = AccountRequestDebugMode.STUB,
+    stub = AccountRequestDebugStubs.SUCCESS,
+)
+
+
 fun getAccountCreateRequest() = AccountCreateRequest(
     requestType = "create",
     requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
-    debug = AccountDebug(
-        mode = AccountRequestDebugMode.STUB,
-        stub = AccountRequestDebugStubs.SUCCESS,
-    ),
+    debug = getStubSuccessAccountDebug(),
     account = AccountCreateObject(
         description = "stub description",
         ownerId = UUID.fromString("9deb6b8c-b797-4b34-9201-776ae1d3cf58"),
@@ -38,20 +41,14 @@ fun getAccountCreateRequest() = AccountCreateRequest(
 fun getAccountReadRequest() = AccountReadRequest(
     requestType = "read",
     requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
-    debug = AccountDebug(
-        mode = AccountRequestDebugMode.STUB,
-        stub = AccountRequestDebugStubs.BAD_OWNER_ID,
-    ),
+    debug = getStubSuccessAccountDebug(),
     account = AccountReadObject(id = "26c45c31-857f-4d5d-bf59-890817c9320b"),
 )
 
 fun getAccountUpdateRequest() = AccountUpdateRequest(
     requestType = "update",
     requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
-    debug = AccountDebug(
-        mode = AccountRequestDebugMode.STUB,
-        stub = AccountRequestDebugStubs.BAD_OWNER_ID,
-    ),
+    debug = getStubSuccessAccountDebug(),
     account = AccountUpdateObject(
         description = "stub description",
         ownerId = UUID.fromString("cd565097-4b69-490e-b167-b59128475562"),
@@ -66,10 +63,7 @@ fun getAccountUpdateRequest() = AccountUpdateRequest(
 fun getAccountSearchRequest() = AccountSearchRequest(
     requestType = "search",
     requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
-    debug = AccountDebug(
-        mode = AccountRequestDebugMode.STUB,
-        stub = AccountRequestDebugStubs.BAD_OWNER_ID,
-    ),
+    debug = getStubSuccessAccountDebug(),
     accountFilter = AccountSearchFilter(
         searchString = "stub search string",
         ownerId = UUID.fromString("cd565097-4b69-490e-b167-b59128475562"),
@@ -79,20 +73,14 @@ fun getAccountSearchRequest() = AccountSearchRequest(
 fun getAccountHistoryRequest() = AccountHistoryRequest(
     requestType = "history",
     requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
-    debug = AccountDebug(
-        mode = AccountRequestDebugMode.STUB,
-        stub = AccountRequestDebugStubs.BAD_OWNER_ID,
-    ),
+    debug = getStubSuccessAccountDebug(),
     account = AccountHistoryObject(id = "26c45c31-857f-4d5d-bf59-890817c9320b"),
 )
 
 fun getAccountTransactRequest() = AccountTransactRequest(
     requestType = "transact",
     requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
-    debug = AccountDebug(
-        mode = AccountRequestDebugMode.STUB,
-        stub = AccountRequestDebugStubs.BAD_OWNER_ID,
-    ),
+    debug = getStubSuccessAccountDebug(),
     account = AccountTransactObject(
         id = "26c45c31-857f-4d5d-bf59-890817c9320b",
         lock = "a3c0cffb-97d3-4e9d-898d-10eb10470501",
