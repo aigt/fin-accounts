@@ -11,6 +11,8 @@ import aigt.finaccounts.common.models.account.AccountOwnerId
 import aigt.finaccounts.common.models.account.AccountPermissionClient
 import aigt.finaccounts.common.models.account.AccountStatus
 import aigt.finaccounts.common.models.accountfilter.AccountFilter
+import aigt.finaccounts.common.models.accountfilter.OwnerIdFilter
+import aigt.finaccounts.common.models.accountfilter.SearchStringFilter
 import aigt.finaccounts.common.models.command.ContextCommand
 import aigt.finaccounts.common.models.request.RequestId
 import aigt.finaccounts.common.models.request.RequestStartTime
@@ -104,7 +106,11 @@ fun getSearchFinAccountsContext() = getBaseFinAccountsContext().copy(
         listSize = 5,
         currency = AccountCurrency("RUB"),
         balance = AccountBalance(154),
-        filter = AccountFilter(),
+        filter = AccountFilter(
+            searchString = SearchStringFilter(id = "hello"),
+            ownerId = OwnerIdFilter(id = "32fffd3c-210f-4291-b132-c1631ecb5ec3"),
+        ),
+        lastTransactionTime = AccountLastTransactionTime("2023-08-04T09:34:31.870508306Z".toInstant()),
     ),
 )
 

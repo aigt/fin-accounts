@@ -10,6 +10,7 @@ import aigt.finaccounts.common.models.account.AccountOwnerId
 import aigt.finaccounts.common.models.account.AccountPermissionClient
 import aigt.finaccounts.common.models.account.AccountStatus
 import aigt.finaccounts.common.models.accountfilter.AccountFilter
+import aigt.finaccounts.common.models.accountfilter.OwnerIdFilter
 import aigt.finaccounts.common.models.transaction.Transaction
 import aigt.finaccounts.common.models.transaction.TransactionAccountId
 import aigt.finaccounts.common.models.transaction.TransactionAmount
@@ -53,13 +54,21 @@ object AccountStub {
         currency: AccountCurrency,
         balance: AccountBalance,
         filter: AccountFilter,
+        lastTransactionTime: AccountLastTransactionTime = AccountLastTransactionTime(
+            timestamp = now(),
+        ),
     ) = MutableList(listSize) { index ->
         account(
-            ownerId = AccountOwnerId(id = uuid4().toString()),
+            ownerId = AccountOwnerId(
+                id = filter.ownerId.takeIf { it != OwnerIdFilter.NONE }
+                    ?.asString()
+                    ?: uuid4().toString(),
+            ),
             balance = balance,
             currency = currency,
             status = AccountStatus.ACTIVE,
             filter = filter.searchString.asString(),
+            lastTransactionTime = lastTransactionTime,
             index = index + 1,
         )
     }
@@ -70,6 +79,7 @@ object AccountStub {
         currency: AccountCurrency,
         status: AccountStatus,
         filter: String,
+        lastTransactionTime: AccountLastTransactionTime,
         index: Int = 0,
     ) = Account(
         id = AccountId(id = "1000200030004000500${index}"),
@@ -78,7 +88,7 @@ object AccountStub {
         balance = balance,
         currency = currency,
         status = status,
-        lastTransactionTime = AccountLastTransactionTime(timestamp = now()),
+        lastTransactionTime = lastTransactionTime,
         permissionsClient = mutableSetOf(AccountPermissionClient.READ),
     )
 
