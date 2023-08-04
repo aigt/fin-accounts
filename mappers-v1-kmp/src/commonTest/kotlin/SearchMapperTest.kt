@@ -35,7 +35,7 @@ class SearchMapperTest {
         assertEquals(
             expected = ContextCommand.SEARCH,
             actual = context.command,
-            message = "Должен создаваться контекст создания аккаунта",
+            message = "Должен создаваться контекст поиска аккаунтов",
         )
         assertEquals(
             expected = ContextState.NONE,

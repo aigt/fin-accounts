@@ -48,7 +48,7 @@ class TransactMapperTest {
         assertEquals(
             expected = ContextCommand.TRANSACT,
             actual = context.command,
-            message = "Должен создаваться контекст создания аккаунта",
+            message = "Должен создаваться контекст добавления транзакции аккаунта",
         )
         assertEquals(
             expected = ContextState.NONE,

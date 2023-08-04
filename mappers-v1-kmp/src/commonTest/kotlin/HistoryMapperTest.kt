@@ -42,7 +42,7 @@ class HistoryMapperTest {
         assertEquals(
             expected = ContextCommand.HISTORY,
             actual = context.command,
-            message = "Должен создаваться контекст создания аккаунта",
+            message = "Должен создаваться контекст истории аккаунта",
         )
         assertEquals(
             expected = ContextState.NONE,
