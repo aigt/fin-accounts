@@ -25,6 +25,7 @@ import aigt.finaccounts.mappers.kmp.v1.fixture.getAccountCreateRequest
 import aigt.finaccounts.mappers.kmp.v1.fixture.getCreateFinAccountsContext
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import aigt.finaccounts.common.models.account.AccountStatus as CtxAccountStatus
 
 class CreateMapperTest {
@@ -49,7 +50,7 @@ class CreateMapperTest {
         assertEquals(
             expected = listOf(),
             actual = context.errors,
-            message = "У контекста не должно быть стэйта",
+            message = "У контекста не должно быть ошибок после создания",
         )
         assertEquals(
             expected = ContextWorkMode.STUB,
@@ -164,61 +165,57 @@ class CreateMapperTest {
             actual = response.errors,
             message = "errors должен быть равен указанному в контексте",
         )
-        assertEquals(
-            expected = "Простой аккаунт",
-            actual = response.account?.description,
-            message = "account.description должен быть равен указанному в контексте",
-        )
-        assertEquals(
-            expected = "9deb6b8c-b797-4b34-9201-776ae1d3cf58",
-            actual = response.account?.ownerId,
-            message = "account.ownerId должен быть равен указанному в контексте",
-        )
-        assertEquals(
-            expected = "RUB",
-            actual = response.account?.currency,
-            message = "currency.currency должен быть равен указанному в контексте",
-        )
-        assertEquals(
-            expected = "10002000300040005000",
-            actual = response.account?.id,
-            message = "currency.id должен быть равен указанному в контексте",
-        )
-        assertEquals(
-            expected = "10002000300040005000",
-            actual = response.account?.id,
-            message = "currency.id должен быть равен указанному в контексте",
-        )
-        /*assertEquals(
-            expected = "",
-            actual = response.account?.lock,
-            message = "currency.lock должен быть равен указанному в контексте",
-        )*/
-        assertEquals(
-            expected = "2023-08-04T18:43:00.123456789Z",
-            actual = response.account?.lastTransaction,
-            message = "currency.lastTransaction должен быть равен указанному в контексте",
-        )
-        assertEquals(
-            expected = setOf(AccountPermissions.READ),
-            actual = response.account?.permissions,
-            message = "currency.permissions должен быть равен указанному в контексте",
-        )
-        assertEquals(
-            expected = 154,
-            actual = response.account?.balance,
-            message = "currency.balance должен быть равен указанному в контексте",
-        )
-        assertEquals(
-            expected = AccountStatus.ACTIVE,
-            actual = response.account?.status,
-            message = "currency.status должен быть равен указанному в контексте",
-        )
 
-        /*assertEquals(1, response.errors?.size)
-        assertEquals("err", response.errors?.firstOrNull()?.code)
-        assertEquals("request", response.errors?.firstOrNull()?.group)
-        assertEquals("title", response.errors?.firstOrNull()?.field)
-        assertEquals("wrong title", response.errors?.firstOrNull()?.message)*/
+        assertNotNull(
+            actual = response.account,
+            message = "account не должен быть null, а равен указанному в контексте",
+        )
+        response.account!!.let { account ->
+            assertEquals(
+                expected = "Простой аккаунт",
+                actual = account.description,
+                message = "account.description должен быть равен указанному в контексте",
+            )
+            assertEquals(
+                expected = "9deb6b8c-b797-4b34-9201-776ae1d3cf58",
+                actual = account.ownerId,
+                message = "account.ownerId должен быть равен указанному в контексте",
+            )
+            assertEquals(
+                expected = "RUB",
+                actual = account.currency,
+                message = "account.currency должен быть равен указанному в контексте",
+            )
+            assertEquals(
+                expected = "10002000300040005000",
+                actual = account.id,
+                message = "account.id должен быть равен указанному в контексте",
+            )
+            /*assertEquals(
+                expected = "",
+                actual = account.lock,
+                message = "account.lock должен быть равен указанному в контексте",
+            )*/
+            assertEquals(
+                expected = "2023-08-04T18:43:00.123456789Z",
+                actual = account.lastTransaction,
+                message = "account.lastTransaction должен быть равен указанному в контексте",
+            )
+            assertEquals(
+                expected = setOf(AccountPermissions.READ),
+                actual = account.permissions,
+                message = "account.permissions должен быть равен указанному в контексте",
+            )
+            assertEquals(
+                expected = 154,
+                actual = account.balance,
+                message = "account.balance должен быть равен указанному в контексте",
+            )
+            assertEquals(
+                expected = AccountStatus.ACTIVE,
+                actual = account.status,
+                message = "account.status должен быть равен указанному в контексте",
+            )
+        }
     }
 }

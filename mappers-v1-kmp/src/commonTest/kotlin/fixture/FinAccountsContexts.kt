@@ -17,7 +17,11 @@ import aigt.finaccounts.common.models.request.RequestStartTime
 import aigt.finaccounts.common.models.state.ContextState
 import aigt.finaccounts.common.models.stubcase.ContextStubCase
 import aigt.finaccounts.common.models.transaction.Transaction
+import aigt.finaccounts.common.models.transaction.TransactionAccountId
+import aigt.finaccounts.common.models.transaction.TransactionType
 import aigt.finaccounts.common.models.workmode.ContextWorkMode
+import aigt.finaccounts.stubs.AccountStub.prepareAccountsList
+import aigt.finaccounts.stubs.AccountStub.prepareTransactionsList
 import kotlinx.datetime.toInstant
 
 val transactionTime =
@@ -25,8 +29,9 @@ val transactionTime =
 val requestStartTime =
     RequestStartTime("2023-08-04T18:43:00.123456789Z".toInstant())
 
-fun getCreateFinAccountsContext() = FinAccountsContext(
-    command = ContextCommand.CREATE,
+
+fun getBaseFinAccountsContext() = FinAccountsContext(
+    command = ContextCommand.NONE,
     state = ContextState.FINISHED,
     errors = mutableListOf(),
     workMode = ContextWorkMode.STUB,
@@ -36,6 +41,14 @@ fun getCreateFinAccountsContext() = FinAccountsContext(
     accountFilter = AccountFilter.NONE,
     accountRequest = Account.NONE,
     transactionRequest = Transaction.NONE,
+    accountResponse = Account.NONE,
+    accountsResponse = mutableListOf(),
+    historyResponse = mutableListOf(),
+)
+
+
+fun getCreateFinAccountsContext() = getBaseFinAccountsContext().copy(
+    command = ContextCommand.CREATE,
     accountResponse = Account(
         id = AccountId("10002000300040005000"),
         description = AccountDescription("Простой аккаунт"),
@@ -48,6 +61,95 @@ fun getCreateFinAccountsContext() = FinAccountsContext(
             AccountPermissionClient.READ,
         ),
     ),
-    accountsResponse = mutableListOf(),
-    historyResponse = mutableListOf(),
+)
+
+
+fun getReadFinAccountsContext() = getBaseFinAccountsContext().copy(
+    command = ContextCommand.READ,
+    accountResponse = Account(
+        id = AccountId("10002000300040005000"),
+        description = AccountDescription("Простой аккаунт"),
+        ownerId = AccountOwnerId("9deb6b8c-b797-4b34-9201-776ae1d3cf58"),
+        balance = AccountBalance(154),
+        currency = AccountCurrency("RUB"),
+        status = AccountStatus.ACTIVE,
+        lastTransactionTime = transactionTime,
+        permissionsClient = mutableSetOf(
+            AccountPermissionClient.READ,
+        ),
+    ),
+)
+
+
+fun getUpdateFinAccountsContext() = getBaseFinAccountsContext().copy(
+    command = ContextCommand.UPDATE,
+    accountResponse = Account(
+        id = AccountId("10002000300040005000"),
+        description = AccountDescription("Простой аккаунт"),
+        ownerId = AccountOwnerId("9deb6b8c-b797-4b34-9201-776ae1d3cf58"),
+        balance = AccountBalance(154),
+        currency = AccountCurrency("RUB"),
+        status = AccountStatus.ACTIVE,
+        lastTransactionTime = transactionTime,
+        permissionsClient = mutableSetOf(
+            AccountPermissionClient.READ,
+        ),
+    ),
+)
+
+
+fun getSearchFinAccountsContext() = getBaseFinAccountsContext().copy(
+    command = ContextCommand.SEARCH,
+    accountsResponse = prepareAccountsList(
+        listSize = 5,
+        currency = AccountCurrency("RUB"),
+        balance = AccountBalance(154),
+        filter = AccountFilter(),
+    ),
+)
+
+
+fun getHistoryFinAccountsContext() = getBaseFinAccountsContext().copy(
+    command = ContextCommand.HISTORY,
+    accountResponse = Account(
+        id = AccountId("10002000300040005000"),
+        description = AccountDescription("Простой аккаунт"),
+        ownerId = AccountOwnerId("9deb6b8c-b797-4b34-9201-776ae1d3cf58"),
+        balance = AccountBalance(1200_00),
+        currency = AccountCurrency("RUB"),
+        status = AccountStatus.ACTIVE,
+        lastTransactionTime = transactionTime,
+        permissionsClient = mutableSetOf(
+            AccountPermissionClient.READ,
+        ),
+    ),
+    historyResponse = prepareTransactionsList(
+        listSize = 5,
+        filter = "filter stub",
+        accountId = TransactionAccountId("10002000300040005000"),
+        type = TransactionType.INCOME,
+    ),
+)
+
+
+fun getTransactFinAccountsContext() = getBaseFinAccountsContext().copy(
+    command = ContextCommand.TRANSACT,
+    accountResponse = Account(
+        id = AccountId("10002000300040005000"),
+        description = AccountDescription("Простой аккаунт"),
+        ownerId = AccountOwnerId("9deb6b8c-b797-4b34-9201-776ae1d3cf58"),
+        balance = AccountBalance(1200_00),
+        currency = AccountCurrency("RUB"),
+        status = AccountStatus.ACTIVE,
+        lastTransactionTime = transactionTime,
+        permissionsClient = mutableSetOf(
+            AccountPermissionClient.READ,
+        ),
+    ),
+    historyResponse = prepareTransactionsList(
+        listSize = 1,
+        filter = "filter stub",
+        accountId = TransactionAccountId("10002000300040005000"),
+        type = TransactionType.WITHDRAW,
+    ),
 )

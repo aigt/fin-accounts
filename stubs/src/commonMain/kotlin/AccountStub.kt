@@ -22,6 +22,7 @@ import aigt.finaccounts.stubs.SimpleAccountsStub.SIMPLE_ACTIVE_ACCOUNT
 import aigt.finaccounts.stubs.SimpleAccountsStub.TRANSACT_ACCOUNT
 import com.benasher44.uuid.uuid4
 import kotlinx.datetime.Clock.System.now
+import kotlinx.datetime.toInstant
 
 
 object AccountStub {
@@ -36,13 +37,13 @@ object AccountStub {
         filter: String,
         accountId: TransactionAccountId,
         type: TransactionType,
-    ) = List(listSize) { index ->
+    ) = MutableList(listSize) { index ->
         transaction(
             id = TransactionId(id = uuid4().toString()),
             amount = TransactionAmount(cents = (index + 1) * 100_00),
-            filter = filter,
+            filter = "$filter index: $index",
             accountId = accountId,
-            counterparty = TransactionCounterparty(id = "3242d9d3-39b3-4fa8-95d4-c847f2bbc25b"),
+            counterparty = TransactionCounterparty(id = "99992000300040005000"),
             type = type,
         )
     }
@@ -52,7 +53,7 @@ object AccountStub {
         currency: AccountCurrency,
         balance: AccountBalance,
         filter: AccountFilter,
-    ) = List(listSize) { index ->
+    ) = MutableList(listSize) { index ->
         account(
             ownerId = AccountOwnerId(id = uuid4().toString()),
             balance = balance,
@@ -93,7 +94,7 @@ object AccountStub {
         amount = amount,
         accountId = accountId,
         counterparty = counterparty,
-        timestamp = TransactionTimestamp(timestamp = now()),
+        timestamp = TransactionTimestamp(timestamp = "2023-07-07T18:43:00.123456789Z".toInstant()),
         type = type,
         description = TransactionDescription(id = "desc $filter $accountId"),
     )
