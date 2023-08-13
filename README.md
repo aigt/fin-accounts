@@ -41,7 +41,9 @@
 8. [mappers-v1-jvm](mappers-v1-jvm) - Мапперы транспортных моделей во
    внутренние для jvm рантайма
 9. [logging](loggging) - Средства для логгирования
-    1. [v1](logging/v1)
+    1. [lib](logging/lib) - Библиотека для логгирования
+        1. [common](logging/lib/common) - Мультплотформенная часть
+    2. [v1](logging/v1)
         1. [api](logging/v1/api) - Модели для сериализации логов
 10. [mappers-v1-kmp](mappers-v1-kmp) - Мапперы транспортных моделей во
     внутренние с поддержкой kotlin multiplatform
