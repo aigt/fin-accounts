@@ -5,7 +5,7 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
 @Suppress("unused")
-interface FinAccountsLogWrapper {
+interface FinAccountsLoggerWrapper {
     val loggerId: String
 
     fun log(
@@ -86,7 +86,7 @@ interface FinAccountsLogWrapper {
     }
 
     companion object {
-        val DEFAULT = object : FinAccountsLogWrapper {
+        val DEFAULT = object : FinAccountsLoggerWrapper {
             override val loggerId: String = "NONE"
 
             override fun log(

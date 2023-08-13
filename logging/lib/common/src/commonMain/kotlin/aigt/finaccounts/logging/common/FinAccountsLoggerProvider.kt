@@ -4,7 +4,7 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 
 class FinAccountsLoggerProvider(
-    private val provider: (String) -> FinAccountsLogWrapper = { FinAccountsLogWrapper.DEFAULT },
+    private val provider: (String) -> FinAccountsLoggerWrapper = { FinAccountsLoggerWrapper.DEFAULT },
 ) {
     fun logger(loggerId: String) = provider(loggerId)
     fun logger(clazz: KClass<*>) =
