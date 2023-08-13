@@ -36,13 +36,16 @@
 5. [common](common) - Общие объекты используемые всеми остальными модулями (с
    поддержкой kotlin multiplatform)
 6. [finaccount-app-ktor](finaccount-app-ktor) - Приложение
-6. [finaccount-app-kafka](finaccount-app-kafka) - Приложение с асинхронным
+7. [finaccount-app-kafka](finaccount-app-kafka) - Приложение с асинхронным
    транспортным протоколом использующее kafka
-7. [mappers-v1-jvm](mappers-v1-jvm) - Мапперы транспортных моделей во
+8. [mappers-v1-jvm](mappers-v1-jvm) - Мапперы транспортных моделей во
    внутренние для jvm рантайма
-8. [mappers-v1-kmp](mappers-v1-kmp) - Мапперы транспортных моделей во
-   внутренние с поддержкой kotlin multiplatform
-9. [deploy](deploy) - Инфраструктура развёртывания приложения
-10. [docs](docs) - Документация
-11. [specs](specs) - OpenAPI спецификации с описанием API
-12. [stubs](stubs) - Заглушки, отдающие фейковый результат на запрос
+9. [logging](loggging) - Средства для логгирования
+    1. [v1](logging/v1)
+        1. [api](logging/v1/api) - Модели для сериализации логов
+10. [mappers-v1-kmp](mappers-v1-kmp) - Мапперы транспортных моделей во
+    внутренние с поддержкой kotlin multiplatform
+11. [deploy](deploy) - Инфраструктура развёртывания приложения
+12. [docs](docs) - Документация
+13. [specs](specs) - OpenAPI спецификации с описанием API
+14. [stubs](stubs) - Заглушки, отдающие фейковый результат на запрос
