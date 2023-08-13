@@ -45,6 +45,7 @@
         1. [common](logging/lib/common) - Мультплотформенная часть
     2. [v1](logging/v1)
         1. [api](logging/v1/api) - Модели для сериализации логов
+        2. [mappers](logging/v1/mappers) - Мапперы для сериализации логов
 10. [mappers-v1-kmp](mappers-v1-kmp) - Мапперы транспортных моделей во
     внутренние с поддержкой kotlin multiplatform
 11. [deploy](deploy) - Инфраструктура развёртывания приложения

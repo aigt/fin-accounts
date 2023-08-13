@@ -38,3 +38,7 @@ include("stubs")
 
 include("finaccount-app-ktor")
 include("finaccount-app-kafka")
+
+include(":logging:lib:common")
+include(":logging:v1:api")
+include(":logging:v1:mappers")
