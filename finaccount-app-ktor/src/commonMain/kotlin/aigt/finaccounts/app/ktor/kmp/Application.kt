@@ -1,4 +1,4 @@
-package aigt.finaccounts.app
+package aigt.finaccounts.app.kmp
 
 import aigt.finaccounts.biz.AccountProcessor
 import aigt.finaccounts.common.app.plugins.configureRouting
