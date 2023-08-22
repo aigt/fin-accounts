@@ -6,6 +6,7 @@ val ktorVersion: String by project
 val logbackVersion: String by project
 val serializationVersion: String by project
 
+
 // ex: Converts to "io.ktor:ktor-ktor-server-netty:2.0.1" with only ktor("netty")
 fun ktor(
     module: String,
@@ -13,20 +14,29 @@ fun ktor(
     version: String? = this@Build_gradle.ktorVersion,
 ): Any = "io.ktor:ktor-${prefix.suffixIfNot("-")}$module:$version"
 
+
 plugins {
     id("application")
     kotlin("plugin.serialization")
     kotlin("multiplatform")
     id("io.ktor.plugin")
 }
+dependencies {
+    implementation(project(mapOf("path" to ":logging:lib:common")))
+    implementation(project(mapOf("path" to ":logging:lib:common")))
+    implementation(project(mapOf("path" to ":logging:lib:common")))
+}
+
 
 repositories {
     maven { url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
 }
 
+
 application {
-    mainClass.set("aigt.finaccounts.app.ApplicationJvmKt")
+    mainClass.set("aigt.finaccounts.app.ktor.Main_jvmKt")
 }
+
 
 ktor {
     docker {
@@ -36,10 +46,12 @@ ktor {
     }
 }
 
+
 jib {
     container.mainClass = "io.ktor.server.cio.EngineMain"
 //    container.mainClass = "aigt.finaccounts.app.ApplicationJvmKt"
 }
+
 
 kotlin {
     jvm {
@@ -49,10 +61,20 @@ kotlin {
     macosX64 {}
     macosArm64 {}
 
+    /*val hostOs = System.getProperty("os.name")
+    val arch = System.getProperty("os.arch")
+    val nativeTarget = when {
+        hostOs == "Mac OS X" && arch == "x86_64" -> macosX64("native")
+        hostOs == "Mac OS X" && arch == "aarch64" -> macosArm64("native")
+        hostOs == "Linux" -> linuxX64("native")
+        // Other supported targets are listed here: https://ktor.io/docs/native-server.html#targets
+        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
+    }*/
+
     targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
         binaries {
             executable {
-                entryPoint = "aigt.finaccounts.app.main"
+                entryPoint = "aigt.finaccounts.app.ktor.main"
             }
         }
     }
@@ -75,7 +97,7 @@ kotlin {
                 implementation(ktor("websockets")) // "io.ktor:ktor-websockets:$ktorVersion"
                 implementation(ktor("auth")) // "io.ktor:ktor-auth:$ktorVersion"
 
-                implementation("ch.qos.logback:logback-classic:$logbackVersion")
+                //implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
                 implementation(project(":common"))
                 implementation(project(":biz"))
@@ -86,6 +108,9 @@ kotlin {
 
                 // Stubs
                 implementation(project(":stubs"))
+
+                implementation(project(":logging:lib:common"))
+                implementation(project(":logging:lib:kermit"))
 
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
@@ -145,6 +170,7 @@ kotlin {
                 // transport models
                 implementation(project(":api-v1-jackson"))
                 implementation(project(":mappers-v1-jvm"))
+                implementation(project(":logging:lib:logback"))
             }
         }
 
@@ -156,8 +182,12 @@ kotlin {
                 implementation(ktor("websockets", prefix = "client-"))
             }
         }
+
+        val linuxX64Main by getting
+        val linuxX64Test by getting
     }
 }
+
 
 tasks.withType<Copy> {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
