@@ -1,0 +1,139 @@
+openapi: 3.0.4
+info:
+  title: Fin accounts log models
+  description: Log models for logging services of fin accounts
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+paths: { }
+
+components:
+  schemas:
+    CommonLogModel:
+      title: Общая модель лога
+      description: Общая модель лога для всех микросервисов системы
+      type: object
+      properties:
+        messageTime:
+          type: string
+        logId:
+          type: string
+        source:
+          type: string
+        account:
+          $ref: '#/components/schemas/FinAccountLogModel'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorLogModel'
+
+    FinAccountLogModel:
+      title: Модель лога для микросервиса FinAccounts
+      type: object
+      properties:
+        requestId:
+          type: string
+        command:
+          type: string
+          enum:
+            - create
+            - read
+            - update
+            - search
+            - history
+            - transact
+        accountFilter:
+          $ref: '#/components/schemas/AccountFilterLog'
+        accountRequest:
+          $ref: '#/components/schemas/AccountLog'
+        transactionRequest:
+          $ref: '#/components/schemas/TransactionLog'
+        accountResponse:
+          $ref: '#/components/schemas/AccountLog'
+        accountsResponse:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountLog'
+        historyResponse:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionLog'
+
+    ErrorLogModel:
+      title: Модель лога для ошибки
+      type: object
+      properties:
+        message:
+          type: string
+        field:
+          type: string
+        code:
+          type: string
+        group:
+          type: string
+
+    AccountLog:
+      title: Модель лога для аккаунта
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        ownerId:
+          type: string
+        balance:
+          type: string
+        currency:
+          type: string
+        status:
+          type: string
+          enum:
+            - none
+            - active
+            - closed
+            - frozen
+        lastTransactionTime:
+          type: string
+        permissionsClient:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+              - read
+              - update
+              - history
+              - transact
+
+    AccountFilterLog:
+      title: Модель лога фильтра
+      properties:
+        searchString:
+          type: string
+        ownerId:
+          type: string
+
+    TransactionLog:
+      title: Модель лога для транзакции
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: string
+        accountId:
+          type: string
+        counterparty:
+          type: string
+        timestamp:
+          type: string
+        type:
+          type: string
+          enum:
+            - none
+            - income
+            - withdraw
+        description:
+          type: string

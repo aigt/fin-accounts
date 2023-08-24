@@ -24,6 +24,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
             }
         }
+
         @Suppress("UNUSED_VARIABLE")
         val commonTest by getting {
             dependencies {
@@ -31,6 +32,7 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
+
         @Suppress("UNUSED_VARIABLE")
         val jvmTest by getting {
             dependencies {
@@ -50,7 +52,7 @@ openApiGenerate {
     apiPackage.set("$openapiGroup.api")
     modelPackage.set("$openapiGroup.models")
     invokerPackage.set("$openapiGroup.invoker")
-    inputSpec.set("$rootDir/specs/specs-account-v1.yaml")
+    inputSpec.set("$rootDir/specs/account-v1.yaml")
     library.set("multiplatform")
 
     /**
