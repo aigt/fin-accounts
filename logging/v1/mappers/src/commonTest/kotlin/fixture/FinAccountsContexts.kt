@@ -28,7 +28,7 @@ val requestStartTime =
 
 fun getBaseFinAccountsContext() = FinAccountsContext(
     command = ContextCommand.NONE,
-    state = ContextState.FINISHED,
+    state = ContextState.FINISHING,
     errors = mutableListOf(),
     workMode = ContextWorkMode.STUB,
     stubCase = ContextStubCase.SUCCESS,

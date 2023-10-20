@@ -543,6 +543,7 @@ components:
         - badTransactionDescription
         - badTransactionType
         - badSearchString
+        - dbError
     AccountRequestDebugMode:
       type: string
       enum:

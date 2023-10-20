@@ -23,6 +23,7 @@ kotlin {
                 implementation("com.benasher44:uuid:$benasherUUIDVersion")
 
                 implementation(project(":common"))
+                implementation(project(":cor"))
                 implementation(project(":stubs"))
             }
         }

@@ -17,4 +17,5 @@ enum class ContextStubCase {
     BAD_TRANSACTION_DESCRIPTION,
     BAD_TRANSACTION_TYPE,
     BAD_SEARCH_STRING,
+    DB_ERROR,
 }

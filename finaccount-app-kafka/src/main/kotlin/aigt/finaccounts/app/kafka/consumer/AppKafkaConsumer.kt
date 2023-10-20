@@ -4,7 +4,7 @@ import aigt.finaccounts.app.kafka.AppKafkaConfig
 import aigt.finaccounts.app.kafka.consumer.strategy.ConsumerStrategy
 import aigt.finaccounts.app.kafka.createKafkaConsumer
 import aigt.finaccounts.app.kafka.createKafkaProducer
-import aigt.finaccounts.biz.AccountProcessor
+import aigt.finaccounts.biz.aigt.finaccounts.biz.AccountProcessor
 import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.common.models.request.RequestStartTime
 import kotlinx.atomicfu.atomic

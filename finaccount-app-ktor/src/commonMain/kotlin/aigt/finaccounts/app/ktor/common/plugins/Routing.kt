@@ -7,7 +7,7 @@ import aigt.finaccounts.app.ktor.common.handlers.v1.readAccount
 import aigt.finaccounts.app.ktor.common.handlers.v1.searchAccount
 import aigt.finaccounts.app.ktor.common.handlers.v1.transactAccount
 import aigt.finaccounts.app.ktor.common.handlers.v1.updateAccount
-import aigt.finaccounts.biz.AccountProcessor
+import aigt.finaccounts.biz.aigt.finaccounts.biz.AccountProcessor
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*

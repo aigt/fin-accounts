@@ -71,6 +71,7 @@ private fun AccountDebug?.transportToStubCase(): ContextStubCase =
         AccountRequestDebugStubs.BAD_TRANSACTION_DESCRIPTION -> ContextStubCase.BAD_TRANSACTION_DESCRIPTION
         AccountRequestDebugStubs.BAD_TRANSACTION_TYPE -> ContextStubCase.BAD_TRANSACTION_TYPE
         AccountRequestDebugStubs.BAD_SEARCH_STRING -> ContextStubCase.BAD_SEARCH_STRING
+        AccountRequestDebugStubs.DB_ERROR -> ContextStubCase.DB_ERROR
         null -> ContextStubCase.NONE
     }
 
