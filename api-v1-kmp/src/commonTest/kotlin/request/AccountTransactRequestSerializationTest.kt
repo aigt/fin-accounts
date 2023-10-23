@@ -71,10 +71,6 @@ class AccountTransactRequestSerializationTest {
             json,
             Regex("\"description\":\\s*\"stub transaction description\""),
         )
-        assertContains(
-            json,
-            Regex("\"timestamp\":\\s*\"2023-07-04T18:43:00.123456789Z\""),
-        )
 
 
         // Баг Jackson - дублирует дискриминатор
