@@ -14,7 +14,7 @@ fun ICorChainDsl<FinAccountsContext>.stubNoCase(title: String) = worker {
         fail(
             ContextError(
                 code = "validation",
-                field = "stub",
+                field = "stub-case",
                 group = "validation",
                 message = "Wrong stub case is requested: ${stubCase.name}",
             ),

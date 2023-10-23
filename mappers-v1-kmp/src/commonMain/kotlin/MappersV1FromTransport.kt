@@ -70,10 +70,10 @@ private fun AccountDebug?.transportToStubCase(): ContextStubCase =
         AccountRequestDebugStubs.BAD_STATUS -> ContextStubCase.BAD_STATUS
         AccountRequestDebugStubs.BAD_TRANSACTION_AMOUNT -> ContextStubCase.BAD_TRANSACTION_AMOUNT
         AccountRequestDebugStubs.BAD_TRANSACTION_COUNTERPARTY -> ContextStubCase.BAD_TRANSACTION_COUNTERPARTY
-        AccountRequestDebugStubs.BAD_TRANSACTION_TIMESTAMP -> ContextStubCase.BAD_TRANSACTION_TIMESTAMP
         AccountRequestDebugStubs.BAD_TRANSACTION_DESCRIPTION -> ContextStubCase.BAD_TRANSACTION_DESCRIPTION
         AccountRequestDebugStubs.BAD_TRANSACTION_TYPE -> ContextStubCase.BAD_TRANSACTION_TYPE
-        AccountRequestDebugStubs.BAD_SEARCH_STRING -> ContextStubCase.BAD_SEARCH_STRING
+        AccountRequestDebugStubs.BAD_SEARCH_STRING_FILTER -> ContextStubCase.BAD_SEARCH_STRING_FILTER
+        AccountRequestDebugStubs.BAD_OWNER_ID_FILTER -> ContextStubCase.BAD_OWNER_ID_FILTER
         AccountRequestDebugStubs.DB_ERROR -> ContextStubCase.DB_ERROR
         null -> ContextStubCase.NONE
     }
@@ -189,7 +189,7 @@ private fun AccountStatus?.fromTransport(): CtxAccountStatus = when (this) {
     null -> CtxAccountStatus.NONE
 }
 
-private fun AccountTransaction.toInternal(): Transaction = Transaction(
+private fun AccountTransactionCreate.toInternal(): Transaction = Transaction(
     amount = this.amount
         ?.let { TransactionAmount(it) }
         ?: TransactionAmount.NONE,

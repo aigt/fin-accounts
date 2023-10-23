@@ -10,12 +10,9 @@ import aigt.finaccounts.common.models.account.AccountOwnerId
 import aigt.finaccounts.common.models.account.AccountStatus
 import aigt.finaccounts.common.models.state.ContextState
 import aigt.finaccounts.common.models.stubcase.ContextStubCase
-import aigt.finaccounts.common.models.transaction.TransactionAccountId
-import aigt.finaccounts.common.models.transaction.TransactionType
 import aigt.finaccounts.cor.ICorChainDsl
 import aigt.finaccounts.cor.worker
 import aigt.finaccounts.stubs.AccountStub
-import com.benasher44.uuid.uuid4
 
 fun ICorChainDsl<FinAccountsContext>.stubHistorySuccess(title: String) =
     worker {
@@ -47,14 +44,12 @@ fun ICorChainDsl<FinAccountsContext>.stubHistorySuccess(title: String) =
             }
             accountResponse = stub
 
-            val accountIdStub = uuid4().toString()
-            historyResponse.addAll(
-                AccountStub.prepareTransactionsList(
-                    listSize = 6,
-                    filter = "на чай",
-                    accountId = TransactionAccountId(accountIdStub),
-                    type = TransactionType.INCOME,
-                ),
-            )
+            // Заполняем историю транзакций, если пришёл id аккаунта в запросе
+            accountRequest.id.takeIf { it != AccountId.NONE }
+                ?.also {
+                    historyResponse.addAll(
+                        AccountStub.prepareSimpleTransactonsList(it),
+                    )
+                }
         }
     }

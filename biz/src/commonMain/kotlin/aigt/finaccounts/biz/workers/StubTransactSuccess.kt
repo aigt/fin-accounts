@@ -10,11 +10,13 @@ import aigt.finaccounts.common.models.account.AccountOwnerId
 import aigt.finaccounts.common.models.account.AccountStatus
 import aigt.finaccounts.common.models.state.ContextState
 import aigt.finaccounts.common.models.stubcase.ContextStubCase
+import aigt.finaccounts.common.models.transaction.TransactionAccountId
 import aigt.finaccounts.cor.ICorChainDsl
 import aigt.finaccounts.cor.worker
 import aigt.finaccounts.stubs.AccountStub
+import aigt.finaccounts.stubs.TransactionStub
 
-fun ICorChainDsl<FinAccountsContext>.stubOffersSuccess(title: String) =
+fun ICorChainDsl<FinAccountsContext>.stubTransactSuccess(title: String) =
     worker {
         this.title = title
         on { stubCase == ContextStubCase.SUCCESS && state == ContextState.RUNNING }
@@ -44,6 +46,17 @@ fun ICorChainDsl<FinAccountsContext>.stubOffersSuccess(title: String) =
             }
             accountResponse = stub
 
-            historyResponse.add(transactionRequest)
+            historyResponse.add(
+                TransactionStub.getSimpleTransactionStub().apply {
+                    amount = transactionRequest.amount
+                    counterparty = transactionRequest.counterparty
+                    type = transactionRequest.type
+                    description = transactionRequest.description
+                    accountId = accountRequest.id
+                        .takeIf { it != AccountId.NONE }
+                        ?.let { TransactionAccountId(it.asString()) }
+                        ?: TransactionAccountId.NONE
+                },
+            )
         }
     }
