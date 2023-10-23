@@ -5,7 +5,7 @@ import aigt.finaccounts.api.v1.kmp.models.AccountResponseObject
 import aigt.finaccounts.api.v1.kmp.models.AccountTransactObject
 import aigt.finaccounts.api.v1.kmp.models.AccountTransactRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountTransactResponse
-import aigt.finaccounts.api.v1.kmp.models.AccountTransaction
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactionCreate
 import aigt.finaccounts.api.v1.kmp.models.TransactionType
 import aigt.finaccounts.blackbox.fixture.client.Client
 import io.kotest.assertions.asClue
@@ -56,12 +56,11 @@ suspend fun <T> Client.transactAccount(
         requestType = requestType,
         debug = debug,
         account = AccountTransactObject(id = accountId, lock = lock),
-        transaction = AccountTransaction(
+        transaction = AccountTransactionCreate(
             type = transactionType,
             amount = transactionAmount,
             counterparty = transactionCounterparty,
             description = transactionDescription,
-            timestamp = transactionTimestamp,
         ),
     )
 
