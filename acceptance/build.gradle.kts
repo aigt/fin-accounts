@@ -37,11 +37,11 @@ dependencies {
 var severity: String = "MINOR"
 
 tasks {
-    withType<Test>().configureEach {
+    /*withType<Test>().configureEach {
         useJUnitPlatform()
         dependsOn(":finaccount-app-ktor:publishImageToLocalRegistry")
         dependsOn(":finaccount-app-kafka:dockerBuildImage")
-    }
+    }*/
     /*    test {
             systemProperty("kotest.framework.test.severity", "NORMAL")
         }
@@ -49,4 +49,15 @@ tasks {
             systemProperty("kotest.framework.test.severity", "MINOR")
             group = "verification"
         }*/
+    withType<Test>().configureEach {
+        useJUnitPlatform()
+    }
+    test {
+        systemProperty("kotest.framework.test.severity", "NORMAL")
+    }
+    create<Test>("test-strict") {
+        systemProperty("kotest.framework.test.severity", "MINOR")
+        group = "verification"
+    }
+
 }
