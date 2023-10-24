@@ -28,7 +28,8 @@ fun FunSpec.testApiV1Jvm(client: Client, prefix: String = "") {
                 it shouldBe created
             }
         }
-
+        
+        /* Раскомментировать когда будет БД
         test("Update Account ok") {
             val created = client.createAccount()
             client.updateAccount(
@@ -73,7 +74,7 @@ fun FunSpec.testApiV1Jvm(client: Client, prefix: String = "") {
                     // TODO раскомментировать, когда будет реальный реп
                 }
             }
-        }
+        }*/
 
         test("Transact Account ok") {
             val created = client.createAccount()

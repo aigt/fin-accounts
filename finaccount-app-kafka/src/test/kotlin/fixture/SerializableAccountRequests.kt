@@ -14,7 +14,7 @@ import aigt.finaccounts.api.v1.kmp.models.AccountSearchRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountStatus
 import aigt.finaccounts.api.v1.kmp.models.AccountTransactObject
 import aigt.finaccounts.api.v1.kmp.models.AccountTransactRequest
-import aigt.finaccounts.api.v1.kmp.models.AccountTransaction
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactionCreate
 import aigt.finaccounts.api.v1.kmp.models.AccountUpdateObject
 import aigt.finaccounts.api.v1.kmp.models.AccountUpdateRequest
 import aigt.finaccounts.api.v1.kmp.models.TransactionType
@@ -39,7 +39,7 @@ fun getAccountReadRequest() = AccountReadRequest(
     requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
     debug = AccountDebug(
         mode = AccountRequestDebugMode.STUB,
-        stub = AccountRequestDebugStubs.BAD_OWNER_ID,
+        stub = AccountRequestDebugStubs.SUCCESS,
     ),
     account = AccountReadObject(id = "26c45c31-857f-4d5d-bf59-890817c9320b"),
 )
@@ -49,7 +49,7 @@ fun getAccountUpdateRequest() = AccountUpdateRequest(
     requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
     debug = AccountDebug(
         mode = AccountRequestDebugMode.STUB,
-        stub = AccountRequestDebugStubs.BAD_OWNER_ID,
+        stub = AccountRequestDebugStubs.SUCCESS,
     ),
     account = AccountUpdateObject(
         description = "stub description",
@@ -67,7 +67,7 @@ fun getAccountSearchRequest() = AccountSearchRequest(
     requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
     debug = AccountDebug(
         mode = AccountRequestDebugMode.STUB,
-        stub = AccountRequestDebugStubs.BAD_OWNER_ID,
+        stub = AccountRequestDebugStubs.SUCCESS,
     ),
     accountFilter = AccountSearchFilter(
         searchString = "stub search string",
@@ -80,7 +80,7 @@ fun getAccountHistoryRequest() = AccountHistoryRequest(
     requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
     debug = AccountDebug(
         mode = AccountRequestDebugMode.STUB,
-        stub = AccountRequestDebugStubs.BAD_OWNER_ID,
+        stub = AccountRequestDebugStubs.SUCCESS,
     ),
     account = AccountHistoryObject(id = "26c45c31-857f-4d5d-bf59-890817c9320b"),
 )
@@ -90,17 +90,16 @@ fun getAccountTransactRequest() = AccountTransactRequest(
     requestId = "75038a32-9d63-4394-968b-d33aaedc057e",
     debug = AccountDebug(
         mode = AccountRequestDebugMode.STUB,
-        stub = AccountRequestDebugStubs.BAD_OWNER_ID,
+        stub = AccountRequestDebugStubs.SUCCESS,
     ),
     account = AccountTransactObject(
         id = "26c45c31-857f-4d5d-bf59-890817c9320b",
         lock = "a3c0cffb-97d3-4e9d-898d-10eb10470501",
     ),
-    transaction = AccountTransaction(
+    transaction = AccountTransactionCreate(
         type = TransactionType.WITHDRAW,
         amount = 1005_00,
         counterparty = "11102220333044405550",
         description = "stub transaction description",
-        timestamp = "2023-07-04T18:43:00.123456789Z",
     ),
 )

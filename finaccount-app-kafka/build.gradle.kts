@@ -3,7 +3,11 @@ plugins {
     kotlin("jvm")
     id("com.bmuschko.docker-java-application")
 }
-
+dependencies {
+    implementation(project(mapOf("path" to ":logging:lib:common")))
+    implementation(project(mapOf("path" to ":logging:lib:common")))
+    implementation(project(mapOf("path" to ":logging:lib:common")))
+}
 application {
     mainClass.set("aigt.finaccounts.app.kafka.MainKt")
 }
@@ -53,9 +57,28 @@ dependencies {
     implementation(project(":api-v1-kmp"))
     implementation(project(":mappers-v1-jvm"))
     implementation(project(":mappers-v1-kmp"))
+    implementation(project(":logging:lib:common"))
+    implementation(project(":logging:lib:logback"))
 
     // logic
     implementation(project(":biz"))
 
     testImplementation(kotlin("test-junit"))
 }
+/*
+tasks.withType<Copy> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType<Tar> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType<Zip> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType<Sync> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}*/
+

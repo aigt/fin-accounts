@@ -7,7 +7,7 @@ import aigt.finaccounts.api.v1.kmp.models.AccountReadRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountSearchRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountTransactRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountUpdateRequest
-import aigt.finaccounts.biz.aigt.finaccounts.biz.AccountProcessor
+import aigt.finaccounts.biz.AccountProcessor
 import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.mappers.kmp.v1.fromTransport
 import aigt.finaccounts.mappers.kmp.v1.toTransportCreate

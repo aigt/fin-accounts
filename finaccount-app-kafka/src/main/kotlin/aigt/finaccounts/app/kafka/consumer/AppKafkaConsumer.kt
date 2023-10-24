@@ -53,22 +53,9 @@ class AppKafkaConsumer(
                     log.info { "Receive ${records.count()} messages" }
 
                 records.forEach { record: ConsumerRecord<String, String> ->
-                    try {
-                        val ctx = FinAccountsContext(
-                            requestStartTime = RequestStartTime(startTime = Clock.System.now()),
-                        )
-                        log.info { "process ${record.key()} from ${record.topic()}:\n${record.value()}" }
-                        val (_, outputTopic, strategy) = topicsAndStrategyByInputTopic[record.topic()]
-                            ?: throw RuntimeException("Receive message from unknown topic ${record.topic()}")
-
-                        strategy.deserialize(record.value(), ctx)
-                        processor.exec(ctx)
-
-                        sendResponse(ctx, strategy, outputTopic)
-                    } catch (ex: Exception) {
-                        log.error(ex) { "error" }
-                    }
+                    processRecord(record)
                 }
+
             }
         } catch (ex: WakeupException) {
             // ignore for shutdown
@@ -81,6 +68,28 @@ class AppKafkaConsumer(
             withContext(NonCancellable) {
                 consumer.close()
             }
+        }
+    }
+
+    private suspend fun processRecord(
+        record: ConsumerRecord<String, String>,
+    ) {
+        try {
+
+            val ctx = FinAccountsContext(
+                requestStartTime = RequestStartTime(startTime = Clock.System.now()),
+            )
+
+            log.info { "process ${record.key()} from ${record.topic()}:\n${record.value()}" }
+            val (_, outputTopic, strategy) = topicsAndStrategyByInputTopic[record.topic()]
+                ?: throw RuntimeException("Receive message from unknown topic ${record.topic()}")
+
+            strategy.deserialize(record.value(), ctx)
+            processor.exec(ctx)
+            sendResponse(ctx, strategy, outputTopic)
+
+        } catch (ex: Exception) {
+            log.error(ex) { "error" }
         }
     }
 
