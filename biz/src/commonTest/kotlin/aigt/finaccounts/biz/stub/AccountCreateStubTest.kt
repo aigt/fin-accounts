@@ -1,7 +1,7 @@
 package aigt.finaccounts.biz.stub
 
 import aigt.finaccounts.biz.AccountProcessor
-import aigt.finaccounts.biz.fixture.getBaseFinAccountsContext
+import aigt.finaccounts.biz.fixture.getBaseStubFinAccountsContext
 import aigt.finaccounts.common.helpers.makeCreateRequestAccount
 import aigt.finaccounts.common.models.account.Account
 import aigt.finaccounts.common.models.account.AccountCurrency
@@ -23,7 +23,7 @@ class AccountCreateStubTest {
         AccountOwnerId("9deb6b8c-b797-4b34-9201-776ae1d31111")
     private val ACCOUNT_CURRENCY = AccountCurrency("EUR")
 
-    private fun getFinAccountsContext() = getBaseFinAccountsContext().copy(
+    private fun getFinAccountsContext() = getBaseStubFinAccountsContext().copy(
         command = ContextCommand.CREATE,
         accountRequest = makeCreateRequestAccount(
             ACCOUNT_DESCRIPTION,

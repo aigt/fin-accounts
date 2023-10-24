@@ -1,7 +1,7 @@
 package aigt.finaccounts.biz.stub
 
 import aigt.finaccounts.biz.AccountProcessor
-import aigt.finaccounts.biz.fixture.getBaseFinAccountsContext
+import aigt.finaccounts.biz.fixture.getBaseStubFinAccountsContext
 import aigt.finaccounts.common.helpers.makeTransactRequestAccount
 import aigt.finaccounts.common.models.account.Account
 import aigt.finaccounts.common.models.account.AccountId
@@ -22,7 +22,7 @@ class AccountTransactStubTest {
 
     private val accountId = AccountId("99992000300040005000")
 
-    private fun getFinAccountsContext() = getBaseFinAccountsContext().copy(
+    private fun getFinAccountsContext() = getBaseStubFinAccountsContext().copy(
         command = ContextCommand.TRANSACT,
         accountRequest = makeTransactRequestAccount(accountId),
         transactionRequest = TransactionStub.getTransactActionTransactionStub(),

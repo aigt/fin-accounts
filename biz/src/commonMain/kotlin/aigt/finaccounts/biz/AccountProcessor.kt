@@ -2,6 +2,11 @@ package aigt.finaccounts.biz
 
 import aigt.finaccounts.biz.groups.operation
 import aigt.finaccounts.biz.groups.stubs
+import aigt.finaccounts.biz.validation.finishAccountValidation
+import aigt.finaccounts.biz.validation.validateCurrencyNotEmpty
+import aigt.finaccounts.biz.validation.validateDescriptionContent
+import aigt.finaccounts.biz.validation.validateOwnerIdNotEmpty
+import aigt.finaccounts.biz.validation.validation
 import aigt.finaccounts.biz.workers.initStatus
 import aigt.finaccounts.biz.workers.stubCreateSuccess
 import aigt.finaccounts.biz.workers.stubDbError
@@ -25,8 +30,13 @@ import aigt.finaccounts.biz.workers.stubValidationBadTransactionDescription
 import aigt.finaccounts.biz.workers.stubValidationBadTransactionType
 import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.common.FinAccountsCorSettings
+import aigt.finaccounts.common.models.account.AccountBalance
+import aigt.finaccounts.common.models.account.AccountId
+import aigt.finaccounts.common.models.account.AccountLastTransactionTime
+import aigt.finaccounts.common.models.account.AccountStatus
 import aigt.finaccounts.common.models.command.ContextCommand
 import aigt.finaccounts.cor.rootChain
+import aigt.finaccounts.cor.worker
 
 class AccountProcessor(
     @Suppress("unused")
@@ -47,6 +57,38 @@ class AccountProcessor(
                     stubDbError("Имитация ошибки работы с БД")
                     stubNoCase("Ошибка: запрошенный стаб недопустим")
                 }
+                validation {
+                    worker("Копируем поля в accountValidating") {
+                        accountValidating = accountRequest.deepCopy()
+                    }
+                    worker("Очистка id") {
+                        accountValidating.id = AccountId.NONE
+                    }
+                    worker("Очистка баланса") {
+                        accountValidating.balance = AccountBalance.NONE
+                    }
+                    worker("Очистка статуса") {
+                        accountValidating.status = AccountStatus.NONE
+                    }
+                    worker("Очистка времени последней транзакции") {
+                        accountValidating.lastTransactionTime =
+                            AccountLastTransactionTime.NONE
+                    }
+                    worker("Очистка разрешений") {
+                        accountValidating.permissionsClient.clear()
+                    }
+                    worker("Очистка описания") {
+                        accountValidating.description =
+                            accountValidating.description.trim()
+                    }
+
+                    validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
+                    validateCurrencyNotEmpty("Проверка, что указана валюта счёта")
+                    validateDescriptionContent("Проверка описания")
+
+                    finishAccountValidation("Завершение проверок")
+                }
+
             }
 
             operation("Получить аккаунт", ContextCommand.READ) {

@@ -19,7 +19,7 @@ val requestStartTime =
     RequestStartTime("2023-08-04T18:43:00.123456789Z".toInstant())
 
 
-fun getBaseFinAccountsContext() = FinAccountsContext(
+fun getBaseStubFinAccountsContext() = FinAccountsContext(
     command = ContextCommand.NONE,
     state = ContextState.NONE,
     errors = mutableListOf(),
@@ -34,3 +34,20 @@ fun getBaseFinAccountsContext() = FinAccountsContext(
     accountsResponse = mutableListOf(),
     historyResponse = mutableListOf(),
 )
+
+fun getBaseTestFinAccountsContext(command: ContextCommand) =
+    FinAccountsContext(
+        command = command,
+        state = ContextState.NONE,
+        errors = mutableListOf(),
+        workMode = ContextWorkMode.TEST,
+        stubCase = ContextStubCase.NONE,
+        requestId = RequestId("75038a32-9d63-4394-968b-d33aaedc057e"),
+        requestStartTime = requestStartTime,
+        accountFilter = AccountFilter.NONE,
+        accountRequest = Account.NONE,
+        transactionRequest = Transaction.NONE,
+        accountResponse = Account.NONE,
+        accountsResponse = mutableListOf(),
+        historyResponse = mutableListOf(),
+    )

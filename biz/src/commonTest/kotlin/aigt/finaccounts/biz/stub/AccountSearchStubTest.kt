@@ -1,7 +1,7 @@
 package aigt.finaccounts.biz.stub
 
 import aigt.finaccounts.biz.AccountProcessor
-import aigt.finaccounts.biz.fixture.getBaseFinAccountsContext
+import aigt.finaccounts.biz.fixture.getBaseStubFinAccountsContext
 import aigt.finaccounts.common.models.account.Account
 import aigt.finaccounts.common.models.account.AccountBalance
 import aigt.finaccounts.common.models.account.AccountCurrency
@@ -26,7 +26,7 @@ class AccountSearchStubTest {
     private val searchString = "для теста 111"
     private val ownerIdString = "cd565097-4b69-490e-b167-b59128475562"
 
-    private fun getFinAccountsContext() = getBaseFinAccountsContext().copy(
+    private fun getFinAccountsContext() = getBaseStubFinAccountsContext().copy(
         command = ContextCommand.SEARCH,
         accountFilter = AccountFilter(
             SearchStringFilter(searchString),
