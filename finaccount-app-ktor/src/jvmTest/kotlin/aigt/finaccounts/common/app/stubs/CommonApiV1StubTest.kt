@@ -19,7 +19,7 @@ import aigt.finaccounts.api.v1.kmp.models.AccountStatus
 import aigt.finaccounts.api.v1.kmp.models.AccountTransactObject
 import aigt.finaccounts.api.v1.kmp.models.AccountTransactRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountTransactResponse
-import aigt.finaccounts.api.v1.kmp.models.AccountTransaction
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactionCreate
 import aigt.finaccounts.api.v1.kmp.models.AccountUpdateObject
 import aigt.finaccounts.api.v1.kmp.models.AccountUpdateRequest
 import aigt.finaccounts.api.v1.kmp.models.AccountUpdateResponse
@@ -212,12 +212,11 @@ class CommonApiV1StubTest {
                     id = "10002000300040005000",
                     lock = null,
                 ),
-                transaction = AccountTransaction(
+                transaction = AccountTransactionCreate(
                     type = TransactionType.INCOME,
                     amount = 100_00,
                     counterparty = "3f275212-fe2e-4109-953c-a0b68acde6b9",
                     description = "Add new transaction for test",
-                    timestamp = "2023-07-04T18:43:00.123456789Z",
                 ),
             )
 
