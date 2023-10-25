@@ -2,10 +2,20 @@ package aigt.finaccounts.biz
 
 import aigt.finaccounts.biz.groups.operation
 import aigt.finaccounts.biz.groups.stubs
+import aigt.finaccounts.biz.validation.clean.validatingCleanBalance
+import aigt.finaccounts.biz.validation.clean.validatingCleanCurrency
+import aigt.finaccounts.biz.validation.clean.validatingCleanDescription
+import aigt.finaccounts.biz.validation.clean.validatingCleanId
+import aigt.finaccounts.biz.validation.clean.validatingCleanLastTransactionTime
+import aigt.finaccounts.biz.validation.clean.validatingCleanOwnerId
+import aigt.finaccounts.biz.validation.clean.validatingCleanPermissionsClient
+import aigt.finaccounts.biz.validation.clean.validatingCleanStatus
+import aigt.finaccounts.biz.validation.clean.validatingTrimDescription
 import aigt.finaccounts.biz.validation.finishAccountValidation
 import aigt.finaccounts.biz.validation.validateCurrencyNotEmpty
 import aigt.finaccounts.biz.validation.validateDescriptionContent
 import aigt.finaccounts.biz.validation.validateOwnerIdNotEmpty
+import aigt.finaccounts.biz.validation.validatingCopyAccount
 import aigt.finaccounts.biz.validation.validation
 import aigt.finaccounts.biz.workers.initStatus
 import aigt.finaccounts.biz.workers.stubCreateSuccess
@@ -30,13 +40,8 @@ import aigt.finaccounts.biz.workers.stubValidationBadTransactionDescription
 import aigt.finaccounts.biz.workers.stubValidationBadTransactionType
 import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.common.FinAccountsCorSettings
-import aigt.finaccounts.common.models.account.AccountBalance
-import aigt.finaccounts.common.models.account.AccountId
-import aigt.finaccounts.common.models.account.AccountLastTransactionTime
-import aigt.finaccounts.common.models.account.AccountStatus
 import aigt.finaccounts.common.models.command.ContextCommand
 import aigt.finaccounts.cor.rootChain
-import aigt.finaccounts.cor.worker
 
 class AccountProcessor(
     @Suppress("unused")
@@ -58,37 +63,27 @@ class AccountProcessor(
                     stubNoCase("Ошибка: запрошенный стаб недопустим")
                 }
                 validation {
-                    worker("Копируем поля в accountValidating") {
-                        accountValidating = accountRequest.deepCopy()
-                    }
-                    worker("Очистка id") {
-                        accountValidating.id = AccountId.NONE
-                    }
-                    worker("Очистка баланса") {
-                        accountValidating.balance = AccountBalance.NONE
-                    }
-                    worker("Очистка статуса") {
-                        accountValidating.status = AccountStatus.NONE
-                    }
-                    worker("Очистка времени последней транзакции") {
-                        accountValidating.lastTransactionTime =
-                            AccountLastTransactionTime.NONE
-                    }
-                    worker("Очистка разрешений") {
-                        accountValidating.permissionsClient.clear()
-                    }
-                    worker("Очистка описания") {
-                        accountValidating.description =
-                            accountValidating.description.trim()
-                    }
+                    // Подготовка к валидации
+                    validatingCopyAccount("Копируем поля в accountValidating")
 
+                    // Очистка неиспользуемых в комманде полей
+                    validatingCleanId("Очистка id")
+                    validatingCleanBalance("Очистка баланса")
+                    validatingCleanStatus("Очистка статуса")
+                    validatingCleanLastTransactionTime("Очистка времени последней транзакции")
+                    validatingCleanPermissionsClient("Очистка разрешений")
+
+                    // Корректировка полей
+                    validatingTrimDescription("Очистка пустых символов в начале и конце описания")
+
+                    // Валидация данных
                     validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
                     validateCurrencyNotEmpty("Проверка, что указана валюта счёта")
                     validateDescriptionContent("Проверка описания")
 
+                    // Завершение валидации
                     finishAccountValidation("Завершение проверок")
                 }
-
             }
 
             operation("Получить аккаунт", ContextCommand.READ) {
@@ -97,6 +92,25 @@ class AccountProcessor(
                     stubValidationBadId("Имитация ошибки валидации id")
                     stubDbError("Имитация ошибки работы с БД")
                     stubNoCase("Ошибка: запрошенный стаб недопустим")
+                }
+                validation {
+                    // Подготовка к валидации
+                    validatingCopyAccount("Копируем поля в accountValidating")
+
+                    // Очистка неиспользуемых в комманде полей
+                    validatingCleanDescription("Очистка описаия")
+                    validatingCleanOwnerId("Очистка идентификатора владельца счёта")
+                    validatingCleanBalance("Очистка баланса")
+                    validatingCleanCurrency("Очистка валюты счёта")
+                    validatingCleanStatus("Очистка статуса")
+                    validatingCleanLastTransactionTime("Очистка времени последней транзакции")
+                    validatingCleanPermissionsClient("Очистка разрешений")
+
+                    // Валидация данных
+                    // validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
+
+                    // Завершение валидации
+                    finishAccountValidation("Завершение проверок")
                 }
             }
 
@@ -112,6 +126,25 @@ class AccountProcessor(
                     stubDbError("Имитация ошибки работы с БД")
                     stubNoCase("Ошибка: запрошенный стаб недопустим")
                 }
+                validation {
+                    // Подготовка к валидации
+                    validatingCopyAccount("Копируем поля в accountValidating")
+
+                    // Очистка неиспользуемых в комманде полей
+                    validatingCleanLastTransactionTime("Очистка времени последней транзакции")
+                    validatingCleanPermissionsClient("Очистка разрешений")
+
+                    // Корректировка полей
+                    validatingTrimDescription("Очистка пустых символов в начале и конце описания")
+
+                    // Валидация данных
+                    validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
+                    validateCurrencyNotEmpty("Проверка, что указана валюта счёта")
+                    validateDescriptionContent("Проверка описания")
+
+                    // Завершение валидации
+                    finishAccountValidation("Завершение проверок")
+                }
             }
 
             operation("История транзакций по счёту", ContextCommand.HISTORY) {
@@ -120,6 +153,25 @@ class AccountProcessor(
                     stubValidationBadId("Имитация ошибки валидации id")
                     stubDbError("Имитация ошибки работы с БД")
                     stubNoCase("Ошибка: запрошенный стаб недопустим")
+                }
+                validation {
+                    // Подготовка к валидации
+                    validatingCopyAccount("Копируем поля в accountValidating")
+
+                    // Очистка неиспользуемых в комманде полей
+                    validatingCleanDescription("Очистка описаия")
+                    validatingCleanOwnerId("Очистка идентификатора владельца счёта")
+                    validatingCleanBalance("Очистка баланса")
+                    validatingCleanCurrency("Очистка валюты счёта")
+                    validatingCleanStatus("Очистка статуса")
+                    validatingCleanLastTransactionTime("Очистка времени последней транзакции")
+                    validatingCleanPermissionsClient("Очистка разрешений")
+
+                    // Валидация данных
+                    // validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
+
+                    // Завершение валидации
+                    finishAccountValidation("Завершение проверок")
                 }
             }
 
@@ -132,7 +184,26 @@ class AccountProcessor(
                     stubDbError("Имитация ошибки работы с БД")
                     stubNoCase("Ошибка: запрошенный стаб недопустим")
                 }
+                validation {
+                    // Подготовка к валидации
+                    validatingCopyAccount("Копируем поля в accountValidating")
 
+                    // Очистка неиспользуемых в комманде полей
+                    validatingCleanId("Очистка id")
+                    validatingCleanDescription("Очистка описаия")
+                    validatingCleanOwnerId("Очистка идентификатора владельца счёта")
+                    validatingCleanBalance("Очистка баланса")
+                    validatingCleanCurrency("Очистка валюты счёта")
+                    validatingCleanStatus("Очистка статуса")
+                    validatingCleanLastTransactionTime("Очистка времени последней транзакции")
+                    validatingCleanPermissionsClient("Очистка разрешений")
+
+                    // Валидация данных
+                    // validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
+
+                    // Завершение валидации
+                    finishAccountValidation("Завершение проверок")
+                }
             }
 
             operation(
@@ -149,6 +220,26 @@ class AccountProcessor(
                     stubDbError("Имитация ошибки работы с БД")
                     stubNoCase("Ошибка: запрошенный стаб недопустим")
                 }
+                validation {
+                    // Подготовка к валидации
+                    validatingCopyAccount("Копируем поля в accountValidating")
+
+                    // Очистка неиспользуемых в комманде полей
+                    validatingCleanDescription("Очистка описаия")
+                    validatingCleanOwnerId("Очистка идентификатора владельца счёта")
+                    validatingCleanBalance("Очистка баланса")
+                    validatingCleanCurrency("Очистка валюты счёта")
+                    validatingCleanStatus("Очистка статуса")
+                    validatingCleanLastTransactionTime("Очистка времени последней транзакции")
+                    validatingCleanPermissionsClient("Очистка разрешений")
+
+                    // Валидация данных
+                    // validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
+
+                    // Завершение валидации
+                    finishAccountValidation("Завершение проверок")
+                }
+
             }
         }.build()
     }

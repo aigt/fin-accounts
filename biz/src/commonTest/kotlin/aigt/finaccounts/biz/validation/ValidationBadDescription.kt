@@ -45,6 +45,21 @@ fun validationDescriptionTrim(
     assertEquals("abc", ctx.accountValidated.description.asString())
 }
 
+@OptIn(ExperimentalCoroutinesApi::class)
+fun validationDescriptionCleaned(
+    command: ContextCommand,
+    processor: AccountProcessor,
+) = runTest {
+    val ctx = getBaseTestFinAccountsContext(command).apply {
+        accountRequest = SimpleAccountsStub.SIMPLE_ACTIVE_ACCOUNT.apply {
+            description = AccountDescription("should be cleaned")
+        }
+    }
+    processor.exec(ctx)
+    assertEquals(0, ctx.errors.size)
+    assertNotEquals(ContextState.FAILING, ctx.state)
+    assertEquals(AccountDescription.NONE, ctx.accountValidated.description)
+}
 
 @OptIn(ExperimentalCoroutinesApi::class)
 fun validationDescriptionSymbols(
