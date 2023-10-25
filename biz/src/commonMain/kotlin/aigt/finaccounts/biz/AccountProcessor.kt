@@ -2,6 +2,7 @@ package aigt.finaccounts.biz
 
 import aigt.finaccounts.biz.groups.operation
 import aigt.finaccounts.biz.groups.stubs
+import aigt.finaccounts.biz.validation.clean.validateIdContent
 import aigt.finaccounts.biz.validation.clean.validatingCleanBalance
 import aigt.finaccounts.biz.validation.clean.validatingCleanCurrency
 import aigt.finaccounts.biz.validation.clean.validatingCleanDescription
@@ -11,11 +12,17 @@ import aigt.finaccounts.biz.validation.clean.validatingCleanOwnerId
 import aigt.finaccounts.biz.validation.clean.validatingCleanPermissionsClient
 import aigt.finaccounts.biz.validation.clean.validatingCleanStatus
 import aigt.finaccounts.biz.validation.clean.validatingTrimDescription
+import aigt.finaccounts.biz.validation.finishAccountFilterValidation
 import aigt.finaccounts.biz.validation.finishAccountValidation
+import aigt.finaccounts.biz.validation.finishTransactionValidation
 import aigt.finaccounts.biz.validation.validateCurrencyNotEmpty
 import aigt.finaccounts.biz.validation.validateDescriptionContent
+import aigt.finaccounts.biz.validation.validateIdNotEmpty
+import aigt.finaccounts.biz.validation.validateOwnerIdContent
 import aigt.finaccounts.biz.validation.validateOwnerIdNotEmpty
 import aigt.finaccounts.biz.validation.validatingCopyAccount
+import aigt.finaccounts.biz.validation.validatingCopyFilter
+import aigt.finaccounts.biz.validation.validatingCopyTransaction
 import aigt.finaccounts.biz.validation.validation
 import aigt.finaccounts.biz.workers.initStatus
 import aigt.finaccounts.biz.workers.stubCreateSuccess
@@ -50,7 +57,7 @@ class AccountProcessor(
     suspend fun exec(ctx: FinAccountsContext) = BusinessChain.exec(ctx)
 
     companion object {
-        private val BusinessChain = rootChain<FinAccountsContext> {
+        private val BusinessChain = rootChain {
             initStatus("Инициализация статуса")
 
             operation("Создание аккаунта", ContextCommand.CREATE) {
@@ -78,6 +85,7 @@ class AccountProcessor(
 
                     // Валидация данных
                     validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
+                    validateOwnerIdContent("Проверка идентификатора владельца счёта")
                     validateCurrencyNotEmpty("Проверка, что указана валюта счёта")
                     validateDescriptionContent("Проверка описания")
 
@@ -107,7 +115,8 @@ class AccountProcessor(
                     validatingCleanPermissionsClient("Очистка разрешений")
 
                     // Валидация данных
-                    // validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
+                    validateIdNotEmpty("Проверка, что идентификатор счёта не пуст")
+                    validateIdContent("Проверка идентификатора")
 
                     // Завершение валидации
                     finishAccountValidation("Завершение проверок")
@@ -138,9 +147,12 @@ class AccountProcessor(
                     validatingTrimDescription("Очистка пустых символов в начале и конце описания")
 
                     // Валидация данных
-                    validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
-                    validateCurrencyNotEmpty("Проверка, что указана валюта счёта")
+                    validateIdNotEmpty("Проверка, что идентификатор счёта не пуст")
+                    validateIdContent("Проверка идентификатора")
                     validateDescriptionContent("Проверка описания")
+                    validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
+                    validateOwnerIdContent("Проверка идентификатора владельца счёта")
+                    validateCurrencyNotEmpty("Проверка, что указана валюта счёта")
 
                     // Завершение валидации
                     finishAccountValidation("Завершение проверок")
@@ -168,7 +180,8 @@ class AccountProcessor(
                     validatingCleanPermissionsClient("Очистка разрешений")
 
                     // Валидация данных
-                    // validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
+                    validateIdNotEmpty("Проверка, что идентификатор счёта не пуст")
+                    validateIdContent("Проверка идентификатора")
 
                     // Завершение валидации
                     finishAccountValidation("Завершение проверок")
@@ -186,23 +199,16 @@ class AccountProcessor(
                 }
                 validation {
                     // Подготовка к валидации
-                    validatingCopyAccount("Копируем поля в accountValidating")
+                    validatingCopyFilter("Копируем фильтр в accountFilterValidating")
 
                     // Очистка неиспользуемых в комманде полей
-                    validatingCleanId("Очистка id")
-                    validatingCleanDescription("Очистка описаия")
-                    validatingCleanOwnerId("Очистка идентификатора владельца счёта")
-                    validatingCleanBalance("Очистка баланса")
-                    validatingCleanCurrency("Очистка валюты счёта")
-                    validatingCleanStatus("Очистка статуса")
-                    validatingCleanLastTransactionTime("Очистка времени последней транзакции")
-                    validatingCleanPermissionsClient("Очистка разрешений")
+                    // validatingCleanId("Очистка id")
 
                     // Валидация данных
                     // validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
 
                     // Завершение валидации
-                    finishAccountValidation("Завершение проверок")
+                    finishAccountFilterValidation("Завершение проверок")
                 }
             }
 
@@ -223,6 +229,7 @@ class AccountProcessor(
                 validation {
                     // Подготовка к валидации
                     validatingCopyAccount("Копируем поля в accountValidating")
+                    validatingCopyTransaction("Копируем поля в transactionValidating")
 
                     // Очистка неиспользуемых в комманде полей
                     validatingCleanDescription("Очистка описаия")
@@ -234,12 +241,13 @@ class AccountProcessor(
                     validatingCleanPermissionsClient("Очистка разрешений")
 
                     // Валидация данных
-                    // validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
+                    validateIdNotEmpty("Проверка, что идентификатор счёта не пуст")
+                    validateIdContent("Проверка идентификатора")
 
                     // Завершение валидации
-                    finishAccountValidation("Завершение проверок")
+                    finishAccountValidation("Завершение проверок счёта")
+                    finishTransactionValidation("Завершение проверок транзакции")
                 }
-
             }
         }.build()
     }
