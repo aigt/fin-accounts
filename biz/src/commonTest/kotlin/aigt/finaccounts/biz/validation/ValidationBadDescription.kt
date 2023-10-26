@@ -20,13 +20,20 @@ fun validationDescriptionCorrect(
 ) = runTest {
     val ctx = getBaseTestFinAccountsContext(command).apply {
         accountRequest = SimpleAccountsStub.SIMPLE_ACTIVE_ACCOUNT.apply {
-            description = AccountDescription("abc")
+            description = AccountDescription("abc ABC абв АБВ .,_-")
         }
     }
     processor.exec(ctx)
-    assertEquals(0, ctx.errors.size)
+    assertEquals(
+        0,
+        ctx.errors.size,
+        message = "${ctx.accountValidating.description.asString()} should not have any errors, but have: ${ctx.errors}",
+    )
     assertNotEquals(ContextState.FAILING, ctx.state)
-    assertEquals("abc", ctx.accountValidated.description.asString())
+    assertEquals(
+        "abc ABC абв АБВ .,_-",
+        ctx.accountValidated.description.asString(),
+    )
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)

@@ -18,10 +18,9 @@ fun ICorChainDsl<FinAccountsContext>.validateDescriptionContent(
     this.title = title
 
     // Проверка контента на валидность
-    val regExp = Regex("^[a-zA-Zа-яА-Я0-9_\\-. ]+$")
+    val regExp = Regex("^[\\p{L}\\d_\\-., ]+$")
     on {
         accountValidating.description != AccountDescription.NONE &&
-            accountValidating.description.isNotEmpty() &&
             !accountValidating.description.matches(regExp)
     }
 

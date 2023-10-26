@@ -83,10 +83,12 @@ class AccountProcessor(
                     // Корректировка полей
                     validatingTrimDescription("Очистка пустых символов в начале и конце описания")
 
-                    // Валидация данных
+                    // Проверка наличия обязательных полей
                     validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
-                    validateOwnerIdContent("Проверка идентификатора владельца счёта")
                     validateCurrencyNotEmpty("Проверка, что указана валюта счёта")
+
+                    // Валидация данных
+                    validateOwnerIdContent("Проверка идентификатора владельца счёта")
                     validateDescriptionContent("Проверка описания")
 
                     // Завершение валидации
@@ -114,8 +116,10 @@ class AccountProcessor(
                     validatingCleanLastTransactionTime("Очистка времени последней транзакции")
                     validatingCleanPermissionsClient("Очистка разрешений")
 
-                    // Валидация данных
+                    // Проверка наличия обязательных полей
                     validateIdNotEmpty("Проверка, что идентификатор счёта не пуст")
+
+                    // Валидация данных
                     validateIdContent("Проверка идентификатора")
 
                     // Завершение валидации
@@ -146,11 +150,12 @@ class AccountProcessor(
                     // Корректировка полей
                     validatingTrimDescription("Очистка пустых символов в начале и конце описания")
 
-                    // Валидация данных
+                    // Проверка наличия обязательных полей
                     validateIdNotEmpty("Проверка, что идентификатор счёта не пуст")
+
+                    // Валидация данных
                     validateIdContent("Проверка идентификатора")
                     validateDescriptionContent("Проверка описания")
-                    validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
                     validateOwnerIdContent("Проверка идентификатора владельца счёта")
                     validateCurrencyNotEmpty("Проверка, что указана валюта счёта")
 
@@ -179,8 +184,10 @@ class AccountProcessor(
                     validatingCleanLastTransactionTime("Очистка времени последней транзакции")
                     validatingCleanPermissionsClient("Очистка разрешений")
 
-                    // Валидация данных
+                    // Проверка наличия обязательных полей
                     validateIdNotEmpty("Проверка, что идентификатор счёта не пуст")
+
+                    // Валидация данных
                     validateIdContent("Проверка идентификатора")
 
                     // Завершение валидации
@@ -240,8 +247,10 @@ class AccountProcessor(
                     validatingCleanLastTransactionTime("Очистка времени последней транзакции")
                     validatingCleanPermissionsClient("Очистка разрешений")
 
-                    // Валидация данных
+                    // Проверка наличия обязательных полей
                     validateIdNotEmpty("Проверка, что идентификатор счёта не пуст")
+
+                    // Валидация данных
                     validateIdContent("Проверка идентификатора")
 
                     // Завершение валидации

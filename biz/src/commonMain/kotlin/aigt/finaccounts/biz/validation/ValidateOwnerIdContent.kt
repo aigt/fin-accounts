@@ -18,7 +18,7 @@ fun ICorChainDsl<FinAccountsContext>.validateOwnerIdContent(
 
     // Проверка контента на валидность
     val regExp =
-        Regex("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+        Regex("^\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}$")
     on { !accountValidating.ownerId.matches(regExp) }
 
     // Информирование о проблеме с контентом

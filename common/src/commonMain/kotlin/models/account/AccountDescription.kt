@@ -8,7 +8,10 @@ value class AccountDescription(private val description: String) {
 
     fun isNotEmpty(): Boolean = description.isNotEmpty()
 
-    fun matches(regex: Regex): Boolean = description.matches(regex)
+    fun matches(regex: Regex): Boolean {
+        println(regex)
+        return description matches regex
+    }
 
     fun trim(): AccountDescription = AccountDescription(description.trim())
 
