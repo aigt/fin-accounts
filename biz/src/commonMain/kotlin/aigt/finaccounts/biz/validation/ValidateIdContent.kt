@@ -1,4 +1,4 @@
-package aigt.finaccounts.biz.validation.clean
+package aigt.finaccounts.biz.validation
 
 import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.common.helpers.errorValidation

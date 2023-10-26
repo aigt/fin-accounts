@@ -23,6 +23,10 @@ class BizValidationUpdateTest {
     fun trimDescription() = validationDescriptionTrim(command, processor)
 
     @Test
+    fun fixSpacesDescription() =
+        validationDescriptionFixSpaces(command, processor)
+
+    @Test
     fun badSymbolsDescription() =
         validationDescriptionSymbols(command, processor)
 

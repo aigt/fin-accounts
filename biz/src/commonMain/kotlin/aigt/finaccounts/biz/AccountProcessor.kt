@@ -2,7 +2,6 @@ package aigt.finaccounts.biz
 
 import aigt.finaccounts.biz.groups.operation
 import aigt.finaccounts.biz.groups.stubs
-import aigt.finaccounts.biz.validation.clean.validateIdContent
 import aigt.finaccounts.biz.validation.clean.validatingCleanBalance
 import aigt.finaccounts.biz.validation.clean.validatingCleanCurrency
 import aigt.finaccounts.biz.validation.clean.validatingCleanDescription
@@ -11,12 +10,14 @@ import aigt.finaccounts.biz.validation.clean.validatingCleanLastTransactionTime
 import aigt.finaccounts.biz.validation.clean.validatingCleanOwnerId
 import aigt.finaccounts.biz.validation.clean.validatingCleanPermissionsClient
 import aigt.finaccounts.biz.validation.clean.validatingCleanStatus
+import aigt.finaccounts.biz.validation.clean.validatingFixSpacesInDescription
 import aigt.finaccounts.biz.validation.clean.validatingTrimDescription
 import aigt.finaccounts.biz.validation.finishAccountFilterValidation
 import aigt.finaccounts.biz.validation.finishAccountValidation
 import aigt.finaccounts.biz.validation.finishTransactionValidation
 import aigt.finaccounts.biz.validation.validateCurrencyNotEmpty
 import aigt.finaccounts.biz.validation.validateDescriptionContent
+import aigt.finaccounts.biz.validation.validateIdContent
 import aigt.finaccounts.biz.validation.validateIdNotEmpty
 import aigt.finaccounts.biz.validation.validateOwnerIdContent
 import aigt.finaccounts.biz.validation.validateOwnerIdNotEmpty
@@ -82,6 +83,7 @@ class AccountProcessor(
 
                     // Корректировка полей
                     validatingTrimDescription("Очистка пустых символов в начале и конце описания")
+                    validatingFixSpacesInDescription("Очистка повторяющихся пробелов и замена пробельных символов на стандартный")
 
                     // Проверка наличия обязательных полей
                     validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
@@ -149,6 +151,7 @@ class AccountProcessor(
 
                     // Корректировка полей
                     validatingTrimDescription("Очистка пустых символов в начале и конце описания")
+                    validatingFixSpacesInDescription("Очистка повторяющихся пробелов и замена пробельных символов на стандартный")
 
                     // Проверка наличия обязательных полей
                     validateIdNotEmpty("Проверка, что идентификатор счёта не пуст")

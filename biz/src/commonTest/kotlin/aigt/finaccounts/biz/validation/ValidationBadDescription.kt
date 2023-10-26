@@ -53,6 +53,25 @@ fun validationDescriptionTrim(
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
+fun validationDescriptionFixSpaces(
+    command: ContextCommand,
+    processor: AccountProcessor,
+) = runTest {
+    val ctx = getBaseTestFinAccountsContext(command).apply {
+        accountRequest = SimpleAccountsStub.SIMPLE_ACTIVE_ACCOUNT.apply {
+            description = AccountDescription("A  A\tA\nA\u000CA\rA A")
+        }
+    }
+    processor.exec(ctx)
+    assertEquals(0, ctx.errors.size)
+    assertNotEquals(ContextState.FAILING, ctx.state)
+    assertEquals(
+        "A A A A A A A",
+        ctx.accountValidated.description.asString(),
+    )
+}
+
+@OptIn(ExperimentalCoroutinesApi::class)
 fun validationDescriptionCleaned(
     command: ContextCommand,
     processor: AccountProcessor,
