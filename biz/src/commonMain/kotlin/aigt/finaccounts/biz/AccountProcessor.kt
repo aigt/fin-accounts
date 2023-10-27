@@ -10,8 +10,13 @@ import aigt.finaccounts.biz.validation.clean.validatingCleanLastTransactionTime
 import aigt.finaccounts.biz.validation.clean.validatingCleanOwnerId
 import aigt.finaccounts.biz.validation.clean.validatingCleanPermissionsClient
 import aigt.finaccounts.biz.validation.clean.validatingCleanStatus
+import aigt.finaccounts.biz.validation.clean.validatingCleanTransactionId
+import aigt.finaccounts.biz.validation.clean.validatingCleanTransactionTimestamp
+import aigt.finaccounts.biz.validation.clean.validatingCopyTransactionAccountId
 import aigt.finaccounts.biz.validation.clean.validatingFixSpacesInDescription
+import aigt.finaccounts.biz.validation.clean.validatingFixSpacesInTransactionDescription
 import aigt.finaccounts.biz.validation.clean.validatingTrimDescription
+import aigt.finaccounts.biz.validation.clean.validatingTrimTransactionDescription
 import aigt.finaccounts.biz.validation.finishAccountFilterValidation
 import aigt.finaccounts.biz.validation.finishAccountValidation
 import aigt.finaccounts.biz.validation.finishTransactionValidation
@@ -24,6 +29,11 @@ import aigt.finaccounts.biz.validation.validateIdContent
 import aigt.finaccounts.biz.validation.validateIdNotEmpty
 import aigt.finaccounts.biz.validation.validateOwnerIdContent
 import aigt.finaccounts.biz.validation.validateOwnerIdNotEmpty
+import aigt.finaccounts.biz.validation.validateTransactionAmountNotEmpty
+import aigt.finaccounts.biz.validation.validateTransactionCounterpartyContent
+import aigt.finaccounts.biz.validation.validateTransactionCounterpartyNotEmpty
+import aigt.finaccounts.biz.validation.validateTransactionDescriptionContent
+import aigt.finaccounts.biz.validation.validateTransactionTypeNotEmpty
 import aigt.finaccounts.biz.validation.validatingCopyAccount
 import aigt.finaccounts.biz.validation.validatingCopyFilter
 import aigt.finaccounts.biz.validation.validatingCopyTransaction
@@ -253,12 +263,26 @@ class AccountProcessor(
                     validatingCleanStatus("Очистка статуса")
                     validatingCleanLastTransactionTime("Очистка времени последней транзакции")
                     validatingCleanPermissionsClient("Очистка разрешений")
+                    validatingCleanTransactionId("Очистка идентификатора транзакции")
+                    validatingCleanTransactionTimestamp("Очистка метки времени транзакции")
+
+                    // Корректировка полей
+                    validatingTrimTransactionDescription("Очистка пустых символов в начале и конце описания")
+                    validatingFixSpacesInTransactionDescription("Очистка повторяющихся пробелов и замена пробельных символов на стандартный")
 
                     // Проверка наличия обязательных полей
                     validateIdNotEmpty("Проверка, что идентификатор счёта не пуст")
+                    validateTransactionAmountNotEmpty("Проверка, что сумма транзакции указана")
+                    validateTransactionCounterpartyNotEmpty("Проверка, что идентификатор счёта ответного контрагента по операции не пуст")
+                    validateTransactionTypeNotEmpty("Проверка, что тип транзакции указан")
 
                     // Валидация данных
                     validateIdContent("Проверка идентификатора")
+                    validateTransactionCounterpartyContent("Проверка счёта ответного контрагента")
+                    validateTransactionDescriptionContent("Проверка содержимого описания транзакции")
+
+                    // Синхронизация аккаунта и транзакции
+                    validatingCopyTransactionAccountId("Копирование номера счёта в транзакцию")
 
                     // Завершение валидации
                     finishAccountValidation("Завершение проверок счёта")

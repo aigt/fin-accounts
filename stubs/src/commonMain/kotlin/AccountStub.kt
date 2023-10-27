@@ -118,7 +118,7 @@ object AccountStub {
         counterparty = counterparty,
         timestamp = TransactionTimestamp(timestamp = "2023-07-07T18:43:00.123456789Z".toInstant()),
         type = type,
-        description = TransactionDescription(id = "desc $filter $accountId"),
+        description = TransactionDescription("desc $filter $accountId"),
     )
 
 }
