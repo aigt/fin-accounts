@@ -3,14 +3,14 @@ package aigt.finaccounts.biz.validation
 import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.common.helpers.errorValidation
 import aigt.finaccounts.common.helpers.fail
-import aigt.finaccounts.common.models.account.AccountOwnerId
+import aigt.finaccounts.common.models.accountfilter.SearchStringFilter
 import aigt.finaccounts.cor.ICorChainDsl
 import aigt.finaccounts.cor.worker
 
 /**
- * Валидация содержания идентификатора владельца
+ * Валидация содержания описания
  */
-fun ICorChainDsl<FinAccountsContext>.validateOwnerIdContent(
+fun ICorChainDsl<FinAccountsContext>.validateFilterSearchStringContent(
     title: String,
 ) = worker {
 
@@ -18,21 +18,19 @@ fun ICorChainDsl<FinAccountsContext>.validateOwnerIdContent(
     this.title = title
 
     // Проверка контента на валидность
-    val uuidPattern =
-        "^\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}$"
-    val regExp = Regex(uuidPattern)
+    val regExp = Regex("^[\\p{L}\\d_\\-., ]+$")
     on {
-        accountValidating.ownerId != AccountOwnerId.NONE &&
-            !accountValidating.ownerId.matches(regExp)
+        accountFilterValidating.searchString != SearchStringFilter.NONE &&
+            !accountFilterValidating.searchString.matches(regExp)
     }
 
     // Информирование о проблеме с контентом
     handle {
         fail(
             errorValidation(
-                field = "ownerId",
+                field = "filterSearchString",
                 violationCode = "badContent",
-                description = "field must contain uuid or be empty",
+                description = "field must contain letters or be empty",
             ),
         )
     }

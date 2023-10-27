@@ -17,6 +17,9 @@ import aigt.finaccounts.biz.validation.finishAccountValidation
 import aigt.finaccounts.biz.validation.finishTransactionValidation
 import aigt.finaccounts.biz.validation.validateCurrencyNotEmpty
 import aigt.finaccounts.biz.validation.validateDescriptionContent
+import aigt.finaccounts.biz.validation.validateFilterNotEmpty
+import aigt.finaccounts.biz.validation.validateFilterOwnerIdContent
+import aigt.finaccounts.biz.validation.validateFilterSearchStringContent
 import aigt.finaccounts.biz.validation.validateIdContent
 import aigt.finaccounts.biz.validation.validateIdNotEmpty
 import aigt.finaccounts.biz.validation.validateOwnerIdContent
@@ -211,11 +214,12 @@ class AccountProcessor(
                     // Подготовка к валидации
                     validatingCopyFilter("Копируем фильтр в accountFilterValidating")
 
-                    // Очистка неиспользуемых в комманде полей
-                    // validatingCleanId("Очистка id")
+                    // Проверка наличия обязательных полей
+                    validateFilterNotEmpty("Проверка, что фильтр не пуст")
 
                     // Валидация данных
-                    // validateOwnerIdNotEmpty("Проверка, что идентификатор владельца счёта не пуст")
+                    validateFilterSearchStringContent("Проверка строки поиска")
+                    validateFilterOwnerIdContent("Проверка идентификатора")
 
                     // Завершение валидации
                     finishAccountFilterValidation("Завершение проверок")

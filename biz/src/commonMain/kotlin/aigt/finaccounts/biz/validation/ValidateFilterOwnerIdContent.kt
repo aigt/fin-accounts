@@ -3,14 +3,14 @@ package aigt.finaccounts.biz.validation
 import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.common.helpers.errorValidation
 import aigt.finaccounts.common.helpers.fail
-import aigt.finaccounts.common.models.account.AccountOwnerId
+import aigt.finaccounts.common.models.accountfilter.OwnerIdFilter
 import aigt.finaccounts.cor.ICorChainDsl
 import aigt.finaccounts.cor.worker
 
 /**
- * Валидация содержания идентификатора владельца
+ * Валидация содержания поиска по идентификатору владельца
  */
-fun ICorChainDsl<FinAccountsContext>.validateOwnerIdContent(
+fun ICorChainDsl<FinAccountsContext>.validateFilterOwnerIdContent(
     title: String,
 ) = worker {
 
@@ -22,15 +22,15 @@ fun ICorChainDsl<FinAccountsContext>.validateOwnerIdContent(
         "^\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}$"
     val regExp = Regex(uuidPattern)
     on {
-        accountValidating.ownerId != AccountOwnerId.NONE &&
-            !accountValidating.ownerId.matches(regExp)
+        accountFilterValidating.ownerId != OwnerIdFilter.NONE &&
+            !accountFilterValidating.ownerId.matches(regExp)
     }
 
     // Информирование о проблеме с контентом
     handle {
         fail(
             errorValidation(
-                field = "ownerId",
+                field = "filterOwnerId",
                 violationCode = "badContent",
                 description = "field must contain uuid or be empty",
             ),
