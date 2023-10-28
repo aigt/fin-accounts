@@ -73,15 +73,28 @@ class AccountCreateStubTest {
     }
 
     @Test
-    fun badDescription() = runTest {
+    fun emptyOwnerId() = runTest {
         val ctx = getFinAccountsContext().apply {
-            stubCase = ContextStubCase.BAD_DESCRIPTION
+            stubCase = ContextStubCase.EMPTY_OWNER_ID
         }
 
         accountProcessor.exec(ctx)
 
         assertEquals(Account(), ctx.accountResponse)
-        assertEquals("description", ctx.errors.firstOrNull()?.field)
+        assertEquals("owner-id", ctx.errors.firstOrNull()?.field)
+        assertEquals("validation", ctx.errors.firstOrNull()?.group)
+    }
+
+    @Test
+    fun emptyCurrency() = runTest {
+        val ctx = getFinAccountsContext().apply {
+            stubCase = ContextStubCase.EMPTY_CURRENCY
+        }
+
+        accountProcessor.exec(ctx)
+
+        assertEquals(Account(), ctx.accountResponse)
+        assertEquals("currency", ctx.errors.firstOrNull()?.field)
         assertEquals("validation", ctx.errors.firstOrNull()?.group)
     }
 
@@ -99,15 +112,15 @@ class AccountCreateStubTest {
     }
 
     @Test
-    fun badCurrency() = runTest {
+    fun badDescription() = runTest {
         val ctx = getFinAccountsContext().apply {
-            stubCase = ContextStubCase.BAD_CURRENCY
+            stubCase = ContextStubCase.BAD_DESCRIPTION
         }
 
         accountProcessor.exec(ctx)
 
         assertEquals(Account(), ctx.accountResponse)
-        assertEquals("currency", ctx.errors.firstOrNull()?.field)
+        assertEquals("description", ctx.errors.firstOrNull()?.field)
         assertEquals("validation", ctx.errors.firstOrNull()?.group)
     }
 

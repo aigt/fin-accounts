@@ -65,6 +65,19 @@ class AccountReadStubTest {
     }
 
     @Test
+    fun emptyId() = runTest {
+        val ctx = getFinAccountsContext().apply {
+            stubCase = ContextStubCase.EMPTY_ID
+        }
+
+        accountProcessor.exec(ctx)
+
+        assertEquals(Account(), ctx.accountResponse)
+        assertEquals("id", ctx.errors.firstOrNull()?.field)
+        assertEquals("validation", ctx.errors.firstOrNull()?.group)
+    }
+
+    @Test
     fun badId() = runTest {
         val ctx = getFinAccountsContext().apply {
             stubCase = ContextStubCase.BAD_ID

@@ -77,9 +77,5 @@ class BizValidationUpdateTest {
     fun correctCurrency() =
         validationCurrencyCorrect(command, processor)
 
-    @Test
-    fun emptyCurrencyError() =
-        validationCurrencyEmptyError(command, processor)
-
 }
 

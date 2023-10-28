@@ -77,9 +77,9 @@ class AccountTransactStubTest {
     }
 
     @Test
-    fun badId() = runTest {
+    fun emptyId() = runTest {
         val ctx = getFinAccountsContext().apply {
-            stubCase = ContextStubCase.BAD_ID
+            stubCase = ContextStubCase.EMPTY_ID
         }
 
         accountProcessor.exec(ctx)
@@ -90,15 +90,57 @@ class AccountTransactStubTest {
     }
 
     @Test
-    fun badTransactionAmount() = runTest {
+    fun emptyTransactionAmount() = runTest {
         val ctx = getFinAccountsContext().apply {
-            stubCase = ContextStubCase.BAD_TRANSACTION_AMOUNT
+            stubCase = ContextStubCase.EMPTY_TRANSACTION_AMOUNT
         }
 
         accountProcessor.exec(ctx)
 
         assertEquals(Account(), ctx.accountResponse)
         assertEquals("transaction-amount", ctx.errors.firstOrNull()?.field)
+        assertEquals("validation", ctx.errors.firstOrNull()?.group)
+    }
+
+    @Test
+    fun emptyTransactionCounterparty() = runTest {
+        val ctx = getFinAccountsContext().apply {
+            stubCase = ContextStubCase.EMPTY_TRANSACTION_COUNTERPARTY
+        }
+
+        accountProcessor.exec(ctx)
+
+        assertEquals(Account(), ctx.accountResponse)
+        assertEquals(
+            "transaction-counterparty",
+            ctx.errors.firstOrNull()?.field,
+        )
+        assertEquals("validation", ctx.errors.firstOrNull()?.group)
+    }
+
+    @Test
+    fun emptyTransactionType() = runTest {
+        val ctx = getFinAccountsContext().apply {
+            stubCase = ContextStubCase.EMPTY_TRANSACTION_TYPE
+        }
+
+        accountProcessor.exec(ctx)
+
+        assertEquals(Account(), ctx.accountResponse)
+        assertEquals("transaction-type", ctx.errors.firstOrNull()?.field)
+        assertEquals("validation", ctx.errors.firstOrNull()?.group)
+    }
+
+    @Test
+    fun badId() = runTest {
+        val ctx = getFinAccountsContext().apply {
+            stubCase = ContextStubCase.BAD_ID
+        }
+
+        accountProcessor.exec(ctx)
+
+        assertEquals(Account(), ctx.accountResponse)
+        assertEquals("id", ctx.errors.firstOrNull()?.field)
         assertEquals("validation", ctx.errors.firstOrNull()?.group)
     }
 
@@ -115,19 +157,6 @@ class AccountTransactStubTest {
             "transaction-counterparty",
             ctx.errors.firstOrNull()?.field,
         )
-        assertEquals("validation", ctx.errors.firstOrNull()?.group)
-    }
-
-    @Test
-    fun badTransactionType() = runTest {
-        val ctx = getFinAccountsContext().apply {
-            stubCase = ContextStubCase.BAD_TRANSACTION_TYPE
-        }
-
-        accountProcessor.exec(ctx)
-
-        assertEquals(Account(), ctx.accountResponse)
-        assertEquals("transaction-type", ctx.errors.firstOrNull()?.field)
         assertEquals("validation", ctx.errors.firstOrNull()?.group)
     }
 

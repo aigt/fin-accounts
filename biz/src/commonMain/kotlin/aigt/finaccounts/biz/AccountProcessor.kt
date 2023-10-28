@@ -47,18 +47,20 @@ import aigt.finaccounts.biz.workers.stubReadSuccess
 import aigt.finaccounts.biz.workers.stubSearchSuccess
 import aigt.finaccounts.biz.workers.stubTransactSuccess
 import aigt.finaccounts.biz.workers.stubUpdateSuccess
-import aigt.finaccounts.biz.workers.stubValidationBadBalance
-import aigt.finaccounts.biz.workers.stubValidationBadCurrency
 import aigt.finaccounts.biz.workers.stubValidationBadDescription
 import aigt.finaccounts.biz.workers.stubValidationBadId
 import aigt.finaccounts.biz.workers.stubValidationBadOwnerId
 import aigt.finaccounts.biz.workers.stubValidationBadOwnerIdFilter
 import aigt.finaccounts.biz.workers.stubValidationBadSearchStringFilter
-import aigt.finaccounts.biz.workers.stubValidationBadStatus
-import aigt.finaccounts.biz.workers.stubValidationBadTransactionAmount
 import aigt.finaccounts.biz.workers.stubValidationBadTransactionCounterparty
 import aigt.finaccounts.biz.workers.stubValidationBadTransactionDescription
-import aigt.finaccounts.biz.workers.stubValidationBadTransactionType
+import aigt.finaccounts.biz.workers.stubValidationEmptyCurrency
+import aigt.finaccounts.biz.workers.stubValidationEmptyFilter
+import aigt.finaccounts.biz.workers.stubValidationEmptyId
+import aigt.finaccounts.biz.workers.stubValidationEmptyOwnerId
+import aigt.finaccounts.biz.workers.stubValidationEmptyTransactionAmount
+import aigt.finaccounts.biz.workers.stubValidationEmptyTransactionCounterparty
+import aigt.finaccounts.biz.workers.stubValidationEmptyTransactionType
 import aigt.finaccounts.common.FinAccountsContext
 import aigt.finaccounts.common.FinAccountsCorSettings
 import aigt.finaccounts.common.models.command.ContextCommand
@@ -77,9 +79,10 @@ class AccountProcessor(
             operation("Создание аккаунта", ContextCommand.CREATE) {
                 stubs("Обработка стабов") {
                     stubCreateSuccess("Имитация успешной обработки")
+                    stubValidationEmptyOwnerId("Имитация ошибки валидации наличия владельца счёта")
+                    stubValidationEmptyCurrency("Имитация ошибки валидации наличия валюты счёта")
                     stubValidationBadOwnerId("Имитация ошибки валидации владельца счёта")
                     stubValidationBadDescription("Имитация ошибки валидации описания")
-                    stubValidationBadCurrency("Имитация ошибки валидации валюты счёта")
                     stubDbError("Имитация ошибки работы с БД")
                     stubNoCase("Ошибка: запрошенный стаб недопустим")
                 }
@@ -114,6 +117,7 @@ class AccountProcessor(
             operation("Получить аккаунт", ContextCommand.READ) {
                 stubs("Обработка стабов") {
                     stubReadSuccess("Имитация успешной обработки")
+                    stubValidationEmptyId("Имитация ошибки валидации наличия id")
                     stubValidationBadId("Имитация ошибки валидации id")
                     stubDbError("Имитация ошибки работы с БД")
                     stubNoCase("Ошибка: запрошенный стаб недопустим")
@@ -145,12 +149,10 @@ class AccountProcessor(
             operation("Изменить аккаунт", ContextCommand.UPDATE) {
                 stubs("Обработка стабов") {
                     stubUpdateSuccess("Имитация успешной обработки")
+                    stubValidationEmptyId("Имитация ошибки валидации наличия id")
                     stubValidationBadId("Имитация ошибки валидации id")
-                    stubValidationBadOwnerId("Имитация ошибки валидации владельца счёта")
                     stubValidationBadDescription("Имитация ошибки валидации описания")
-                    stubValidationBadCurrency("Имитация ошибки валидации валюты счёта")
-                    stubValidationBadBalance("Имитация ошибки валидации баланса счёта")
-                    stubValidationBadStatus("Имитация ошибки валидации статуса счёта")
+                    stubValidationBadOwnerId("Имитация ошибки валидации владельца счёта")
                     stubDbError("Имитация ошибки работы с БД")
                     stubNoCase("Ошибка: запрошенный стаб недопустим")
                 }
@@ -173,7 +175,6 @@ class AccountProcessor(
                     validateIdContent("Проверка идентификатора")
                     validateDescriptionContent("Проверка описания")
                     validateOwnerIdContent("Проверка идентификатора владельца счёта")
-                    validateCurrencyNotEmpty("Проверка, что указана валюта счёта")
 
                     // Завершение валидации
                     finishAccountValidation("Завершение проверок")
@@ -183,6 +184,7 @@ class AccountProcessor(
             operation("История транзакций по счёту", ContextCommand.HISTORY) {
                 stubs("Обработка стабов") {
                     stubHistorySuccess("Имитация успешной обработки")
+                    stubValidationEmptyId("Имитация ошибки валидации наличия id")
                     stubValidationBadId("Имитация ошибки валидации id")
                     stubDbError("Имитация ошибки работы с БД")
                     stubNoCase("Ошибка: запрошенный стаб недопустим")
@@ -214,7 +216,7 @@ class AccountProcessor(
             operation("Поиск аккаунтов", ContextCommand.SEARCH) {
                 stubs("Обработка стабов") {
                     stubSearchSuccess("Имитация успешной обработки")
-                    stubValidationBadId("Имитация ошибки валидации id")
+                    stubValidationEmptyFilter("Имитация ошибки валидации наличия id")
                     stubValidationBadSearchStringFilter("Имитация ошибки валидации строки поиска")
                     stubValidationBadOwnerIdFilter("Имитация ошибки валидации строки поиска по владельцу счёта")
                     stubDbError("Имитация ошибки работы с БД")
@@ -242,10 +244,12 @@ class AccountProcessor(
             ) {
                 stubs("Обработка стабов") {
                     stubTransactSuccess("Имитация успешной обработки")
+                    stubValidationEmptyId("Имитация ошибки валидации наличия id")
+                    stubValidationEmptyTransactionAmount("Имитация ошибки валидации наличия id")
+                    stubValidationEmptyTransactionCounterparty("Имитация ошибки валидации наличия id")
+                    stubValidationEmptyTransactionType("Имитация ошибки валидации наличия id")
                     stubValidationBadId("Имитация ошибки валидации id")
-                    stubValidationBadTransactionAmount("Имитация ошибки суммы транзакции")
                     stubValidationBadTransactionCounterparty("Имитация ошибки валидации счёта контрагента транзакции")
-                    stubValidationBadTransactionType("Имитация ошибки валидации типа транзакции")
                     stubValidationBadTransactionDescription("Имитация ошибки валидации описания транзакции")
                     stubDbError("Имитация ошибки работы с БД")
                     stubNoCase("Ошибка: запрошенный стаб недопустим")

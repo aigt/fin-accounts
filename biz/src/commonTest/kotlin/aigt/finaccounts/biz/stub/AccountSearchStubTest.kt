@@ -60,15 +60,15 @@ class AccountSearchStubTest {
     }
 
     @Test
-    fun badId() = runTest {
+    fun emptyFilter() = runTest {
         val ctx = getFinAccountsContext().apply {
-            stubCase = ContextStubCase.BAD_ID
+            stubCase = ContextStubCase.EMPTY_FILTER
         }
 
         accountProcessor.exec(ctx)
 
         assertEquals(Account(), ctx.accountResponse)
-        assertEquals("id", ctx.errors.firstOrNull()?.field)
+        assertEquals("search-filter", ctx.errors.firstOrNull()?.field)
         assertEquals("validation", ctx.errors.firstOrNull()?.group)
     }
 

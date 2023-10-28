@@ -546,6 +546,13 @@ components:
       enum:
         - success
         - notFound
+        - emptyId
+        - emptyOwnerId
+        - emptyCurrency
+        - emptyFilter
+        - emptyTransactionAmount
+        - emptyTransactionCounterparty
+        - emptyTransactionType
         - badId
         - badDescription
         - badOwnerId

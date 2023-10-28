@@ -83,6 +83,19 @@ class AccountUpdateStubTest {
     }
 
     @Test
+    fun emptyId() = runTest {
+        val ctx = getFinAccountsContext().apply {
+            stubCase = ContextStubCase.EMPTY_ID
+        }
+
+        accountProcessor.exec(ctx)
+
+        assertEquals(Account(), ctx.accountResponse)
+        assertEquals("id", ctx.errors.firstOrNull()?.field)
+        assertEquals("validation", ctx.errors.firstOrNull()?.group)
+    }
+
+    @Test
     fun badId() = runTest {
         val ctx = getFinAccountsContext().apply {
             stubCase = ContextStubCase.BAD_ID
@@ -118,45 +131,6 @@ class AccountUpdateStubTest {
 
         assertEquals(Account(), ctx.accountResponse)
         assertEquals("owner-id", ctx.errors.firstOrNull()?.field)
-        assertEquals("validation", ctx.errors.firstOrNull()?.group)
-    }
-
-    @Test
-    fun badCurrency() = runTest {
-        val ctx = getFinAccountsContext().apply {
-            stubCase = ContextStubCase.BAD_CURRENCY
-        }
-
-        accountProcessor.exec(ctx)
-
-        assertEquals(Account(), ctx.accountResponse)
-        assertEquals("currency", ctx.errors.firstOrNull()?.field)
-        assertEquals("validation", ctx.errors.firstOrNull()?.group)
-    }
-
-    @Test
-    fun badBalance() = runTest {
-        val ctx = getFinAccountsContext().apply {
-            stubCase = ContextStubCase.BAD_BALANCE
-        }
-
-        accountProcessor.exec(ctx)
-
-        assertEquals(Account(), ctx.accountResponse)
-        assertEquals("balance", ctx.errors.firstOrNull()?.field)
-        assertEquals("validation", ctx.errors.firstOrNull()?.group)
-    }
-
-    @Test
-    fun badStatus() = runTest {
-        val ctx = getFinAccountsContext().apply {
-            stubCase = ContextStubCase.BAD_STATUS
-        }
-
-        accountProcessor.exec(ctx)
-
-        assertEquals(Account(), ctx.accountResponse)
-        assertEquals("status", ctx.errors.firstOrNull()?.field)
         assertEquals("validation", ctx.errors.firstOrNull()?.group)
     }
 

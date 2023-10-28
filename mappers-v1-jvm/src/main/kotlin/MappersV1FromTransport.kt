@@ -58,6 +58,13 @@ private fun AccountDebug?.transportToStubCase(): ContextStubCase =
     when (this?.stub) {
         AccountRequestDebugStubs.SUCCESS -> ContextStubCase.SUCCESS
         AccountRequestDebugStubs.NOT_FOUND -> ContextStubCase.NOT_FOUND
+        AccountRequestDebugStubs.EMPTY_ID -> ContextStubCase.EMPTY_ID
+        AccountRequestDebugStubs.EMPTY_OWNER_ID -> ContextStubCase.EMPTY_OWNER_ID
+        AccountRequestDebugStubs.EMPTY_CURRENCY -> ContextStubCase.EMPTY_CURRENCY
+        AccountRequestDebugStubs.EMPTY_FILTER -> ContextStubCase.EMPTY_FILTER
+        AccountRequestDebugStubs.EMPTY_TRANSACTION_AMOUNT -> ContextStubCase.EMPTY_TRANSACTION_AMOUNT
+        AccountRequestDebugStubs.EMPTY_TRANSACTION_COUNTERPARTY -> ContextStubCase.EMPTY_TRANSACTION_COUNTERPARTY
+        AccountRequestDebugStubs.EMPTY_TRANSACTION_TYPE -> ContextStubCase.EMPTY_TRANSACTION_TYPE
         AccountRequestDebugStubs.BAD_ID -> ContextStubCase.BAD_ID
         AccountRequestDebugStubs.BAD_DESCRIPTION -> ContextStubCase.BAD_DESCRIPTION
         AccountRequestDebugStubs.BAD_OWNER_ID -> ContextStubCase.BAD_OWNER_ID
