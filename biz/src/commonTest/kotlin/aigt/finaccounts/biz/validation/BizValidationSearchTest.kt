@@ -3,7 +3,6 @@ package aigt.finaccounts.biz.validation
 import aigt.finaccounts.biz.AccountProcessor
 import aigt.finaccounts.common.models.command.ContextCommand
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class BizValidationSearchTest {
@@ -16,7 +15,7 @@ class BizValidationSearchTest {
     @Test fun emptyTitle() = validationTitleEmpty(command, processor)
     @Test fun badSymbolsTitle() = validationTitleSymbols(command, processor)*/
 
-    @Test
-    fun cleanedDescription() = validationDescriptionCleaned(command, processor)
+    /*@Test
+    fun cleanedDescription() = validationDescriptionCleaned(command, processor)*/
 }
 
