@@ -19,6 +19,30 @@ class BizValidationReadTest {
     fun cleanedDescription() =
         validationDescriptionCleaned(command, processor)
 
+    @Test
+    fun cleanedOwnerId() =
+        validationOwnerIdCleaned(command, processor)
+
+    @Test
+    fun cleanedBalance() =
+        validationBalanceCleaned(command, processor)
+
+    @Test
+    fun cleanedCurrency() =
+        validationCurrencyCleaned(command, processor)
+
+    @Test
+    fun cleanedStatus() =
+        validationStatusCleaned(command, processor)
+
+    @Test
+    fun cleanedLastTransaction() =
+        validationLastTransactionCleaned(command, processor)
+
+    @Test
+    fun cleanedPermissionClient() =
+        validationPermissionsClientCleaned(command, processor)
+
     /*
     Тест валидации поля: id
     */

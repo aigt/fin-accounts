@@ -71,3 +71,20 @@ fun validationIdContentError(
     assertEquals("id", error?.field)
     assertContains(error?.message ?: "", "id")
 }
+
+@OptIn(ExperimentalCoroutinesApi::class)
+fun validationIdCleaned(
+    command: ContextCommand,
+    processor: AccountProcessor,
+) = runTest {
+    val idString = "12344321000055556789"
+    val ctx = getBaseTestFinAccountsContext(command).apply {
+        accountRequest = SimpleAccountsStub.SIMPLE_ACTIVE_ACCOUNT.apply {
+            id = AccountId(idString)
+        }
+    }
+    processor.exec(ctx)
+    assertEquals(0, ctx.errors.size)
+    assertNotEquals(ContextState.FAILING, ctx.state)
+    assertEquals(AccountId.NONE, ctx.accountValidated.id)
+}

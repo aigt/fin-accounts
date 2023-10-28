@@ -12,6 +12,18 @@ class BizValidationUpdateTest {
     private val processor by lazy { AccountProcessor() }
 
     /*
+    Тест валидации очистки полей
+    */
+
+    @Test
+    fun cleanedLastTransaction() =
+        validationLastTransactionCleaned(command, processor)
+
+    @Test
+    fun cleanedPermissionClient() =
+        validationPermissionsClientCleaned(command, processor)
+
+    /*
     Тест валидации поля: id
     */
 

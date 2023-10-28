@@ -71,3 +71,21 @@ fun validationOwnerIdUUIDError(
     assertEquals("ownerId", error?.field)
     assertContains(error?.message ?: "", "ownerId")
 }
+
+@OptIn(ExperimentalCoroutinesApi::class)
+fun validationOwnerIdCleaned(
+    command: ContextCommand,
+    processor: AccountProcessor,
+) = runTest {
+    val ownerIdString = "e9966d0b-bf83-4c61-a86c-de973dfa89d0"
+    val ctx = getBaseTestFinAccountsContext(command).apply {
+        accountRequest = SimpleAccountsStub.SIMPLE_ACTIVE_ACCOUNT.apply {
+            ownerId = AccountOwnerId(ownerIdString)
+        }
+    }
+    processor.exec(ctx)
+    assertEquals(0, ctx.errors.size)
+    assertNotEquals(ContextState.FAILING, ctx.state)
+    assertEquals(AccountOwnerId.NONE, ctx.accountValidated.ownerId)
+}
+
