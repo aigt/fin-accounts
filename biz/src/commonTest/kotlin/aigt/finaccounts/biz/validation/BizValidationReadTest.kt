@@ -11,12 +11,28 @@ class BizValidationReadTest {
     private val command = ContextCommand.READ
     private val processor by lazy { AccountProcessor() }
 
-    /*@Test fun correctTitle() = validationTitleCorrect(command, processor)
-    @Test fun trimTitle() = validationTitleTrim(command, processor)
-    @Test fun emptyTitle() = validationTitleEmpty(command, processor)
-    @Test fun badSymbolsTitle() = validationTitleSymbols(command, processor)*/
+    /*
+    Тест валидации очистки полей
+    */
 
     @Test
-    fun cleanedDescription() = validationDescriptionCleaned(command, processor)
+    fun cleanedDescription() =
+        validationDescriptionCleaned(command, processor)
+
+    /*
+    Тест валидации поля: id
+    */
+
+    @Test
+    fun correctId() =
+        validationIdCorrect(command, processor)
+
+    @Test
+    fun emptyIdError() =
+        validationIdEmptyError(command, processor)
+
+    @Test
+    fun badIdContentError() =
+        validationIdContentError(command, processor)
 }
 

@@ -12,7 +12,6 @@ import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-
 @OptIn(ExperimentalCoroutinesApi::class)
 fun validationDescriptionCorrect(
     command: ContextCommand,
@@ -88,7 +87,7 @@ fun validationDescriptionCleaned(
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
-fun validationDescriptionSymbols(
+fun validationDescriptionSymbolsError(
     command: ContextCommand,
     processor: AccountProcessor,
 ) = runTest {

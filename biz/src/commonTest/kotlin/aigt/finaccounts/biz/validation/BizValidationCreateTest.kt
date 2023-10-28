@@ -11,24 +11,52 @@ class BizValidationCreateTest {
     private val command = ContextCommand.CREATE
     private val processor by lazy { AccountProcessor() }
 
-    /*@Test fun correctTitle() = validationTitleCorrect(command, processor)
-    @Test fun trimTitle() = validationTitleTrim(command, processor)
-    @Test fun emptyTitle() = validationTitleEmpty(command, processor)
-    @Test fun badSymbolsTitle() = validationTitleSymbols(command, processor)*/
+    /*
+    Тест валидации поля: description
+    */
 
     @Test
-    fun correctDescription() = validationDescriptionCorrect(command, processor)
+    fun correctDescription() =
+        validationDescriptionCorrect(command, processor)
 
     @Test
-    fun trimDescription() = validationDescriptionTrim(command, processor)
+    fun trimDescription() =
+        validationDescriptionTrim(command, processor)
 
     @Test
     fun fixSpacesDescription() =
         validationDescriptionFixSpaces(command, processor)
 
     @Test
-    fun badSymbolsDescription() =
-        validationDescriptionSymbols(command, processor)
+    fun badSymbolsDescriptionError() =
+        validationDescriptionSymbolsError(command, processor)
 
+    /*
+    Тест валидации поля: ownerId
+     */
+
+    @Test
+    fun correctOwnerId() =
+        validationOwnerIdCorrect(command, processor)
+
+    @Test
+    fun emptyOwnerIdError() =
+        validationOwnerIdEmptyError(command, processor)
+
+    @Test
+    fun uuidOwnerIdError() =
+        validationOwnerIdUUIDError(command, processor)
+
+    /*
+    Тест валидации поля: currency
+     */
+
+    @Test
+    fun correctCurrency() =
+        validationCurrencyCorrect(command, processor)
+
+    @Test
+    fun emptyCurrencyError() =
+        validationCurrencyEmptyError(command, processor)
 }
 

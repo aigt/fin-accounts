@@ -11,10 +11,25 @@ class BizValidationUpdateTest {
     private val command = ContextCommand.UPDATE
     private val processor by lazy { AccountProcessor() }
 
-    /*@Test fun correctTitle() = validationTitleCorrect(command, processor)
-    @Test fun trimTitle() = validationTitleTrim(command, processor)
-    @Test fun emptyTitle() = validationTitleEmpty(command, processor)
-    @Test fun badSymbolsTitle() = validationTitleSymbols(command, processor)*/
+    /*
+    Тест валидации поля: id
+    */
+
+    @Test
+    fun correctId() =
+        validationIdCorrect(command, processor)
+
+    @Test
+    fun emptyIdError() =
+        validationIdEmptyError(command, processor)
+
+    @Test
+    fun badIdContentError() =
+        validationIdContentError(command, processor)
+
+    /*
+    Тест валидации поля: description
+    */
 
     @Test
     fun correctDescription() = validationDescriptionCorrect(command, processor)
@@ -28,7 +43,31 @@ class BizValidationUpdateTest {
 
     @Test
     fun badSymbolsDescription() =
-        validationDescriptionSymbols(command, processor)
+        validationDescriptionSymbolsError(command, processor)
+
+    /*
+    Тест валидации поля: ownerId
+     */
+
+    @Test
+    fun correctOwnerId() =
+        validationOwnerIdCorrect(command, processor)
+
+    @Test
+    fun uuidOwnerIdError() =
+        validationOwnerIdUUIDError(command, processor)
+
+    /*
+    Тест валидации поля: currency
+     */
+
+    @Test
+    fun correctCurrency() =
+        validationCurrencyCorrect(command, processor)
+
+    @Test
+    fun emptyCurrencyError() =
+        validationCurrencyEmptyError(command, processor)
 
 }
 
