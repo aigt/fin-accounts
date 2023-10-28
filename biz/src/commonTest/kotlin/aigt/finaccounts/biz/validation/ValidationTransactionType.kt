@@ -2,34 +2,33 @@ package aigt.finaccounts.biz.validation
 
 import aigt.finaccounts.biz.AccountProcessor
 import aigt.finaccounts.biz.fixture.getBaseTestFinAccountsContext
-import aigt.finaccounts.common.models.account.AccountStatus
 import aigt.finaccounts.common.models.command.ContextCommand
 import aigt.finaccounts.common.models.state.ContextState
+import aigt.finaccounts.common.models.transaction.TransactionType
 import aigt.finaccounts.stubs.SimpleAccountsStub
 import aigt.finaccounts.stubs.TransactionStub
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlin.test.assertContains
 import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
-fun validationStatusCleaned(
+fun validationTransactionTypeEmptyError(
     command: ContextCommand,
     processor: AccountProcessor,
-    withTransaction: Boolean = false,
 ) = runTest {
     val ctx = getBaseTestFinAccountsContext(command).apply {
-        accountRequest = SimpleAccountsStub.SIMPLE_ACTIVE_ACCOUNT.apply {
-            status = AccountStatus.ACTIVE
-        }
-        if (withTransaction) {
-            transactionRequest =
-                TransactionStub.getTransactActionTransactionStub()
-        }
+        accountRequest = SimpleAccountsStub.SIMPLE_ACTIVE_ACCOUNT
+        transactionRequest =
+            TransactionStub.getTransactActionTransactionStub().apply {
+                type = TransactionType.NONE
+            }
     }
     processor.exec(ctx)
-    assertEquals(0, ctx.errors.size)
-    assertNotEquals(ContextState.FAILING, ctx.state)
-    assertEquals(AccountStatus.NONE, ctx.accountValidated.status)
+    assertEquals(1, ctx.errors.size)
+    assertEquals(ContextState.FAILING, ctx.state)
+    val error = ctx.errors.firstOrNull()
+    assertEquals("transactionType", error?.field)
+    assertContains(error?.message ?: "", "transactionType")
 }

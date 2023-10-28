@@ -28,7 +28,7 @@ fun ICorChainDsl<FinAccountsContext>.finishTransactionValidation(title: String) 
         this.title = title
         on { state == ContextState.RUNNING }
         handle {
-            transactionValidating = transactionValidated
+            transactionValidated = transactionValidating
         }
     }
 

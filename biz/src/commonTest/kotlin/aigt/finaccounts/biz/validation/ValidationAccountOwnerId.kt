@@ -6,6 +6,7 @@ import aigt.finaccounts.common.models.account.AccountOwnerId
 import aigt.finaccounts.common.models.command.ContextCommand
 import aigt.finaccounts.common.models.state.ContextState
 import aigt.finaccounts.stubs.SimpleAccountsStub
+import aigt.finaccounts.stubs.TransactionStub
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertContains
@@ -76,11 +77,16 @@ fun validationOwnerIdUUIDError(
 fun validationOwnerIdCleaned(
     command: ContextCommand,
     processor: AccountProcessor,
+    withTransaction: Boolean = false,
 ) = runTest {
     val ownerIdString = "e9966d0b-bf83-4c61-a86c-de973dfa89d0"
     val ctx = getBaseTestFinAccountsContext(command).apply {
         accountRequest = SimpleAccountsStub.SIMPLE_ACTIVE_ACCOUNT.apply {
             ownerId = AccountOwnerId(ownerIdString)
+        }
+        if (withTransaction) {
+            transactionRequest =
+                TransactionStub.getTransactActionTransactionStub()
         }
     }
     processor.exec(ctx)

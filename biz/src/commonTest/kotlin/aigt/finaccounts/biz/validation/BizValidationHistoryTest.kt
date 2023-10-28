@@ -8,7 +8,7 @@ import kotlin.test.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class BizValidationHistoryTest {
 
-    private val command = ContextCommand.READ
+    private val command = ContextCommand.HISTORY
     private val processor by lazy { AccountProcessor() }
 
     /*

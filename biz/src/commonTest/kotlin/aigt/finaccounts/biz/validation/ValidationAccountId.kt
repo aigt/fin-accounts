@@ -6,6 +6,7 @@ import aigt.finaccounts.common.models.account.AccountId
 import aigt.finaccounts.common.models.command.ContextCommand
 import aigt.finaccounts.common.models.state.ContextState
 import aigt.finaccounts.stubs.SimpleAccountsStub
+import aigt.finaccounts.stubs.TransactionStub
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertContains
@@ -17,11 +18,16 @@ import kotlin.test.assertNotEquals
 fun validationIdCorrect(
     command: ContextCommand,
     processor: AccountProcessor,
+    withTransaction: Boolean = false,
 ) = runTest {
     val idString = "12344321000055556789"
     val ctx = getBaseTestFinAccountsContext(command).apply {
         accountRequest = SimpleAccountsStub.SIMPLE_ACTIVE_ACCOUNT.apply {
             id = AccountId(idString)
+        }
+        if (withTransaction) {
+            transactionRequest =
+                TransactionStub.getTransactActionTransactionStub()
         }
     }
     processor.exec(ctx)
@@ -39,10 +45,15 @@ fun validationIdCorrect(
 fun validationIdEmptyError(
     command: ContextCommand,
     processor: AccountProcessor,
+    withTransaction: Boolean = false,
 ) = runTest {
     val ctx = getBaseTestFinAccountsContext(command).apply {
         accountRequest = SimpleAccountsStub.SIMPLE_ACTIVE_ACCOUNT.apply {
             id = AccountId.NONE
+        }
+        if (withTransaction) {
+            transactionRequest =
+                TransactionStub.getTransactActionTransactionStub()
         }
     }
     processor.exec(ctx)
@@ -57,11 +68,16 @@ fun validationIdEmptyError(
 fun validationIdContentError(
     command: ContextCommand,
     processor: AccountProcessor,
+    withTransaction: Boolean = false,
 ) = runTest {
     val idString = "a1231234123412341234"
     val ctx = getBaseTestFinAccountsContext(command).apply {
         accountRequest = SimpleAccountsStub.SIMPLE_ACTIVE_ACCOUNT.apply {
             id = AccountId(idString)
+        }
+        if (withTransaction) {
+            transactionRequest =
+                TransactionStub.getTransactActionTransactionStub()
         }
     }
     processor.exec(ctx)
