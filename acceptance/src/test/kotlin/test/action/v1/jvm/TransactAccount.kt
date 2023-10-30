@@ -5,7 +5,7 @@ import aigt.finaccounts.api.v1.jackson.models.AccountResponseObject
 import aigt.finaccounts.api.v1.jackson.models.AccountTransactObject
 import aigt.finaccounts.api.v1.jackson.models.AccountTransactRequest
 import aigt.finaccounts.api.v1.jackson.models.AccountTransactResponse
-import aigt.finaccounts.api.v1.jackson.models.AccountTransaction
+import aigt.finaccounts.api.v1.jackson.models.AccountTransactionCreate
 import aigt.finaccounts.api.v1.jackson.models.TransactionType
 import aigt.finaccounts.blackbox.fixture.client.Client
 import io.kotest.assertions.asClue
@@ -29,7 +29,6 @@ suspend fun Client.transactAccount(
     transactionAmount = transactionAmount,
     transactionCounterparty = transactionCounterparty,
     transactionDescription = transactionDescription,
-    transactionTimestamp = transactionTimestamp,
 ) {
     it should haveSuccessResult
     it.account shouldBe accountStub
@@ -45,7 +44,6 @@ suspend fun <T> Client.transactAccount(
     transactionAmount: Int? = null,
     transactionCounterparty: String? = null,
     transactionDescription: String? = null,
-    transactionTimestamp: String? = null,
     block: (AccountTransactResponse) -> T,
 ): T = withClue("transactAccountV1: $accountId") {
 
@@ -56,12 +54,11 @@ suspend fun <T> Client.transactAccount(
         requestType = requestType,
         debug = debug,
         account = AccountTransactObject(id = accountId, lock = lock),
-        transaction = AccountTransaction(
+        transaction = AccountTransactionCreate(
             type = transactionType,
             amount = transactionAmount,
             counterparty = transactionCounterparty,
             description = transactionDescription,
-            timestamp = transactionTimestamp,
         ),
     )
 

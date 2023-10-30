@@ -250,6 +250,22 @@ components:
         - history
         - transact
 
+    AccountTransactionCreate:
+      type: object
+      description: Базовый объект операции совершённой по счёту
+      properties:
+        type:
+          required: true
+          $ref: '#/components/schemas/TransactionType'
+        amount:
+          required: true
+          $ref: '#/components/schemas/TransactionAmount'
+        counterparty:
+          required: true
+          $ref: '#/components/schemas/TransactionCounterparty'
+        description:
+          required: true
+          $ref: '#/components/schemas/TransactionDescription'
     AccountTransaction:
       type: object
       description: Базовый объект операции совершённой по счёту
@@ -473,7 +489,7 @@ components:
             account:
               $ref: '#/components/schemas/AccountTransactObject'
             transaction:
-              $ref: '#/components/schemas/AccountTransaction'
+              $ref: '#/components/schemas/AccountTransactionCreate'
 
     # Схемы респонсов
 
@@ -530,6 +546,13 @@ components:
       enum:
         - success
         - notFound
+        - emptyId
+        - emptyOwnerId
+        - emptyCurrency
+        - emptyFilter
+        - emptyTransactionAmount
+        - emptyTransactionCounterparty
+        - emptyTransactionType
         - badId
         - badDescription
         - badOwnerId
@@ -539,10 +562,11 @@ components:
         - badStatus
         - badTransactionAmount
         - badTransactionCounterparty
-        - badTransactionTimestamp
         - badTransactionDescription
         - badTransactionType
-        - badSearchString
+        - badSearchStringFilter
+        - badOwnerIdFilter
+        - dbError
     AccountRequestDebugMode:
       type: string
       enum:

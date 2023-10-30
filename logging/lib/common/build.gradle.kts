@@ -47,3 +47,8 @@ kotlin {
         }
     }
 }
+
+tasks.withType<Jar> {
+    // Иначе будет конфликтовать с common библиотекой приложения
+    archiveBaseName.set("logging-common")
+}

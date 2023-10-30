@@ -44,3 +44,5 @@ include(":logging:lib:kermit")
 include(":logging:lib:logback")
 include(":logging:v1:api")
 include(":logging:v1:mappers")
+
+include(":cor")

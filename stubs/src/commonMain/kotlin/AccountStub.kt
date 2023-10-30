@@ -33,6 +33,14 @@ object AccountStub {
 
     fun prepareResult(block: Account.() -> Unit): Account = get().apply(block)
 
+    fun prepareSimpleTransactonsList(accountId: AccountId) =
+        prepareTransactionsList(
+            listSize = 7,
+            filter = "на чай простая",
+            accountId = TransactionAccountId(accountId.asString()),
+            type = TransactionType.WITHDRAW,
+        )
+
     fun prepareTransactionsList(
         listSize: Int,
         filter: String,
@@ -40,7 +48,11 @@ object AccountStub {
         type: TransactionType,
     ) = MutableList(listSize) { index ->
         transaction(
-            id = TransactionId(id = uuid4().toString()),
+            id = TransactionId(
+                id = "1754624d-f266-4d0c-b72b-${
+                    index.toString().padStart(12, '0')
+                }",
+            ),
             amount = TransactionAmount(cents = (index + 1) * 100_00),
             filter = "$filter index: $index",
             accountId = accountId,
@@ -106,7 +118,7 @@ object AccountStub {
         counterparty = counterparty,
         timestamp = TransactionTimestamp(timestamp = "2023-07-07T18:43:00.123456789Z".toInstant()),
         type = type,
-        description = TransactionDescription(id = "desc $filter $accountId"),
+        description = TransactionDescription("desc $filter $accountId"),
     )
 
 }

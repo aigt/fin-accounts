@@ -12,6 +12,7 @@ import aigt.finaccounts.api.v1.jackson.models.AccountStatus
 import aigt.finaccounts.api.v1.jackson.models.AccountTransactObject
 import aigt.finaccounts.api.v1.jackson.models.AccountTransaction
 import aigt.finaccounts.api.v1.jackson.models.TransactionType
+import aigt.finaccounts.stubs.SimpleAccountsStub
 import java.util.UUID.fromString
 
 
@@ -22,8 +23,8 @@ val debug = AccountDebug(
 
 
 val accountStub = AccountResponseObject(
-    description = "Простой аккаунт",
-    ownerId = fromString("9deb6b8c-b797-4b34-9201-776ae1d3cf58"),
+    description = SimpleAccountsStub.ACCOUNT_DESCRIPTION.asString(),
+    ownerId = fromString(SimpleAccountsStub.ACCOUNT_OWNER_ID.asString()),
     currency = "RUB",
     id = "10002000300040005000",
     lock = null,
@@ -37,8 +38,8 @@ val accountStub = AccountResponseObject(
 
 
 val someCreateAccount = AccountCreateObject(
-    description = "stub description",
-    ownerId = fromString("cd565097-4b69-490e-b167-b59128475562"),
+    description = SimpleAccountsStub.ACCOUNT_DESCRIPTION.asString(),
+    ownerId = fromString(SimpleAccountsStub.ACCOUNT_OWNER_ID.asString()),
     currency = "RUB",
 )
 

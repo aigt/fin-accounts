@@ -14,7 +14,7 @@ import aigt.finaccounts.api.v1.jackson.models.AccountSearchRequest
 import aigt.finaccounts.api.v1.jackson.models.AccountStatus
 import aigt.finaccounts.api.v1.jackson.models.AccountTransactObject
 import aigt.finaccounts.api.v1.jackson.models.AccountTransactRequest
-import aigt.finaccounts.api.v1.jackson.models.AccountTransaction
+import aigt.finaccounts.api.v1.jackson.models.AccountTransactionCreate
 import aigt.finaccounts.api.v1.jackson.models.AccountUpdateObject
 import aigt.finaccounts.api.v1.jackson.models.AccountUpdateRequest
 import aigt.finaccounts.api.v1.jackson.models.TransactionType
@@ -85,11 +85,10 @@ fun getAccountTransactRequest() = AccountTransactRequest(
         id = "26c45c31-857f-4d5d-bf59-890817c9320b",
         lock = "a3c0cffb-97d3-4e9d-898d-10eb10470501",
     ),
-    transaction = AccountTransaction(
+    transaction = AccountTransactionCreate(
         type = TransactionType.WITHDRAW,
         amount = 1005_00,
         counterparty = "11102220333044405550",
         description = "stub transaction description",
-        timestamp = "2023-07-04T18:43:00.123456789Z",
     ),
 )

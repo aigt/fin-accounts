@@ -1,13 +1,9 @@
 package aigt.finaccounts.blackbox.test.api.v1.kmp
 
-import aigt.finaccounts.api.v1.kmp.models.AccountSearchFilter
 import aigt.finaccounts.blackbox.fixture.client.Client
 import aigt.finaccounts.blackbox.test.action.v1.kmp.createAccount
 import aigt.finaccounts.blackbox.test.action.v1.kmp.readAccount
-import aigt.finaccounts.blackbox.test.action.v1.kmp.searchAccount
-import aigt.finaccounts.blackbox.test.action.v1.kmp.someCreateAccount
 import aigt.finaccounts.blackbox.test.action.v1.kmp.transactAccount
-import aigt.finaccounts.blackbox.test.action.v1.kmp.updateAccount
 import io.kotest.assertions.asClue
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
@@ -28,6 +24,7 @@ fun FunSpec.testApiV1Kmp(client: Client, prefix: String = "") {
             }
         }
 
+        /* Раскомментировать когда будет БД
         test("Update Account ok") {
             val created = client.createAccount()
             client.updateAccount(
@@ -73,7 +70,7 @@ fun FunSpec.testApiV1Kmp(client: Client, prefix: String = "") {
                 }
             }
         }
-
+*/
         test("Transact Account ok") {
             val created = client.createAccount()
 

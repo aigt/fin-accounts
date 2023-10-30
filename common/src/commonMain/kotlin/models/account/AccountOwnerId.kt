@@ -6,6 +6,10 @@ import kotlin.jvm.JvmInline
 value class AccountOwnerId(private val id: String) {
     fun asString() = id
 
+    fun isEmpty(): Boolean = id.isEmpty()
+
+    fun matches(regex: Regex): Boolean = id.matches(regex)
+
     companion object {
         val NONE = AccountOwnerId("")
     }

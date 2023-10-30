@@ -27,6 +27,14 @@ data class FinAccountsContext(
     var accountRequest: Account = Account.NONE,
     var transactionRequest: Transaction = Transaction.NONE,
 
+    var accountValidating: Account = Account.NONE,
+    var transactionValidating: Transaction = Transaction.NONE,
+    var accountFilterValidating: AccountFilter = AccountFilter.NONE,
+
+    var accountValidated: Account = Account.NONE,
+    var transactionValidated: Transaction = Transaction.NONE,
+    var accountFilterValidated: AccountFilter = AccountFilter.NONE,
+
     var accountResponse: Account = Account.NONE,
     var accountsResponse: MutableList<Account> = mutableListOf(),
     var historyResponse: MutableList<Transaction> = mutableListOf(),

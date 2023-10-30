@@ -10,7 +10,13 @@ data class Account(
     var lastTransactionTime: AccountLastTransactionTime = AccountLastTransactionTime.NONE,
     val permissionsClient: MutableSet<AccountPermissionClient> = mutableSetOf(),
 ) {
+
+    fun deepCopy(): Account = copy(
+        permissionsClient = permissionsClient.toMutableSet(),
+    )
+
     companion object {
         val NONE = Account()
     }
+
 }

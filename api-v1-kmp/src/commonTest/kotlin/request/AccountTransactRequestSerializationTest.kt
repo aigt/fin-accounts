@@ -6,11 +6,10 @@ import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugMode
 import aigt.finaccounts.api.v1.kmp.models.AccountRequestDebugStubs
 import aigt.finaccounts.api.v1.kmp.models.AccountTransactObject
 import aigt.finaccounts.api.v1.kmp.models.AccountTransactRequest
-import aigt.finaccounts.api.v1.kmp.models.AccountTransaction
+import aigt.finaccounts.api.v1.kmp.models.AccountTransactionCreate
 import aigt.finaccounts.api.v1.kmp.models.TransactionType
 import aigt.finaccounts.api.v1.kmp.requests.apiV1RequestDeserialize
 import aigt.finaccounts.api.v1.kmp.requests.apiV1RequestSerialize
-import kotlinx.serialization.decodeFromString
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -28,12 +27,11 @@ class AccountTransactRequestSerializationTest {
             id = "26c45c31-857f-4d5d-bf59-890817c9320b",
             lock = "a3c0cffb-97d3-4e9d-898d-10eb10470501",
         ),
-        transaction = AccountTransaction(
+        transaction = AccountTransactionCreate(
             type = TransactionType.WITHDRAW,
             amount = 1005_00,
             counterparty = "11102220333044405550",
             description = "stub transaction description",
-            timestamp = "2023-07-04T18:43:00.123456789Z",
         ),
     )
 
@@ -72,10 +70,6 @@ class AccountTransactRequestSerializationTest {
         assertContains(
             json,
             Regex("\"description\":\\s*\"stub transaction description\""),
-        )
-        assertContains(
-            json,
-            Regex("\"timestamp\":\\s*\"2023-07-04T18:43:00.123456789Z\""),
         )
 
 

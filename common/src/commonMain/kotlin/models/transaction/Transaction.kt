@@ -9,6 +9,9 @@ data class Transaction(
     var type: TransactionType = TransactionType.NONE,
     var description: TransactionDescription = TransactionDescription.NONE,
 ) {
+
+    fun deepCopy(): Transaction = copy(amount = this.amount)
+
     companion object {
         val NONE = Transaction()
     }

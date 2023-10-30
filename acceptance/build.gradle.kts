@@ -16,6 +16,9 @@ dependencies {
     testImplementation(project(":api-v1-jackson"))
     testImplementation(project(":api-v1-kmp"))
 
+    testImplementation(project(":common"))
+    testImplementation(project(":stubs"))
+
     testImplementation("ch.qos.logback:logback-classic:$logbackVersion")
     testImplementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingJvmVersion")
 
@@ -42,11 +45,11 @@ tasks {
         dependsOn(":finaccount-app-ktor:publishImageToLocalRegistry")
         dependsOn(":finaccount-app-kafka:dockerBuildImage")
     }
-    /*    test {
-            systemProperty("kotest.framework.test.severity", "NORMAL")
-        }
-        create<Test>("test-strict") {
-            systemProperty("kotest.framework.test.severity", "MINOR")
-            group = "verification"
-        }*/
+    test {
+        systemProperty("kotest.framework.test.severity", "NORMAL")
+    }
+    create<Test>("test-strict") {
+        systemProperty("kotest.framework.test.severity", "MINOR")
+        group = "verification"
+    }
 }

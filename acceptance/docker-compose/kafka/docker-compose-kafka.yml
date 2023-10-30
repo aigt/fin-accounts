@@ -17,6 +17,7 @@ services:
       - app-tier
 
   kafka:
+    hostname: kafka
     image: confluentinc/cp-kafka:7.0.9
     depends_on:
       zookeeper:

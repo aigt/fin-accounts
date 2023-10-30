@@ -1,3 +1,5 @@
+[![CI](https://github.com/aigt/fin-accounts/actions/workflows/CI.yml/badge.svg)](https://github.com/aigt/fin-accounts/actions/workflows/CI.yml)
+
 # Система учета финансов
 
 Система учёта автоматизирует учёт счетов и работу с историей их изменений.

@@ -18,6 +18,7 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
 
                 api("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
+                implementation(project(":logging:lib:common"))
             }
         }
         val commonTest by getting {
@@ -28,3 +29,8 @@ kotlin {
         }
     }
 }
+
+tasks.withType<Copy> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+

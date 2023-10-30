@@ -13,5 +13,6 @@ value class AccountCurrency(private val code: String) {
 
     companion object {
         val NONE = AccountCurrency("-")
+        val RUB = AccountCurrency("RUB")
     }
 }
